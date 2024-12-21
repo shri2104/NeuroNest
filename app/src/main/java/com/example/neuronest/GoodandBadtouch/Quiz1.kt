@@ -50,7 +50,7 @@ fun DragAndDropQuestionScreen(
                 title = {
                     Text(text = "Good and Bad Touch Quiz")
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF228B22), titleContentColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFFA500), titleContentColor = Color.White)
             )
         }
     ) { innerPadding ->
@@ -59,7 +59,7 @@ fun DragAndDropQuestionScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
-                    .verticalScroll(scrollState), // Enable scrolling
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(

@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.DashboardScreen
 import com.example.neuronest.GoodandBadtouch.QuizScreen
+import com.example.neuronest.GoodandBadtouch.SelectionScreen
+import com.example.neuronest.GoodandBadtouch.SplashScreen
 
 
 @Composable
@@ -18,5 +20,12 @@ fun Navigation(){
         composable("GoodandBadtouchQuiz"){
             QuizScreen(navController=navController)
         }
+        composable("SelectionScreen"){
+            SelectionScreen(navController=navController)
+        }
+        composable("Splashscreen"){
+            SplashScreen(navController=navController)
+        }
+
     }
 }
