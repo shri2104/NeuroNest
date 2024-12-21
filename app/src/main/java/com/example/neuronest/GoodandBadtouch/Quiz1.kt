@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +35,8 @@ fun DragAndDropQuestionScreen(
     var draggedItemIndex by remember { mutableStateOf<Int?>(null) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
     val offsets = remember { mutableStateListOf(*Array(optionImages.size) { Offset(0f, 0f) }) }
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(currentQuestionNumber) {
         offsets.forEachIndexed { index, _ ->
             offsets[index] = Offset(0f, 0f)
@@ -54,7 +58,8 @@ fun DragAndDropQuestionScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .verticalScroll(scrollState), // Enable scrolling
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -87,7 +92,13 @@ fun DragAndDropQuestionScreen(
                                 Box(
                                     modifier = Modifier
                                         .size(100.dp)
-                                        .offset { IntOffset(offsets[index].x.toInt(), offsets[index].y.toInt()) }
+                                        .offset {
+                                            // Adjust for scrolling
+                                            IntOffset(
+                                                offsets[index].x.toInt(),
+                                                (offsets[index].y - scrollState.value).toInt()
+                                            )
+                                        }
                                         .clip(RoundedCornerShape(8.dp))
                                         .background(Color.LightGray)
                                         .pointerInput(Unit) {
@@ -103,7 +114,7 @@ fun DragAndDropQuestionScreen(
                                                     }
                                                 },
                                                 onDragEnd = {
-                                                    if (draggedItemIndex == correctImageIndex && offsets[index].y > dropThresholdY) {
+                                                    if (draggedItemIndex == correctImageIndex && offsets[index].y > dropThresholdY + scrollState.value) {
                                                         isAnswerCorrect = true
                                                         onAnswerCorrect()
                                                     } else {
