@@ -169,14 +169,16 @@ fun DragAndDropQuestionScreen(
                 ) {
                     Button(
                         onClick = onPreviousQuestion,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
                     ) {
                         Text("Previous")
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
                         onClick = onNextQuestion,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
                     ) {
                         Text("Next")
                     }
