@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
+import org.w3c.dom.Text
 
 
 @Composable
@@ -53,15 +55,46 @@ fun QuizScreen(navController: NavHostController) {
         Question(
             questionImage = R.drawable.q2,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            correctImageIndex = 0,
+            dropThresholdY = 450f
+        ),
+        Question(
+            questionImage = R.drawable.q3,
+            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 1,
             dropThresholdY = 450f
         ),
         Question(
-            questionImage = R.drawable.q,
-            optionImages = listOf(R.drawable.o1, R.drawable.o2, R.drawable._3, R.drawable.o4),
+            questionImage = R.drawable.q4,
+            optionImages = listOf(R.drawable.q4o1, R.drawable.q4o2, R.drawable.q4o3),
+            correctImageIndex = 2,
+            dropThresholdY = 500f
+        ),
+        Question(
+            questionImage = R.drawable.q5,
+            optionImages = listOf(R.drawable.q5o1, R.drawable.q5o2, R.drawable.q5o3),
             correctImageIndex = 0,
             dropThresholdY = 500f
+        ),
+        Question(
+            questionImage = R.drawable.q6,
+            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            correctImageIndex = 0,
+            dropThresholdY = 450f
+        ),
+        Question(
+            questionImage = R.drawable.q7,
+            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            correctImageIndex = 1,
+            dropThresholdY = 450f
+        ),
+        Question(
+            questionImage = R.drawable.q8,
+            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            correctImageIndex = 0,
+            dropThresholdY = 450f
         )
+
     )
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
