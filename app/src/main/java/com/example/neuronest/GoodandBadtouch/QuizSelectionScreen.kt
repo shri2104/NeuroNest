@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -33,7 +34,7 @@ import com.example.neuronest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectionScreen(navController: NavHostController) {
+fun QuizSelectionScreen(navController: NavHostController) {
     val backgroundImage = R.drawable.dolphins
 
     Scaffold(
@@ -91,27 +92,34 @@ fun SelectionScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     onClick = {
-                        navController.navigate("presentationscreen")
+                        navController.navigate("DragandDropQuiz")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
                 ) {
-                    Text(text = "Ready to explore the presentation?")
+                    Text(text = "Drag And Drop")
                 }
                 Button(
                     onClick = {
-                        navController.navigate("QuizSelectionScreen")
+                        navController.navigate("MatchQuiz")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
                 ) {
-                    Text(text = "It's quiz time! Are you ready?")
+                    Text(text = "Match the pair")
                 }
             }
         }
+    }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewQuizSelectionScreen() {
+    MaterialTheme {
+        QuizSelectionScreen(navController = NavHostController(LocalContext.current))
     }
 }

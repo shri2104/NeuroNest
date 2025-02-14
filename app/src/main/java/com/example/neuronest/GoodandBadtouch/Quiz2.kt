@@ -40,75 +40,73 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
-import org.w3c.dom.Text
 
 
 @Composable
 fun QuizScreen(navController: NavHostController) {
     val questions = listOf(
-        Question(
+        Question1(
             questionImage = R.drawable.q,
             optionImages = listOf(R.drawable.o1, R.drawable.o2, R.drawable._3, R.drawable.o4),
             correctImageIndex = 0,
             dropThresholdY = 500f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q2,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 0,
             dropThresholdY = 450f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q3,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 1,
             dropThresholdY = 450f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q4,
             optionImages = listOf(R.drawable.q4o1, R.drawable.q4o2, R.drawable.q4o3),
             correctImageIndex = 2,
             dropThresholdY = 500f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q5,
             optionImages = listOf(R.drawable.q5o1, R.drawable.q5o2, R.drawable.q5o3),
             correctImageIndex = 0,
             dropThresholdY = 500f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q6,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 0,
             dropThresholdY = 450f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q7,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 1,
             dropThresholdY = 450f
         ),
-        Question(
+        Question1(
             questionImage = R.drawable.q8,
             optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
             correctImageIndex = 0,
             dropThresholdY = 450f
         )
-
     )
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
     var isQuizFinished by remember { mutableStateOf(false) } // State to track if the quiz is finished
-
+    var score by remember { mutableStateOf(0) }
     if (isQuizFinished) {
-        FinishScreen(navController = navController) // Show Finish Screen when the quiz ends
+        FinishScreen(navController = navController,score = score, totalQuestions = questions.size) // Show Finish Screen when the quiz ends
     } else {
         val onNextQuestion: () -> Unit = {
             if (currentQuestionIndex < questions.size - 1) {
                 currentQuestionIndex++
                 isAnswerCorrect = false
             } else {
-                isQuizFinished = true // Set quiz as finished when the last question is answered
+                isQuizFinished = true
             }
         }
         val onPreviousQuestion: () -> Unit = {
@@ -129,6 +127,7 @@ fun QuizScreen(navController: NavHostController) {
             totalQuestions = questions.size,
             onAnswerCorrect = {
                 isAnswerCorrect = true
+                score++;
             },
             onNextQuestion = onNextQuestion,
             onPreviousQuestion = onPreviousQuestion
@@ -137,29 +136,24 @@ fun QuizScreen(navController: NavHostController) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinishScreen(navController: NavHostController) {
+fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: Int) {
     val backgroundImage = R.drawable.dolphins
+    val message = when {
+        score == totalQuestions -> "🎉 Amazing! You got everything right! 🎉"
+        score > totalQuestions / 2 -> "🌟 Great Job! You're learning fast! 🌟"
+        else -> "😊 Keep trying! You're doing awesome! 😊"
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = "NeuroNest",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFFFA500),
-                    titleContentColor = Color.White
-                )
+                title = { Text(text = "NeuroNest", color = Color.White) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFFA500))
             )
         }
     ) { innerPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier = Modifier.fillMaxSize().padding(innerPadding)
         ) {
             Image(
                 painter = painterResource(id = backgroundImage),
@@ -168,48 +162,60 @@ fun FinishScreen(navController: NavHostController) {
                 contentScale = ContentScale.Crop
             )
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Spacer(modifier = Modifier.height(32.dp))
-
-             Column {
-                 Card(
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .padding(16.dp),
-                     colors = CardDefaults.cardColors(LightGray),
-                     shape = RoundedCornerShape(8.dp)
-                 ) {
-                     Text(
-                         text = "Congratulations! You've completed the quiz! Keep up the great work,\n" +
-                                 "and continue to explore and discover more about your world!",
-                         fontSize = 14.sp,
-                         color = Color(0xFFFFA500),
-                         fontWeight = FontWeight.Bold,
-                         modifier = Modifier.padding(16.dp)
-                     )
-                 }
-                 Button(
-                     onClick = {
-                         navController.navigate("DashBoard")
-                     },
-                     modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally),
-                     colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
-                 ) {
-                     Text(text = "Go Back")
-                 }
-             }
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    colors = CardDefaults.cardColors(Color(0xFFFFE0B2)), // Soft orange background
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = message,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFFFA500),
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "Your Score: $score / $totalQuestions 🎯",
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF4CAF50), // Green for positivity
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                        if (score == totalQuestions) {
+                            Text(
+                                text = "🏆 You're a Quiz Champion! 🏆",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF1976D2), // Blue for excitement
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+                    }
+                }
+                Button(
+                    onClick = { navController.navigate("DashBoard") },
+                    modifier = Modifier.padding(top = 16.dp),
+                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                ) {
+                    Text(text = "🎈 Go Back 🎈", fontSize = 16.sp)
+                }
             }
         }
     }
-
 }
-data class Question(
+data class Question1(
     val questionImage: Int,
     val optionImages: List<Int>,
     val correctImageIndex: Int,
     val dropThresholdY: Float
 )
-

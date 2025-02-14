@@ -59,7 +59,7 @@ fun SplashScreen(navController: NavHostController) {
             )
         )
         delay(2000L)
-        navController.navigate("GoodandBadtouchQuiz")
+        navController.navigate("SelectionScreen")
     }
     Box(
         modifier = Modifier

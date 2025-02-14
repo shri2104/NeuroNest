@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -34,14 +36,16 @@ fun DragAndDropQuestionScreen(
 ) {
     var draggedItemIndex by remember { mutableStateOf<Int?>(null) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
-    val offsets = remember { mutableStateListOf(*Array(optionImages.size) { Offset(0f, 0f) }) }
+    val offsets = remember { mutableStateListOf(*Array(optionImages.size) { Offset(0f, 0f)})}
     val scrollState = rememberScrollState()
-
+    var droppedImageIndex by remember { mutableStateOf<Int?>(null) }
+    val context = LocalContext.current
     LaunchedEffect(currentQuestionNumber) {
         offsets.forEachIndexed { index, _ ->
             offsets[index] = Offset(0f, 0f)
         }
         isAnswerCorrect = false
+        droppedImageIndex = null
     }
 
     Scaffold(
@@ -93,7 +97,6 @@ fun DragAndDropQuestionScreen(
                                     modifier = Modifier
                                         .size(100.dp)
                                         .offset {
-                                            // Adjust for scrolling
                                             IntOffset(
                                                 offsets[index].x.toInt(),
                                                 (offsets[index].y - scrollState.value).toInt()
@@ -116,6 +119,8 @@ fun DragAndDropQuestionScreen(
                                                 onDragEnd = {
                                                     if (draggedItemIndex == correctImageIndex && offsets[index].y > dropThresholdY + scrollState.value) {
                                                         isAnswerCorrect = true
+                                                        Toast.makeText(context, "Correct Answer!", Toast.LENGTH_SHORT).show()
+                                                        droppedImageIndex = index
                                                         onAnswerCorrect()
                                                     } else {
                                                         offsets[index] = Offset(0f, 0f)
@@ -146,7 +151,6 @@ fun DragAndDropQuestionScreen(
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
                 )
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -155,11 +159,20 @@ fun DragAndDropQuestionScreen(
                         .background(if (isAnswerCorrect) Color.Green else Color.LightGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = if (isAnswerCorrect) "Correct Answer!" else "Drop Answer Here",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
+                    if (droppedImageIndex != null && isAnswerCorrect) {
+                        Image(
+                            painter = painterResource(id = optionImages[droppedImageIndex!!]),
+                            contentDescription = "Dropped Image",
+                            modifier = Modifier.size(80.dp)
+
+                        )
+                    } else {
+                        Text(
+                            text = "Drop Answer Here",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Color.Black
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
