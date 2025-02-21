@@ -65,7 +65,7 @@ fun SplashScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color(0xFFFFA500)),
+            .background(Color(0xFF2196F3)),
         contentAlignment = Alignment.Center
     ){
         Surface(
@@ -80,7 +80,7 @@ fun SplashScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.dolphins),
+                    painter = painterResource(id = R.drawable.dolphin),
                     contentDescription = "Background Image",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -95,7 +95,7 @@ fun SplashScreen(navController: NavHostController) {
                     Text(
                         text = "Let's Goo!",
                         style = MaterialTheme.typography.headlineLarge.copy(
-                            color = Color(0xFFFF4500),
+                            color = Color(0xFF3F51B5),
                             fontWeight = FontWeight.Bold,
                             fontSize = 50.sp,
                             letterSpacing = 2.sp

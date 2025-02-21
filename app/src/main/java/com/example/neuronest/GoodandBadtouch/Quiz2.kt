@@ -127,7 +127,7 @@ fun QuizScreen(navController: NavHostController) {
             totalQuestions = questions.size,
             onAnswerCorrect = {
                 isAnswerCorrect = true
-                score++;
+                score++; 
             },
             onNextQuestion = onNextQuestion,
             onPreviousQuestion = onPreviousQuestion

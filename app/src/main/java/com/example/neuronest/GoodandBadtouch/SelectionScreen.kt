@@ -34,7 +34,7 @@ import com.example.neuronest.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectionScreen(navController: NavHostController) {
-    val backgroundImage = R.drawable.dolphins
+    val backgroundImage = R.drawable.dolphin
 
     Scaffold(
         topBar = {
@@ -47,11 +47,13 @@ fun SelectionScreen(navController: NavHostController) {
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFFFA500),
+                    containerColor = Color(0xFF3F51B5),
                     titleContentColor = Color.White
                 )
             )
+            Spacer(modifier = Modifier.height(20.dp))
         }
+
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -65,6 +67,15 @@ fun SelectionScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+
+            Text(
+                text = "Good and Bad Touch",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                color = Color(0xFF3F51B5)
+            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -72,16 +83,9 @@ fun SelectionScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Good and Bad Touch",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    color = Color(0xFFFF4500)
-                )
+
                 Divider(
-                    color = Color(0xFFFF4500),
+                    color = Color(0xFF3F51B5),
                     thickness = 2.dp,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -96,9 +100,10 @@ fun SelectionScreen(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Ready to explore the presentation?")
+                    Text(text = "Happy Learning!", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+
                 }
                 Button(
                     onClick = {
@@ -107,9 +112,9 @@ fun SelectionScreen(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "It's quiz time! Are you ready?")
+                    Text(text = "Brain Fun!",fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }

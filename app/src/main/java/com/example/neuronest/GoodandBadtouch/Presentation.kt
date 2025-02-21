@@ -69,7 +69,7 @@ fun PresentationScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Presentation") },
+                title = { Text(text = "Good & Bad Touch") },
                 navigationIcon = {
                     IconButton(onClick =  { navController.navigate("SelectionScreen") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")

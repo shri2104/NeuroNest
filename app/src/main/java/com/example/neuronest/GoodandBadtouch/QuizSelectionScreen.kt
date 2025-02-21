@@ -35,7 +35,7 @@ import com.example.neuronest.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizSelectionScreen(navController: NavHostController) {
-    val backgroundImage = R.drawable.dolphins
+    val backgroundImage = R.drawable.dolphin
 
     Scaffold(
         topBar = {
