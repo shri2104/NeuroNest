@@ -125,7 +125,10 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
                 items(tasks) { (taskName, taskImage) ->
                     TaskItem(taskName = taskName, taskImage = taskImage,onClick={
                         if (taskName == "Task 1") {
-                            navController.navigate("SelectionScreen")
+                            navController.navigate("Task1SelectionScreen")
+                        }
+                        if (taskName == "Task 2") {
+                            navController.navigate("Task2SelectionScreen")
                         }
                     })
                 }

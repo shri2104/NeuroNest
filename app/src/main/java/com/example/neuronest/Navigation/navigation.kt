@@ -9,8 +9,9 @@ import com.example.neuronest.GoodandBadtouch.MatchThePairQuizScreen
 import com.example.neuronest.GoodandBadtouch.PresentationScreen
 import com.example.neuronest.GoodandBadtouch.QuizScreen
 import com.example.neuronest.GoodandBadtouch.QuizSelectionScreen
-import com.example.neuronest.GoodandBadtouch.SelectionScreen
 import com.example.neuronest.GoodandBadtouch.SplashScreen
+import com.example.neuronest.GoodandBadtouch.Task1SelectionScreen
+import com.example.neuronest.Task2.Task2SelectionScreen
 
 
 @Composable
@@ -29,8 +30,11 @@ fun Navigation(){
         composable("QuizSelectionScreen"){
             QuizSelectionScreen(navController=navController)
         }
-        composable("SelectionScreen"){
-            SelectionScreen(navController=navController)
+        composable("Task1SelectionScreen"){
+            Task1SelectionScreen(navController=navController)
+        }
+        composable("Task2SelectionScreen"){
+            Task2SelectionScreen(navController=navController)
         }
         composable("Splashscreen"){
             SplashScreen(navController=navController)

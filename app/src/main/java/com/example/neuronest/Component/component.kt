@@ -1,6 +1,3 @@
-package com.example.neuronest.GoodandBadtouch
-
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -32,11 +29,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.neuronest.R
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuizSelectionScreen(navController: NavHostController) {
-    val backgroundImage = R.drawable.dolphin
-
+fun SelectionScreen(
+    navController: NavHostController,
+    backgroundImage: Int,
+    titleText: String,
+    onFirstButtonClick: () -> Unit,
+    onSecondButtonClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,7 +50,7 @@ fun QuizSelectionScreen(navController: NavHostController) {
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFFFA500),
+                    containerColor = Color(0xFF3F51B5),
                     titleContentColor = Color.White
                 )
             )
@@ -73,15 +75,16 @@ fun QuizSelectionScreen(navController: NavHostController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Good and Bad Touch",
+                    text = titleText,
                     style = MaterialTheme.typography.headlineMedium.copy(
-                        fontSize = 24.sp,
+                        fontSize = 35.sp,
                         fontWeight = FontWeight.Bold
                     ),
-                    color = Color(0xFFFF4500)
+                    color = Color(0xFF3F51B5)
                 )
+
                 Divider(
-                    color = Color(0xFFFF4500),
+                    color = Color(0xFF3F51B5),
                     thickness = 2.dp,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,35 +93,24 @@ fun QuizSelectionScreen(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
-                    onClick = {
-                        navController.navigate("DragandDropQuiz")
-                    },
+                    onClick = onFirstButtonClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Drag And Drop")
+                    Text(text = "Happy Learning!", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
-                    onClick = {
-                        navController.navigate("MatchQuiz")
-                    },
+                    onClick = onSecondButtonClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Match the pair")
+                    Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
-    }
-}
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewQuizSelectionScreen() {
-    MaterialTheme {
-        QuizSelectionScreen(navController = NavHostController(LocalContext.current))
     }
 }
