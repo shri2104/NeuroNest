@@ -15,6 +15,8 @@ import com.example.neuronest.Task2.ClassPresentationScreen
 import com.example.neuronest.Task2.ClassSelectionScreen
 import com.example.neuronest.Task2.SocialPresentationScreen
 import com.example.neuronest.Task2.SocialSelectionScreen
+import com.example.neuronest.Task2.Task2Quiz.Classroomquiz1
+import com.example.neuronest.Task2.Task2Quiz.classroomquizselection
 import com.example.neuronest.Task2.Task2SelectionScreen
 
 
@@ -57,6 +59,12 @@ fun Navigation(){
         }
         composable("socialpresentationscreen"){
             SocialPresentationScreen(navController = navController)
+        }
+        composable("classroomquizselection"){
+            classroomquizselection(navController = navController)
+        }
+        composable("classroomquiz"){
+            Classroomquiz1(navController=navController)
         }
 
     }

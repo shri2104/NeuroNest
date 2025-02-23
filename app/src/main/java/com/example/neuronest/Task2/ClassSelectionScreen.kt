@@ -36,9 +36,12 @@ fun ClassSelectionScreen(navController: NavHostController) {
         navController = navController,
         backgroundImage = R.drawable.girl,
         titleText = "Classroom Manners",
+        firstButtonText = "Happy Learning!",
+        secondButtonText = "Brain Fun!",
         onFirstButtonClick = { navController.navigate("classpresentationscreen") },
-        onSecondButtonClick = { navController.navigate("QuizSelectionScreen") }
+        onSecondButtonClick = { navController.navigate("classroomquizselection") }
     )
+
 }
 
 
@@ -48,6 +51,8 @@ fun classSelectionScreen(
     navController: NavHostController,
     backgroundImage: Int,
     titleText: String,
+    firstButtonText: String,
+    secondButtonText: String,
     onFirstButtonClick: () -> Unit,
     onSecondButtonClick: () -> Unit
 ) {
@@ -85,14 +90,12 @@ fun classSelectionScreen(
                     fontSize = 65.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 65.sp
-
                 ),
                 color = Color(0xFF52360C),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .align(Alignment.TopCenter)  // Centers text
+                    .align(Alignment.TopCenter)
                     .padding(top = 20.dp)
-
             )
             Column(
                 modifier = Modifier
@@ -101,16 +104,6 @@ fun classSelectionScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-
-//                Divider(
-//                    color = Color(0xFF3F51B5),
-//                    thickness = 2.dp,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(vertical = 16.dp)
-//                )
-
                 Spacer(modifier = Modifier.height(50.dp))
                 Button(
                     onClick = onFirstButtonClick,
@@ -119,7 +112,7 @@ fun classSelectionScreen(
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Happy Learning!", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                    Text(text = firstButtonText, fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
@@ -128,7 +121,7 @@ fun classSelectionScreen(
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = secondButtonText, fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }

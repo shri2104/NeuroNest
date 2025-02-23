@@ -91,7 +91,7 @@ fun socialSelectionScreen(
                 color = Color(0xFF52360C),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .align(Alignment.TopCenter)  // Centers text
+                    .align(Alignment.TopCenter)
                     .padding(top = 80.dp)
             )
             Column(
