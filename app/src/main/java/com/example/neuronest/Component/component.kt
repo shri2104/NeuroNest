@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,19 +78,21 @@ fun SelectionScreen(
                 Text(
                     text = titleText,
                     style = MaterialTheme.typography.headlineMedium.copy(
-                        fontSize = 35.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 65.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 65.sp
                     ),
+                    textAlign = TextAlign.Center,
                     color = Color(0xFF3F51B5)
                 )
 
-                Divider(
+                /*Divider(
                     color = Color(0xFF3F51B5),
                     thickness = 2.dp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
-                )
+                )*/
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(

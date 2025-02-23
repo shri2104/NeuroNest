@@ -1,6 +1,5 @@
 package com.example.neuronest.Task2
 
-import SelectionScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,20 +31,20 @@ import androidx.navigation.NavHostController
 import com.example.neuronest.R
 
 @Composable
-fun Task2SelectionScreen(navController: NavHostController) {
-    task2SelectionScreen(
+fun SocialSelectionScreen(navController: NavHostController) {
+    socialSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.social3,
-        titleText = "Manners",
-        onFirstButtonClick = { navController.navigate("ClassSelectionScreen") },
-        onSecondButtonClick = { navController.navigate("SocialSelectionScreen") }
+        backgroundImage = R.drawable.social4,
+        titleText = "Social Manners",
+        onFirstButtonClick = { navController.navigate("socialpresentationscreen") },
+        onSecondButtonClick = { navController.navigate("QuizSelectionScreen") }
     )
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun task2SelectionScreen(
+fun socialSelectionScreen(
     navController: NavHostController,
     backgroundImage: Int,
     titleText: String,
@@ -64,11 +63,13 @@ fun task2SelectionScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF52360C),
-                    titleContentColor = Color.White
+                    titleContentColor = Color.Black
+
                 )
             )
         }
     ) { innerPadding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,15 +85,14 @@ fun task2SelectionScreen(
                 text = titleText,
                 style = MaterialTheme.typography.headlineMedium.copy(
                     fontSize = 65.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 65.sp
+                    fontWeight = FontWeight.Bold
+                    ,lineHeight = 65.sp
                 ),
                 color = Color(0xFF52360C),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Alignment.TopCenter)  // Centers text
                     .padding(top = 80.dp)
-
             )
             Column(
                 modifier = Modifier
@@ -119,7 +119,7 @@ fun task2SelectionScreen(
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Classroom Manners", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Happy Learning!", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
@@ -128,7 +128,7 @@ fun task2SelectionScreen(
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Social Manners", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
