@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,8 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.neuronest.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,10 +31,15 @@ fun MatchThePairQuestionScreen(
     var matchedPairs by remember { mutableStateOf<Map<Int, Boolean>>(emptyMap()) }
     var incorrectPair by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
-    // Shuffle right column once when the screen is loaded
     val shuffledRightPairs = remember { question.pairs.shuffled() }
-
-    // Reset incorrect pairs after 1 second
+    val context = LocalContext.current
+    fun playSound(resId: Int) {
+        val mediaPlayer = MediaPlayer.create(context, resId)
+        mediaPlayer?.apply {
+            start()
+            setOnCompletionListener { release() }
+        }
+    }
     LaunchedEffect(incorrectPair) {
         incorrectPair?.let {
             delay(1000)
@@ -78,7 +86,6 @@ fun MatchThePairQuestionScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            // Left column (Text Items)
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -91,17 +98,22 @@ fun MatchThePairQuestionScreen(
                                         }, RoundedCornerShape(8.dp)
                                     )
                                     .padding(16.dp)
-                                    .clickable { selectedLeftId = pair.id },
+                                    .clickable {
+                                        selectedLeftId = pair.id
+                                        if (pair.leftItem == "GoodTouch") {
+                                            playSound(R.raw.good_touch)
+                                        } else if (pair.leftItem == "BadTouch") {
+                                            playSound(R.raw.bad_touch)
+                                        }
+                                    },
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(text = pair.leftItem)
                             }
 
-                            // Space between the columns
                             Spacer(modifier = Modifier.width(16.dp))
 
-                            // Right column (Shuffled Image Items)
-                            val shuffledPair = shuffledRightPairs[index] // Get shuffled image
+                            val shuffledPair = shuffledRightPairs[index]
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
