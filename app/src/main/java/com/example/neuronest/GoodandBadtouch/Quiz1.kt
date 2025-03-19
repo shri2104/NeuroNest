@@ -52,9 +52,9 @@ fun DragAndDropQuestionScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Good and Bad Touch Quiz")
+                    Text(text = "Drag And Drop")
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFFA500), titleContentColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF3F51B5), titleContentColor = Color.White)
             )
         }
     ) { innerPadding ->
@@ -183,7 +183,7 @@ fun DragAndDropQuestionScreen(
                     Button(
                         onClick = onPreviousQuestion,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                        colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                     ) {
                         Text("Previous")
                     }
@@ -191,7 +191,7 @@ fun DragAndDropQuestionScreen(
                     Button(
                         onClick = onNextQuestion,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                        colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                     ) {
                         Text("Next")
                     }

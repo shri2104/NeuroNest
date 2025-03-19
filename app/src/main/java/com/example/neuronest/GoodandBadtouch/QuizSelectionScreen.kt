@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,11 +33,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.neuronest.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizSelectionScreen(navController: NavHostController) {
-    val backgroundImage = R.drawable.dolphin
+    quizselectionscreen(
+        navController = navController,
+        backgroundImage = R.drawable.dolphin,
+        titleText = "Good and Bad Touch",
+        onFirstButtonClick = { navController.navigate("DragandDropQuiz") },
+        onSecondButtonClick = { navController.navigate("MatchQuiz") }
+    )
+}
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun quizselectionscreen(
+    navController: NavHostController,
+    backgroundImage: Int,
+    titleText: String,
+    onFirstButtonClick: () -> Unit,
+    onSecondButtonClick: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,7 +65,7 @@ fun QuizSelectionScreen(navController: NavHostController) {
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFFFA500),
+                    containerColor = Color(0xFF3F51B5),
                     titleContentColor = Color.White
                 )
             )
@@ -73,52 +90,38 @@ fun QuizSelectionScreen(navController: NavHostController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Good and Bad Touch",
+                    text = titleText,
                     style = MaterialTheme.typography.headlineMedium.copy(
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 65.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 65.sp
                     ),
-                    color = Color(0xFFFF4500)
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF3F51B5)
                 )
-                Divider(
-                    color = Color(0xFFFF4500),
-                    thickness = 2.dp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                )
+
 
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
-                    onClick = {
-                        navController.navigate("DragandDropQuiz")
-                    },
+                    onClick = onFirstButtonClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Drag And Drop")
+                    Text(text = "Drag And Drop", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
-                    onClick = {
-                        navController.navigate("MatchQuiz")
-                    },
+                    onClick = onSecondButtonClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Match the pair")
+                    Text(text = "Match The Pair ", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
     }
 }
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewQuizSelectionScreen() {
-    MaterialTheme {
-        QuizSelectionScreen(navController = NavHostController(LocalContext.current))
-    }
-}
+

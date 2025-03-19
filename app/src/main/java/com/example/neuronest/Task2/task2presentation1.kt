@@ -55,6 +55,11 @@ fun ClassPresentationScreen(navController: NavHostController) {
         R.drawable.c12,
         R.drawable.c13,
         R.drawable.c14,
+        R.drawable.c15,
+        R.drawable.c16,
+        R.drawable.c17,
+        R.drawable.c18,
+        R.drawable.c19
     )
     var currentIndex by remember { mutableStateOf(0) }
 

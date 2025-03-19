@@ -137,18 +137,18 @@ fun QuizScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: Int) {
-    val backgroundImage = R.drawable.dolphins
+    val backgroundImage = R.drawable.dolphin
     val message = when {
-        score == totalQuestions -> "🎉 Amazing! You got everything right! 🎉"
-        score > totalQuestions / 2 -> "🌟 Great Job! You're learning fast! 🌟"
-        else -> "😊 Keep trying! You're doing awesome! 😊"
+        score == totalQuestions -> "Amazing! You got everything right! "
+        score > totalQuestions / 2 -> "Great Job! You're learning fast! "
+        else -> " Keep trying! You're doing awesome! "
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "NeuroNest", color = Color.White) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFFFFA500))
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF3F51B5))
             )
         }
     ) { innerPadding ->
@@ -168,7 +168,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
             ) {
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    colors = CardDefaults.cardColors(Color(0xFFFFE0B2)), // Soft orange background
+                    colors = CardDefaults.cardColors(Color(0xFF3F51B5)), // Soft orange background
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Column(
@@ -179,23 +179,23 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                             text = message,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFFFFA500),
+                            color = Color(0xFFF0F0F1),
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "Your Score: $score / $totalQuestions 🎯",
+                            text = "Your Score: $score / $totalQuestions ",
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF4CAF50), // Green for positivity
+                            color = Color(0xFFF0F0F1),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(top = 8.dp)
                         )
                         if (score == totalQuestions) {
                             Text(
-                                text = "🏆 You're a Quiz Champion! 🏆",
+                                text = "You're a Quiz Champion!",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF1976D2), // Blue for excitement
+                                color = Color(0xFFF0F0F1),
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -205,9 +205,9 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                 Button(
                     onClick = { navController.navigate("DashBoard") },
                     modifier = Modifier.padding(top = 16.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "🎈 Go Back 🎈", fontSize = 16.sp)
+                    Text(text = "Go Back ", fontSize = 16.sp)
                 }
             }
         }

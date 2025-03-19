@@ -18,10 +18,11 @@ import com.example.neuronest.Task2.SocialSelectionScreen
 import com.example.neuronest.Task2.Task2Quiz.Classroomquiz1
 import com.example.neuronest.Task2.Task2Quiz.classroomquizselection
 import com.example.neuronest.Task2.Task2SelectionScreen
+import com.example.neuronest.retrofit.ApiService
 
 
 @Composable
-fun Navigation(){
+fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
     NavHost(navController=navController,startDestination = "DashBoard"){
         composable("DashBoard"){

@@ -51,9 +51,9 @@ fun MatchThePairQuestionScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Match the Pair Quiz") },
+                title = { Text(text = "Match the Pair") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFFFA500),
+                    containerColor = Color(0xFF3F51B5),
                     titleContentColor = Color.White
                 )
             )
@@ -157,10 +157,10 @@ fun MatchThePairQuestionScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Button(onClick = onPreviousQuestion, colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))) {
+                    Button(onClick = onPreviousQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
                         Text("Previous")
                     }
-                    Button(onClick = onNextQuestion, colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))) {
+                    Button(onClick = onNextQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
                         Text("Next")
                     }
                 }
