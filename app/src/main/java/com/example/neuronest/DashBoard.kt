@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -33,6 +34,15 @@ fun DashboardScreen(navController: NavHostController) {
             TopAppBar(
                 title = {
                     Text("NeuroNest", fontWeight = FontWeight.Bold)
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate("profile")}) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Profile",
+                            tint = Color.White
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFF228B22),
@@ -62,7 +72,7 @@ fun DashboardScreen(navController: NavHostController) {
                                 tint = Color.White
                             )
                         }
-                        IconButton(onClick = {  }) {
+                        IconButton(onClick = { }) {
                             Icon(
                                 Icons.Default.Settings,
                                 contentDescription = "Settings",
@@ -74,15 +84,16 @@ fun DashboardScreen(navController: NavHostController) {
             )
         },
         content = { paddingValues ->
-            TaskGrid(modifier = Modifier.padding(paddingValues),navController)
+            TaskGrid(modifier = Modifier.padding(paddingValues), navController)
         }
     )
 }
+
 @Composable
 fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
     val tasks = listOf(
-        "Task 1" to R.drawable.rb_5272,
-        "Task 2" to R.drawable.rb_5272,
+        "Good & Bad Touch" to R.drawable.rb_5272,
+        "Manners" to R.drawable.rb_5272,
         "Task 3" to R.drawable.rb_5272,
         "Task 5" to R.drawable.rb_5272,
         "Task 6" to R.drawable.rb_5272,
@@ -124,10 +135,10 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
             ) {
                 items(tasks) { (taskName, taskImage) ->
                     TaskItem(taskName = taskName, taskImage = taskImage,onClick={
-                        if (taskName == "Task 1") {
+                        if (taskName == "Good & Bad Touch") {
                             navController.navigate("Task1SelectionScreen")
                         }
-                        if (taskName == "Task 2") {
+                        if (taskName == "Manners") {
                             navController.navigate("Task2SelectionScreen")
                         }
                     })

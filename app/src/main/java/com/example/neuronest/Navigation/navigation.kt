@@ -1,6 +1,9 @@
 package com.example.neuronest.Navigation
 
+import LoginScreen
+import SignUpScreen
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,15 +21,29 @@ import com.example.neuronest.Task2.SocialSelectionScreen
 import com.example.neuronest.Task2.Task2Quiz.Classroomquiz1
 import com.example.neuronest.Task2.Task2Quiz.classroomquizselection
 import com.example.neuronest.Task2.Task2SelectionScreen
+import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
 
 
 @Composable
 fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
-    NavHost(navController=navController,startDestination = "DashBoard"){
+    NavHost(navController=navController,startDestination = "Splashscreen"){
+
+        composable("LoginScreen") {
+            LoginScreen(
+                onSignUp = { navController.navigate("SignUpScreen") },
+               navController
+            )
+        }
+        composable("SignUpScreen") {
+            SignUpScreen(navController = navController)
+        }
         composable("DashBoard"){
             DashboardScreen(navController=navController)
+        }
+        composable("profile"){
+            ProfileScreen(navController=navController)
         }
         composable("DragandDropQuiz"){
             QuizScreen(navController=navController)
@@ -51,6 +68,7 @@ fun Navigation(apiService: ApiService) {
         }
         composable("Splashscreen"){
             SplashScreen(navController=navController)
+
         }
         composable("presentationscreen"){
             PresentationScreen(navController = navController)

@@ -53,60 +53,66 @@ fun classroomquizselection(navController: NavHostController) {
 fun Classroomquiz1(navController: NavHostController) {
     val questions = listOf(
         Question1(
-            questionImage = R.drawable.q,
-            optionImages = listOf(R.drawable.o1, R.drawable.o2, R.drawable._3, R.drawable.o4),
+            questionImage = R.drawable.classq1,
+            optionImages = listOf(R.drawable.classo1, R.drawable.classo6, R.drawable.classo3, R.drawable.classo2),
             correctImageIndex = 0,
             dropThresholdY = 500f
         ),
         Question1(
-            questionImage = R.drawable.q2,
-            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            questionImage = R.drawable.classq2,
+            optionImages = listOf(R.drawable.classo4, R.drawable.classo1,R.drawable.classo2,R.drawable.classo3),
             correctImageIndex = 0,
             dropThresholdY = 450f
         ),
         Question1(
-            questionImage = R.drawable.q3,
-            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            questionImage = R.drawable.classq3,
+            optionImages = listOf(R.drawable.classo1, R.drawable.classo7,R.drawable.classo3,R.drawable.classo4),
             correctImageIndex = 1,
             dropThresholdY = 450f
         ),
         Question1(
-            questionImage = R.drawable.q4,
-            optionImages = listOf(R.drawable.q4o1, R.drawable.q4o2, R.drawable.q4o3),
+            questionImage = R.drawable.classq4,
+            optionImages = listOf(R.drawable.classo1, R.drawable.classo6, R.drawable.classo7, R.drawable.classo9),
+            correctImageIndex = 0,
+            dropThresholdY = 500f
+        ),
+        Question1(
+            questionImage = R.drawable.classq5,
+            optionImages = listOf(R.drawable.classo1, R.drawable.classo5, R.drawable.classo3,R.drawable.classo9),
+            correctImageIndex = 1,
+            dropThresholdY = 500f
+        ),
+        Question1(
+            questionImage = R.drawable.classq6,
+            optionImages = listOf(R.drawable.classo9, R.drawable.classo2,R.drawable.classo4,R.drawable.classo7),
+            correctImageIndex = 0,
+            dropThresholdY = 450f
+        ),
+        Question1(
+            questionImage = R.drawable.classq7,
+            optionImages = listOf(R.drawable.classo3, R.drawable.classo4,R.drawable.classo2,R.drawable.classo1),
             correctImageIndex = 2,
-            dropThresholdY = 500f
-        ),
-        Question1(
-            questionImage = R.drawable.q5,
-            optionImages = listOf(R.drawable.q5o1, R.drawable.q5o2, R.drawable.q5o3),
-            correctImageIndex = 0,
-            dropThresholdY = 500f
-        ),
-        Question1(
-            questionImage = R.drawable.q6,
-            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
-            correctImageIndex = 0,
             dropThresholdY = 450f
         ),
         Question1(
-            questionImage = R.drawable.q7,
-            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
-            correctImageIndex = 1,
+            questionImage = R.drawable.classq8,
+            optionImages = listOf(R.drawable.classo2, R.drawable.classo6,R.drawable.classo3,R.drawable.classo5),
+            correctImageIndex = 2,
             dropThresholdY = 450f
         ),
         Question1(
-            questionImage = R.drawable.q8,
-            optionImages = listOf(R.drawable.q2o1, R.drawable.q2o2),
+            questionImage = R.drawable.classq9,
+            optionImages = listOf(R.drawable.classo8, R.drawable.classo7,R.drawable.classo6,R.drawable.classo5),
             correctImageIndex = 0,
             dropThresholdY = 450f
         )
     )
     var currentQuestionIndex by remember { mutableStateOf(0) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
-    var isQuizFinished by remember { mutableStateOf(false) } // State to track if the quiz is finished
+    var isQuizFinished by remember { mutableStateOf(false) }
     var score by remember { mutableStateOf(0) }
     if (isQuizFinished) {
-        FinishScreen(navController = navController,score = score, totalQuestions = questions.size) // Show Finish Screen when the quiz ends
+        FinishScreen(navController = navController,score = score, totalQuestions = questions.size)
     } else {
         val onNextQuestion: () -> Unit = {
             if (currentQuestionIndex < questions.size - 1) {
@@ -122,9 +128,7 @@ fun Classroomquiz1(navController: NavHostController) {
                 isAnswerCorrect = false
             }
         }
-
         val currentQuestion = questions[currentQuestionIndex]
-
         DragAndDropQuestionScreen(
             questionImage = currentQuestion.questionImage,
             optionImages = currentQuestion.optionImages,
@@ -141,6 +145,7 @@ fun Classroomquiz1(navController: NavHostController) {
         )
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: Int) {
@@ -150,7 +155,6 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
         score > totalQuestions / 2 -> "🌟 Great Job! You're learning fast! 🌟"
         else -> "😊 Keep trying! You're doing awesome! 😊"
     }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -175,7 +179,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
             ) {
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    colors = CardDefaults.cardColors(Color(0xFFFFE0B2)), // Soft orange background
+                    colors = CardDefaults.cardColors(Color(0xFFFFE0B2)),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Column(
@@ -193,7 +197,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                             text = "Your Score: $score / $totalQuestions 🎯",
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF4CAF50), // Green for positivity
+                            color = Color(0xFF4CAF50),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(top = 8.dp)
                         )
@@ -202,7 +206,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                                 text = "🏆 You're a Quiz Champion! 🏆",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF1976D2), // Blue for excitement
+                                color = Color(0xFF1976D2),
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -214,7 +218,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                     modifier = Modifier.padding(top = 16.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFFFA500))
                 ) {
-                    Text(text = "🎈 Go Back 🎈", fontSize = 16.sp)
+                    Text(text = "Go Back", fontSize = 16.sp)
                 }
             }
         }
