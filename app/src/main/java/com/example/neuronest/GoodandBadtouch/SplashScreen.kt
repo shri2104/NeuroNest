@@ -40,8 +40,6 @@ import androidx.navigation.NavHostController
 import com.example.neuronest.R
 import kotlinx.coroutines.delay
 
-
-
 @Composable
 fun SplashScreen(navController: NavHostController, viewModel: LoginScreenViewModel = viewModel()) {
     val scale = remember { Animatable(0f) }
@@ -74,29 +72,13 @@ fun SplashScreen(navController: NavHostController, viewModel: LoginScreenViewMod
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Surface(
+        Image(
+            painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped), // Replace with your actual image resource
+            contentDescription = "App Logo",
             modifier = Modifier
-                .size(350.dp)
-                .graphicsLayer(scaleX = scale.value, scaleY = scale.value),
-            shape = CircleShape,
-            color = Color.White,
-            border = BorderStroke(3.dp, Color.LightGray)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Neuronest",
-                    style = MaterialTheme.typography.headlineLarge.copy(
-                        color = Color(0xFF3F51B5),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 50.sp,
-                        letterSpacing = 2.sp
-                    )
-                )
-            }
-        }
+                .size(150.dp) // Adjust size as needed
+                .graphicsLayer(scaleX = scale.value, scaleY = scale.value)
+        )
     }
 }
 

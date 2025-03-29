@@ -12,7 +12,7 @@ import com.example.neuronest.R
 fun Task1SelectionScreen(navController: NavHostController) {
     SelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.dolphin,
+        backgroundImage = R.drawable.screenshot_2025_03_29_at_3_40_37pm,
         titleText = "Good and Bad Touch",
         onFirstButtonClick = { navController.navigate("presentationscreen") },
         onSecondButtonClick = { navController.navigate("QuizSelectionScreen") }

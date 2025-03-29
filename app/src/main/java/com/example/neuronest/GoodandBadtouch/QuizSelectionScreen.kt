@@ -37,7 +37,7 @@ import com.example.neuronest.R
 fun QuizSelectionScreen(navController: NavHostController) {
     quizselectionscreen(
         navController = navController,
-        backgroundImage = R.drawable.dolphin,
+        backgroundImage = R.drawable.screenshot_2025_03_29_at_3_40_37pm,
         titleText = "Good and Bad Touch",
         onFirstButtonClick = { navController.navigate("DragandDropQuiz") },
         onSecondButtonClick = { navController.navigate("MatchQuiz") }
@@ -99,8 +99,6 @@ fun quizselectionscreen(
                     textAlign = TextAlign.Center,
                     color = Color(0xFF3F51B5)
                 )
-
-
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     onClick = onFirstButtonClick,

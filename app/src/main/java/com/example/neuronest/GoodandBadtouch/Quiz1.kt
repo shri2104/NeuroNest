@@ -95,7 +95,7 @@ fun DragAndDropQuestionScreen(
                                 val index = optionImages.indexOf(imageResId)
                                 Box(
                                     modifier = Modifier
-                                        .size(100.dp)
+                                        .size(130.dp)
                                         .offset {
                                             IntOffset(
                                                 offsets[index].x.toInt(),
@@ -117,7 +117,10 @@ fun DragAndDropQuestionScreen(
                                                     }
                                                 },
                                                 onDragEnd = {
-                                                    if (draggedItemIndex == correctImageIndex && offsets[index].y > dropThresholdY + scrollState.value) {
+                                                    if (draggedItemIndex == correctImageIndex &&
+                                                        index == correctImageIndex && // Ensure it's the actual correct index
+                                                        offsets[index].y > dropThresholdY + scrollState.value
+                                                    ) {
                                                         isAnswerCorrect = true
                                                         Toast.makeText(context, "Correct Answer!", Toast.LENGTH_SHORT).show()
                                                         droppedImageIndex = index
@@ -126,7 +129,8 @@ fun DragAndDropQuestionScreen(
                                                         offsets[index] = Offset(0f, 0f)
                                                     }
                                                     draggedItemIndex = null
-                                                },
+                                                }
+                                                ,
                                                 onDragCancel = {
                                                     offsets[index] = Offset(0f, 0f)
                                                 }
@@ -137,7 +141,7 @@ fun DragAndDropQuestionScreen(
                                     Image(
                                         painter = painterResource(id = imageResId),
                                         contentDescription = "Option $index",
-                                        modifier = Modifier.size(80.dp)
+                                        modifier = Modifier.size(120.dp)
                                     )
                                 }
                             }
@@ -163,7 +167,7 @@ fun DragAndDropQuestionScreen(
                         Image(
                             painter = painterResource(id = optionImages[droppedImageIndex!!]),
                             contentDescription = "Dropped Image",
-                            modifier = Modifier.size(80.dp)
+                            modifier = Modifier.size(120.dp)
 
                         )
                     } else {

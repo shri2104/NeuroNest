@@ -1,4 +1,5 @@
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -26,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.neuronest.R
+
 @Composable
 fun LoginScreen(
     onSignUp: () -> Unit,
@@ -45,33 +50,19 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            Text(
-                text = "Neuronest",
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    color = Color(0xFF3F51B5),
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 2.sp
-                ),
-                textAlign = TextAlign.Center
+            Image(
+                painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped), // Replace with your logo
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(120.dp)
+                    .padding(bottom = 16.dp)
             )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text("Login", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(16.dp))
 
-            InputField(
-                label = "Email",
-                value = email,
-                onValueChange = { email = it },
-                placeholder = "Enter your email"
-            )
+
+            InputField(label = "Email", value = email, onValueChange = { email = it }, placeholder = "Enter your email")
             Spacer(modifier = Modifier.height(8.dp))
-            InputField(
-                label = "Password",
-                value = password,
-                onValueChange = { password = it },
-                placeholder = "Enter your password",
-            )
+            InputField(label = "Password", value = password, onValueChange = { password = it }, placeholder = "Enter your password")
+
             Spacer(modifier = Modifier.height(16.dp))
 
             if (errorMessage != null) {
@@ -130,19 +121,12 @@ fun SignUpScreen(viewModel: LoginScreenViewModel = viewModel(), navController: N
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Neuronest",
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    color = Color(0xFF3F51B5),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 50.sp,
-                    letterSpacing = 2.sp
-                )
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Text("Sign Up", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(24.dp))
+            Text("SIGN UP", style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Divider(Modifier.height(4.dp))
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             InputField(label = "Child Name", value = childName, onValueChange = { childName = it }, placeholder = "Enter child's name")
             InputField(label = "Caregiver's Name", value = caregiverName, onValueChange = { caregiverName = it }, placeholder = "Enter caregiver's name")
@@ -172,6 +156,7 @@ fun SignUpScreen(viewModel: LoginScreenViewModel = viewModel(), navController: N
         }
     }
 }
+
 
 
 
