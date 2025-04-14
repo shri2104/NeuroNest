@@ -36,39 +36,57 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
+import android.media.MediaPlayer
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClassPresentationScreen(navController: NavHostController) {
+    val context = LocalContext.current
+
     val images = listOf(
-        R.drawable.c1,
-        R.drawable.c2,
-        R.drawable.c3,
-        R.drawable.c4,
-        R.drawable.c5,
-        R.drawable.c6,
-        R.drawable.c7,
-        R.drawable.c8,
-        R.drawable.c9,
-        R.drawable.c10,
-        R.drawable.c11,
-        R.drawable.c12,
-        R.drawable.c13,
-        R.drawable.c14,
-        R.drawable.c15,
-        R.drawable.c16,
-        R.drawable.c17,
-        R.drawable.c18,
-        R.drawable.c19
+        R.drawable.c1, R.drawable.c2, R.drawable.c3, R.drawable.c4,
+        R.drawable.c5, R.drawable.c6, R.drawable.c7, R.drawable.c8,
+        R.drawable.c9, R.drawable.c10, R.drawable.c11, R.drawable.c12,
+        R.drawable.c13, R.drawable.c14, R.drawable.c15, R.drawable.c16,
+        R.drawable.c17, R.drawable.c18, R.drawable.c19
     )
+
+    val audios = listOf(
+        R.raw.c1, R.raw.c2, R.raw.c3, R.raw.c4,
+        R.raw.c5, R.raw.c5, R.raw.c7, R.raw.c7,
+        R.raw.c9, R.raw.c10, R.raw.c11, R.raw.c12,
+        R.raw.c13, R.raw.c14, R.raw.c15, R.raw.c16,
+        R.raw.c17, R.raw.c18, R.raw.c19
+    )
+
     var currentIndex by remember { mutableStateOf(0) }
+    var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
+
+    // Handle audio playback when index changes
+    LaunchedEffect(currentIndex) {
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, audios[currentIndex])
+        mediaPlayer?.start()
+    }
+
+    // Clean up the media player when composable leaves the composition
+    DisposableEffect(Unit) {
+        onDispose {
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Classroom Manners") },
                 navigationIcon = {
-                    IconButton(onClick =  { navController.navigate("Task2SelectionScreen") }) {
+                    IconButton(onClick = { navController.navigate("Task2SelectionScreen") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
@@ -106,11 +124,11 @@ fun ClassPresentationScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp), // Add horizontal padding for better alignment
-            verticalArrangement = Arrangement.Center, // Center content vertically
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp)) // Add top spacing
+            Spacer(modifier = Modifier.height(16.dp))
 
             Image(
                 painter = painterResource(id = images[currentIndex]),
@@ -118,12 +136,12 @@ fun ClassPresentationScreen(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(500.dp)
-                    .padding(16.dp) // Add padding around the image
+                    .padding(16.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .border(BorderStroke(2.dp, MaterialTheme.colorScheme.primary))
             )
 
-            Spacer(modifier = Modifier.height(32.dp)) // Increase spacing between image and buttons
+            Spacer(modifier = Modifier.height(32.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -147,5 +165,3 @@ fun ClassPresentationScreen(navController: NavHostController) {
         }
     }
 }
-
-

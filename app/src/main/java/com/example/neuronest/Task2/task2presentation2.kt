@@ -32,20 +32,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
+import android.media.MediaPlayer
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalContext
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SocialPresentationScreen(navController: NavHostController) {
+    val context = LocalContext.current
     val images = listOf(
         R.drawable.s1,
         R.drawable.s2,
+        R.drawable.s3,
+        R.drawable.s4,
         R.drawable.s5,
-        R.drawable.s8,
-        R.drawable._3,
         R.drawable.s6,
         R.drawable.s7,
         R.drawable.s8,
@@ -61,7 +67,25 @@ fun SocialPresentationScreen(navController: NavHostController) {
         R.drawable.s18,
         R.drawable.s19
     )
+
+    val audios = listOf(
+        R.raw.s1, R.raw.s2, R.raw.s3, R.raw.s4, R.raw.s5, R.raw.s6,
+        R.raw.s7, R.raw.s8, R.raw.s9, R.raw.s10, R.raw.s11, R.raw.s12,
+        R.raw.s13, R.raw.s14, R.raw.s15, R.raw.s16, R.raw.s17, R.raw.s18, R.raw.s19
+    )
+
     var currentIndex by remember { mutableStateOf(0) }
+    var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
+
+    DisposableEffect(currentIndex) {
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, audios[currentIndex])
+        mediaPlayer?.start()
+
+        onDispose {
+            mediaPlayer?.release()
+        }
+    }
 
     Scaffold(
         topBar = {
