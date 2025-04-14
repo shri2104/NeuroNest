@@ -28,11 +28,12 @@ fun MatchThePairQuestionScreen(
     onPreviousQuestion: () -> Unit
 ) {
     var selectedLeftId by remember { mutableStateOf<Int?>(null) }
-    var matchedPairs by remember { mutableStateOf<Map<Int, Boolean>>(emptyMap()) }
+    var matchedPairs by remember { mutableStateOf<Map<Int, Int>>(emptyMap()) }
     var incorrectPair by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
     val shuffledRightPairs = remember { question.pairs.shuffled() }
     val context = LocalContext.current
+
     fun playSound(resId: Int) {
         val mediaPlayer = MediaPlayer.create(context, resId)
         mediaPlayer?.apply {
@@ -40,10 +41,10 @@ fun MatchThePairQuestionScreen(
             setOnCompletionListener { release() }
         }
     }
+
     LaunchedEffect(incorrectPair) {
         incorrectPair?.let {
             delay(1000)
-            matchedPairs = matchedPairs - it.first - it.second
             incorrectPair = null
         }
     }
@@ -69,7 +70,6 @@ fun MatchThePairQuestionScreen(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Display question number
                 Text(
                     text = "Question $currentQuestionNumber of $totalQuestions",
                     style = MaterialTheme.typography.titleMedium,
@@ -78,7 +78,7 @@ fun MatchThePairQuestionScreen(
                 )
 
                 Column {
-                    question.pairs.forEachIndexed { index, pair ->
+                    question.pairs.forEach { pair ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -86,19 +86,19 @@ fun MatchThePairQuestionScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            val isMatched = matchedPairs.containsKey(pair.id)
+
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
                                     .background(
-                                        when {
-                                            selectedLeftId == pair.id -> Color.Yellow
-                                            matchedPairs[pair.id] == true -> Color.Green
-                                            incorrectPair?.first == pair.id -> Color.Red
-                                            else -> Color.LightGray
-                                        }, RoundedCornerShape(8.dp)
+                                        if (selectedLeftId == pair.id) Color.Yellow
+                                        else if (isMatched) Color.Green
+                                        else Color.LightGray,
+                                        RoundedCornerShape(8.dp)
                                     )
                                     .padding(16.dp)
-                                    .clickable {
+                                    .clickable(enabled = !isMatched) {
                                         selectedLeftId = pair.id
                                         if (pair.leftItem == "GoodTouch") {
                                             playSound(R.raw.good_touch)
@@ -113,27 +113,26 @@ fun MatchThePairQuestionScreen(
 
                             Spacer(modifier = Modifier.width(16.dp))
 
-                            val shuffledPair = shuffledRightPairs[index]
+                            val shuffledPair = shuffledRightPairs.first { it.id == question.correctMatches[pair.id] }
+                            val isRightMatched = matchedPairs.containsValue(shuffledPair.id)
+
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
                                     .background(
-                                        when {
-                                            matchedPairs[shuffledPair.id] == true -> Color.Green
-                                            incorrectPair?.second == shuffledPair.id -> Color.Red
-                                            else -> Color.LightGray
-                                        }, RoundedCornerShape(8.dp)
+                                        if (isRightMatched) Color.Green
+                                        else Color.LightGray,
+                                        RoundedCornerShape(8.dp)
                                     )
                                     .padding(16.dp)
-                                    .clickable {
+                                    .clickable(enabled = selectedLeftId != null && !isRightMatched) {
                                         selectedLeftId?.let { leftId ->
                                             val isCorrect = question.correctMatches[leftId] == shuffledPair.id
                                             if (isCorrect) {
-                                                matchedPairs = matchedPairs + (leftId to true) + (shuffledPair.id to true)
+                                                matchedPairs = matchedPairs + (leftId to shuffledPair.id)
                                                 onAnswerCorrect()
                                             } else {
                                                 incorrectPair = Pair(leftId, shuffledPair.id)
-                                                matchedPairs = matchedPairs + (leftId to false) + (shuffledPair.id to false)
                                             }
                                         }
                                         selectedLeftId = null
@@ -152,7 +151,6 @@ fun MatchThePairQuestionScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Navigation buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -160,7 +158,7 @@ fun MatchThePairQuestionScreen(
                     Button(onClick = onPreviousQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
                         Text("Previous")
                     }
-                    Button(onClick = onNextQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
+                    Button(onClick = onNextQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3)), enabled = matchedPairs.size == question.pairs.size) {
                         Text("Next")
                     }
                 }

@@ -35,17 +35,14 @@ import com.example.neuronest.R
 fun ClassSelectionScreen(navController: NavHostController) {
     classSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.girl,
+        backgroundImage = R.drawable.resized_girl,
         titleText = "Classroom Manners",
         firstButtonText = "Happy Learning!",
         secondButtonText = "Brain Fun!",
         onFirstButtonClick = { navController.navigate("classpresentationscreen") },
         onSecondButtonClick = { navController.navigate("classroomquizselection") }
     )
-
 }
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun classSelectionScreen(

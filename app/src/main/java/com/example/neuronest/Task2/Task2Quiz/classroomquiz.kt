@@ -40,7 +40,7 @@ import com.example.neuronest.Task2.classSelectionScreen
 fun classroomquizselection(navController: NavHostController) {
     classSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.girl,
+        backgroundImage = R.drawable.resized_girl,
         titleText = "Classroom Manners",
         firstButtonText = "Drag & Drop",
         secondButtonText = "Match",

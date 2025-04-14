@@ -35,15 +35,29 @@ fun MatchThePairQuizScreen(navController: NavHostController) {
     val questions = listOf(
         Question(
             pairs = listOf(
-                PairItem(1, "GoodTouch",R.drawable.pre4),
-                PairItem(2, "BadTouch", R.drawable.q5o3),
+                PairItem(1, "GoodTouch", R.drawable.m1g1),
+                PairItem(2, "BadTouch", R.drawable.m1b1),
             ),
-            correctMatches = mapOf(1 to 1, 2 to 2) // Left ID -> Right ID
+            correctMatches = mapOf(1 to 2, 2 to 1)
+        ),
+        Question(
+            pairs = listOf(
+                PairItem(1, "GoodTouch", R.drawable.m1g2),
+                PairItem(2, "BadTouch", R.drawable.m1b2),
+            ),
+            correctMatches = mapOf(1 to 2, 2 to 1)
+        ),
+        Question(
+            pairs = listOf(
+                PairItem(1, "GoodTouch", R.drawable.m1g3),
+                PairItem(2, "BadTouch", R.drawable.m1b3),
+            ),
+            correctMatches = mapOf(1 to 2, 2 to 1)
         ),
     )
 
-    var currentQuestionIndex by remember { mutableStateOf(0) }
-    var score2 by remember { mutableStateOf(0) }
+    var currentQuestionIndex by remember { mutableIntStateOf(0) }
+    var score2 by remember { mutableIntStateOf(0) }
     var isQuizFinished by remember { mutableStateOf(false) }
 
     if (isQuizFinished) {
@@ -54,9 +68,9 @@ fun MatchThePairQuizScreen(navController: NavHostController) {
         MatchThePairQuestionScreen(
             question = currentQuestion,
             currentQuestionNumber = currentQuestionIndex + 1,
-            totalQuestions = questions.size ,
+            totalQuestions = questions.size,
             onAnswerCorrect = {
-                score2 += 1// Increase score when the answer is correct
+                score2++ // Increase score when the answer is correct
             },
             onNextQuestion = {
                 if (currentQuestionIndex < questions.size - 1) {
@@ -73,7 +87,6 @@ fun MatchThePairQuizScreen(navController: NavHostController) {
         )
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
