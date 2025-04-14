@@ -57,7 +57,7 @@ fun ClassPresentationScreen(navController: NavHostController) {
 
     val audios = listOf(
         R.raw.c1, R.raw.c2, R.raw.c3, R.raw.c4,
-        R.raw.c5, R.raw.c5, R.raw.c7, R.raw.c7,
+        R.raw.c5, R.raw.c6, R.raw.c7, R.raw.c8,
         R.raw.c9, R.raw.c10, R.raw.c11, R.raw.c12,
         R.raw.c13, R.raw.c14, R.raw.c15, R.raw.c16,
         R.raw.c17, R.raw.c18, R.raw.c19
