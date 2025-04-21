@@ -37,10 +37,9 @@ fun SocialSelectionScreen(navController: NavHostController) {
         backgroundImage = R.drawable.social4,
         titleText = "Social Manners",
         onFirstButtonClick = { navController.navigate("socialpresentationscreen") },
-        onSecondButtonClick = { navController.navigate("QuizSelectionScreen") }
+        onSecondButtonClick = { navController.navigate("socialquizselection") }
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,6 +128,98 @@ fun socialSelectionScreen(
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
                     Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                }
+            }
+        }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun socialSelectionScreen2(
+    navController: NavHostController,
+    backgroundImage: Int,
+    titleText: String,
+    onFirstButtonClick: () -> Unit,
+    onSecondButtonClick: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "NeuroNest",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.White
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF52360C),
+                    titleContentColor = Color.Black
+
+                )
+            )
+        }
+    ) { innerPadding ->
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Image(
+                painter = painterResource(id = backgroundImage),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
+            Text(
+                text = titleText,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 65.sp,
+                    fontWeight = FontWeight.Bold
+                    ,lineHeight = 65.sp
+                ),
+                color = Color(0xFF52360C),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 80.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+
+//                Divider(
+//                    color = Color(0xFF3F51B5),
+//                    thickness = 2.dp,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(vertical = 16.dp)
+//                )
+
+                Spacer(modifier = Modifier.height(50.dp))
+                Button(
+                    onClick = onFirstButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
+                ) {
+                    Text(text = "Selection", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                }
+                Button(
+                    onClick = onSecondButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
+                ) {
+                    Text(text = "Yes/No", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }

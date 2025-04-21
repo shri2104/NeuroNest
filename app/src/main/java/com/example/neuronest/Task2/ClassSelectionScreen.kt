@@ -125,3 +125,105 @@ fun classSelectionScreen(
         }
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun classSelectionScreen2(
+    navController: NavHostController,
+    backgroundImage: Int,
+    titleText: String,
+    firstButtonText: String,
+    secondButtonText: String,
+    thirdButtonText: String,
+    onFirstButtonClick: () -> Unit,
+    onSecondButtonClick: () -> Unit,
+    onThirdButtonClick: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "NeuroNest",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.White
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF52360C),
+                    titleContentColor = Color.White
+                )
+            )
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            // Background Image
+            Image(
+                painter = painterResource(id = backgroundImage),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            // Title Text
+            Text(
+                text = titleText,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontSize = 50.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 55.sp
+                ),
+                color = Color(0xFF52360C),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 24.dp, start = 16.dp, end = 16.dp)
+            )
+
+            // Buttons
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    onClick = onFirstButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                ) {
+                    Text(text = firstButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Button(
+                    onClick = onSecondButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                ) {
+                    Text(text = secondButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                }
+
+                Button(
+                    onClick = onThirdButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                ) {
+                    Text(text = thirdButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                }
+            }
+        }
+    }
+}

@@ -35,18 +35,22 @@ import androidx.navigation.NavHostController
 import com.example.neuronest.GoodandBadtouch.DragAndDropQuestionScreen
 import com.example.neuronest.R
 import com.example.neuronest.Task2.classSelectionScreen
+import com.example.neuronest.Task2.classSelectionScreen2
 
 @Composable
 fun classroomquizselection(navController: NavHostController) {
-    classSelectionScreen(
+    classSelectionScreen2(
         navController = navController,
         backgroundImage = R.drawable.resized_girl,
         titleText = "Classroom Manners",
         firstButtonText = "Drag & Drop",
-        secondButtonText = "Match",
-        onFirstButtonClick = { navController.navigate("classroomquiz") },
-        onSecondButtonClick = { navController.navigate("classroomquizselection") }
+        secondButtonText = "Matching",
+        thirdButtonText = "YES/NO",
+        onFirstButtonClick = { navController.navigate("classroomquiz")},
+        onSecondButtonClick = { navController.navigate("matchforclassroom") },
+        onThirdButtonClick = { navController.navigate("ynforclass") }
     )
+
 }
 
 @Composable

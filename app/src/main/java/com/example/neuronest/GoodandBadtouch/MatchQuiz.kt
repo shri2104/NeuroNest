@@ -27,142 +27,159 @@ fun MatchThePairQuestionScreen(
     onNextQuestion: () -> Unit,
     onPreviousQuestion: () -> Unit
 ) {
-    var selectedLeftId by remember { mutableStateOf<Int?>(null) }
-    var matchedPairs by remember { mutableStateOf<Map<Int, Int>>(emptyMap()) }
-    var incorrectPair by remember { mutableStateOf<Pair<Int, Int>?>(null) }
+    key(question) {
+        var selectedLeftId by remember { mutableStateOf<Int?>(null) }
+        var matchedPairs by remember { mutableStateOf<Map<Int, Int>>(emptyMap()) }
+        var incorrectPair by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
-    val shuffledRightPairs = remember { question.pairs.shuffled() }
-    val context = LocalContext.current
+        val shuffledRightPairs = remember(question) { question.pairs.shuffled() }
+        val context = LocalContext.current
 
-    fun playSound(resId: Int) {
-        val mediaPlayer = MediaPlayer.create(context, resId)
-        mediaPlayer?.apply {
-            start()
-            setOnCompletionListener { release() }
+        fun playSound(resId: Int) {
+            val mediaPlayer = MediaPlayer.create(context, resId)
+            mediaPlayer?.apply {
+                start()
+                setOnCompletionListener { release() }
+            }
         }
-    }
 
-    LaunchedEffect(incorrectPair) {
-        incorrectPair?.let {
-            delay(1000)
-            incorrectPair = null
+        LaunchedEffect(incorrectPair) {
+            incorrectPair?.let {
+                delay(1000)
+                incorrectPair = null
+            }
         }
-    }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Match the Pair") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF3F51B5),
-                    titleContentColor = Color.White
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Match the Pair") },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xFF3F51B5),
+                        titleContentColor = Color.White
+                    )
                 )
-            )
-        }
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+            }
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(16.dp)
             ) {
-                Text(
-                    text = "Question $currentQuestionNumber of $totalQuestions",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Question $currentQuestionNumber of $totalQuestions",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.Black,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
 
-                Column {
-                    question.pairs.forEach { pair ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            val isMatched = matchedPairs.containsKey(pair.id)
-
-                            Box(
+                    Column {
+                        question.pairs.forEach { pair ->
+                            Row(
                                 modifier = Modifier
-                                    .weight(1f)
-                                    .background(
-                                        if (selectedLeftId == pair.id) Color.Yellow
-                                        else if (isMatched) Color.Green
-                                        else Color.LightGray,
-                                        RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(16.dp)
-                                    .clickable(enabled = !isMatched) {
-                                        selectedLeftId = pair.id
-                                        if (pair.leftItem == "GoodTouch") {
-                                            playSound(R.raw.good_touch)
-                                        } else if (pair.leftItem == "BadTouch") {
-                                            playSound(R.raw.bad_touch)
-                                        }
-                                    },
-                                contentAlignment = Alignment.Center
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(text = pair.leftItem)
-                            }
+                                val isMatched = matchedPairs.containsKey(pair.id)
 
-                            Spacer(modifier = Modifier.width(16.dp))
-
-                            val shuffledPair = shuffledRightPairs.first { it.id == question.correctMatches[pair.id] }
-                            val isRightMatched = matchedPairs.containsValue(shuffledPair.id)
-
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .background(
-                                        if (isRightMatched) Color.Green
-                                        else Color.LightGray,
-                                        RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(16.dp)
-                                    .clickable(enabled = selectedLeftId != null && !isRightMatched) {
-                                        selectedLeftId?.let { leftId ->
-                                            val isCorrect = question.correctMatches[leftId] == shuffledPair.id
-                                            if (isCorrect) {
-                                                matchedPairs = matchedPairs + (leftId to shuffledPair.id)
-                                                onAnswerCorrect()
-                                            } else {
-                                                incorrectPair = Pair(leftId, shuffledPair.id)
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .background(
+                                            if (selectedLeftId == pair.id) Color.Yellow
+                                            else if (isMatched) Color.Green
+                                            else Color.LightGray,
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                        .padding(16.dp)
+                                        .clickable(enabled = !isMatched) {
+                                            selectedLeftId = pair.id
+                                            if (pair.leftItem == "GoodTouch") {
+                                                playSound(R.raw.good_touch)
+                                            } else if (pair.leftItem == "BadTouch") {
+                                                playSound(R.raw.bad_touch)
                                             }
-                                        }
-                                        selectedLeftId = null
-                                    },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Image(
-                                    painter = painterResource(id = shuffledPair.rightItem),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(100.dp)
-                                )
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(text = pair.leftItem)
+                                }
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                val shuffledPair =
+                                    shuffledRightPairs.first { it.id == question.correctMatches[pair.id] }
+                                val isRightMatched = matchedPairs.containsValue(shuffledPair.id)
+
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .background(
+                                            if (isRightMatched) Color.Green
+                                            else Color.LightGray,
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                        .padding(16.dp)
+                                        .clickable(enabled = selectedLeftId != null && !isRightMatched) {
+                                            selectedLeftId?.let { leftId ->
+                                                val isCorrect =
+                                                    question.correctMatches[leftId] == shuffledPair.id
+                                                if (isCorrect) {
+                                                    matchedPairs =
+                                                        matchedPairs + (leftId to shuffledPair.id)
+                                                    onAnswerCorrect()
+                                                } else {
+                                                    incorrectPair = Pair(leftId, shuffledPair.id)
+                                                }
+                                            }
+                                            selectedLeftId = null
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = shuffledPair.rightItem),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(100.dp)
+                                    )
+                                }
                             }
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Button(onClick = onPreviousQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
-                        Text("Previous")
-                    }
-                    Button(onClick = onNextQuestion, colors = ButtonDefaults.buttonColors(Color(0xFF2196F3)), enabled = matchedPairs.size == question.pairs.size) {
-                        Text("Next")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = onPreviousQuestion,
+                            colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
+                        ) {
+                            Text("Previous")
+                        }
+                        Button(
+                            onClick = onNextQuestion,
+                            colors = ButtonDefaults.buttonColors(Color(0xFF2196F3)),
+                            enabled = matchedPairs.size == question.pairs.size
+                        ) {
+                            Text("Next")
+                        }
                     }
                 }
             }
         }
     }
 }
+
+
+
+
+

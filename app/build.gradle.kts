@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
 }
+
 android {
     namespace = "com.example.neuronest"
     compileSdk = 35

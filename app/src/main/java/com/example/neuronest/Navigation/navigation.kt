@@ -3,7 +3,6 @@ package com.example.neuronest.Navigation
 import LoginScreen
 import SignUpScreen
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,12 +13,17 @@ import com.example.neuronest.GoodandBadtouch.QuizScreen
 import com.example.neuronest.GoodandBadtouch.QuizSelectionScreen
 import com.example.neuronest.GoodandBadtouch.SplashScreen
 import com.example.neuronest.GoodandBadtouch.Task1SelectionScreen
+import com.example.neuronest.Task2.Task2Quiz.MatchGameScreen
 import com.example.neuronest.Task2.ClassPresentationScreen
 import com.example.neuronest.Task2.ClassSelectionScreen
+import com.example.neuronest.Task2.ImageSelectionScreen
 import com.example.neuronest.Task2.SocialPresentationScreen
 import com.example.neuronest.Task2.SocialSelectionScreen
 import com.example.neuronest.Task2.Task2Quiz.Classroomquiz1
 import com.example.neuronest.Task2.Task2Quiz.classroomquizselection
+import com.example.neuronest.Task2.Task2Quiz.sampleQuestions
+import com.example.neuronest.Task2.Task2Quiz.sampleQuestions2
+import com.example.neuronest.Task2.Task2Quiz.socialquiz
 import com.example.neuronest.Task2.Task2SelectionScreen
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
@@ -69,6 +73,21 @@ fun Navigation(apiService: ApiService) {
         composable("Splashscreen"){
             SplashScreen(navController=navController)
 
+        }
+        composable("matchforclassroom"){
+            MatchGameScreen(navController=navController)
+        }
+        composable("socialquizselection"){
+            socialquiz(navController=navController)
+        }
+        composable("ynforclass"){
+            com.example.neuronest.Task2.Task2Quiz.QuizScreen(questions = sampleQuestions)
+        }
+        composable("ynforsocial"){
+            com.example.neuronest.Task2.Task2Quiz.QuizScreen2(questions = sampleQuestions2)
+        }
+        composable("selctionforsocial"){
+            ImageSelectionScreen(navController)
         }
         composable("presentationscreen"){
             PresentationScreen(navController = navController)

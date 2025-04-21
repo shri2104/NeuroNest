@@ -38,24 +38,32 @@ fun MatchThePairQuizScreen(navController: NavHostController) {
                 PairItem(1, "GoodTouch", R.drawable.m1g1),
                 PairItem(2, "BadTouch", R.drawable.m1b1),
             ),
-            correctMatches = mapOf(1 to 2, 2 to 1)
+            correctMatches = mapOf(
+                2 to 2,
+                1 to 1
+            )
         ),
         Question(
             pairs = listOf(
                 PairItem(1, "GoodTouch", R.drawable.m1g2),
                 PairItem(2, "BadTouch", R.drawable.m1b2),
-            ),
-            correctMatches = mapOf(1 to 2, 2 to 1)
+            ).shuffled(),
+            correctMatches = mapOf(
+                1 to 1,
+                2 to 2
+            ).toList().shuffled().associate { it.first to it.second }
         ),
         Question(
             pairs = listOf(
-                PairItem(1, "GoodTouch", R.drawable.m1g3),
-                PairItem(2, "BadTouch", R.drawable.m1b3),
-            ),
-            correctMatches = mapOf(1 to 2, 2 to 1)
-        ),
+                PairItem(1, "GoodTouch", R.drawable.m1b3),
+                PairItem(2, "BadTouch", R.drawable.m1g3),
+            ).shuffled(), // Shuffle the pair order
+            correctMatches = mapOf(
+                1 to 2, // GoodTouch -> BadTouch
+                2 to 1  // BadTouch -> GoodTouch
+            ).toList().shuffled().associate { it.first to it.second } // Shuffle the correct matches
+        )
     )
-
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var score2 by remember { mutableIntStateOf(0) }
     var isQuizFinished by remember { mutableStateOf(false) }
