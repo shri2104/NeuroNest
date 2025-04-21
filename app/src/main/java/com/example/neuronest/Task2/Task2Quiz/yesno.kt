@@ -30,9 +30,7 @@ fun QuizScreen(
     var currentIndex by remember { mutableStateOf(0) }
     var showSnackbar by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-
     val question = questions[currentIndex]
-
     LaunchedEffect(showSnackbar) {
         if (showSnackbar) {
             snackbarHostState.showSnackbar("Incorrect answer")
@@ -40,7 +38,6 @@ fun QuizScreen(
             showSnackbar = false
         }
     }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -116,13 +113,11 @@ fun QuizScreen(
         }
     }
 }
-
 // Sample model
 data class Question(
     val imageRes: Int,
     val answer: Boolean
 )
-
 val sampleQuestions = listOf(
     Question(R.drawable.yn1, false),
     Question(R.drawable.yn2, false),
@@ -166,7 +161,6 @@ fun QuizScreen2(
             showSnackbar = false
         }
     }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -242,7 +236,6 @@ fun QuizScreen2(
         }
     }
 }
-
 val sampleQuestions2 = listOf(
     Question(R.drawable.yns1, true),
     Question(R.drawable.yns2, false),
