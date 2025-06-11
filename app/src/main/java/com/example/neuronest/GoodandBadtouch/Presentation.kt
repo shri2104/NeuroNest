@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -24,6 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,9 +45,9 @@ import com.example.neuronest.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresentationScreen(navController: NavHostController) {
+    val context = LocalContext.current
     val images = listOf(
         R.drawable.pre1,
-        R.drawable.pre2,
         R.drawable.pre3,
         R.drawable.pre4,
         R.drawable.pre5,
@@ -64,7 +67,31 @@ fun PresentationScreen(navController: NavHostController) {
         R.drawable.pre19,
         R.drawable.pre20
     )
+    val audios = listOf(
+        R.raw.gb1, R.raw.gb3 ,R.raw.gb4,
+        R.raw.gb5, R.raw.gb6, R.raw.gb7, R.raw.gb8,
+        R.raw.gb9, R.raw.gb10, R.raw.gb11, R.raw.gb12,
+        R.raw.gb13, R.raw.gb14, R.raw.gb15, R.raw.gb16,
+        R.raw.gb17, R.raw.gb18, R.raw.gb19 , R.raw.gb20
+    )
+
     var currentIndex by remember { mutableStateOf(0) }
+    var mediaPlayer : MediaPlayer? by remember {mutableStateOf(null)}
+
+    // Handle audio playback when index changes
+    LaunchedEffect(currentIndex) {
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, audios[currentIndex])
+        mediaPlayer?.start()
+    }
+
+    // Clean up the media player when composable leaves the composition
+    DisposableEffect(Unit) {
+        onDispose {
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
+    }
 
     Scaffold(
         topBar = {

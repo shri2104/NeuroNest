@@ -78,7 +78,7 @@ fun MatchThePairQuizScreen(navController: NavHostController) {
             currentQuestionNumber = currentQuestionIndex + 1,
             totalQuestions = questions.size,
             onAnswerCorrect = {
-                score2++ // Increase score when the answer is correct
+                score2 += 1 // Increase score when the answer is correct
             },
             onNextQuestion = {
                 if (currentQuestionIndex < questions.size - 1) {

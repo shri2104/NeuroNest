@@ -96,16 +96,11 @@ fun MatchThePairQuestionScreen(
                                             if (selectedLeftId == pair.id) Color.Yellow
                                             else if (isMatched) Color.Green
                                             else Color.LightGray,
-                                            RoundedCornerShape(8.dp)
+                                            RoundedCornerShape(16.dp)
                                         )
                                         .padding(16.dp)
                                         .clickable(enabled = !isMatched) {
                                             selectedLeftId = pair.id
-                                            if (pair.leftItem == "GoodTouch") {
-                                                playSound(R.raw.good_touch)
-                                            } else if (pair.leftItem == "BadTouch") {
-                                                playSound(R.raw.bad_touch)
-                                            }
                                         },
                                     contentAlignment = Alignment.Center
                                 ) {
@@ -134,9 +129,11 @@ fun MatchThePairQuestionScreen(
                                                 if (isCorrect) {
                                                     matchedPairs =
                                                         matchedPairs + (leftId to shuffledPair.id)
+                                                    playSound(R.raw.correct)
                                                     onAnswerCorrect()
                                                 } else {
                                                     incorrectPair = Pair(leftId, shuffledPair.id)
+                                                    playSound(R.raw.wrng)
                                                 }
                                             }
                                             selectedLeftId = null
@@ -146,7 +143,7 @@ fun MatchThePairQuestionScreen(
                                     Image(
                                         painter = painterResource(id = shuffledPair.rightItem),
                                         contentDescription = null,
-                                        modifier = Modifier.size(100.dp)
+                                        modifier = Modifier.size(200.dp)
                                     )
                                 }
                             }
@@ -178,8 +175,3 @@ fun MatchThePairQuestionScreen(
         }
     }
 }
-
-
-
-
-
