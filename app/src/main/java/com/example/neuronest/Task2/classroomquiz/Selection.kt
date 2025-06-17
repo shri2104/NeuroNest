@@ -6,6 +6,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,9 +66,8 @@ fun classroomselection(navController: NavHostController) {
                     navigationIconContentColor = Color.White
                 )
             )
-        },
-
-        ) { innerPadding ->
+        }
+    ) { innerPadding ->
 
         Column(
             modifier = Modifier
@@ -74,69 +77,63 @@ fun classroomselection(navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = "Select good manners from below:",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 12.dp)
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(vertical = 16.dp)
             )
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
+                    .fillMaxWidth()
             ) {
-                for (row in 0 until 2) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                items(currentImages.size) { index ->
+                    val image = currentImages[index]
+                    val globalIndex = currentPage * imagesPerPage + index
+
+                    val backgroundColor = when {
+                        image.isClicked && image.isCorrect -> Color(0xFF64B5F6)
+                        image.isClicked && !image.isCorrect -> Color(0xFFEF5350)
+                        else -> MaterialTheme.colorScheme.surface
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .background(backgroundColor, RoundedCornerShape(16.dp))
+                            .clickable(enabled = !image.isClicked) {
+                                images = images.toMutableList().also {
+                                    it[globalIndex] = it[globalIndex].copy(isClicked = true)
+                                }
+                                val msg = if (image.isCorrect) "Correct Answer" else "Incorrect Answer"
+                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                            },
+                        contentAlignment = Alignment.Center
                     ) {
-                        for (col in 0 until 2) {
-                            val index = row * 2 + col
-                            if (index < currentImages.size) {
-                                val image = currentImages[index]
-                                val globalIndex = currentPage * imagesPerPage + index
-
-                                val backgroundColor = when {
-                                    image.isClicked && image.isCorrect -> Color(0xFF64B5F6)
-                                    image.isClicked && !image.isCorrect -> Color(0xFFEF5350)
-                                    else -> MaterialTheme.colorScheme.surface
-                                }
-
-                                Box(
-                                    modifier = Modifier
-                                        .size(420.dp)
-                                        .background(backgroundColor, RoundedCornerShape(16.dp))
-                                        .clickable(enabled = !image.isClicked) {
-                                            images = images.toMutableList().also {
-                                                it[globalIndex] = it[globalIndex].copy(isClicked = true)
-                                            }
-                                            val msg = if (image.isCorrect) "Correct Answer" else "Incorrect Answer"
-                                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = image.resId),
-                                        contentDescription = "Option ${globalIndex + 1}",
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(12.dp)
-                                    )
-                                }
-                            }
-                        }
+                        Image(
+                            painter = painterResource(id = image.resId),
+                            contentDescription = "Option ${globalIndex + 1}",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(12.dp)
+                        )
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 20.dp),
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
                     onClick = { if (currentPage > 0) currentPage-- },
@@ -147,6 +144,7 @@ fun classroomselection(navController: NavHostController) {
                 ) {
                     Text("Previous")
                 }
+                Spacer(modifier = Modifier.width(12.dp))
                 Button(
                     onClick = { if (currentPage < totalPages - 1) currentPage++ },
                     enabled = currentPage < totalPages - 1,
@@ -158,9 +156,10 @@ fun classroomselection(navController: NavHostController) {
                 }
             }
         }
-
     }
 }
+
+
 data class SelectableImage(
     val resId: Int,
     val isCorrect: Boolean,
