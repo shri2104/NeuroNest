@@ -32,7 +32,7 @@ import com.example.neuronest.retrofit.ApiService
 @Composable
 fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
-    NavHost(navController=navController,startDestination = "Splashscreen"){
+    NavHost(navController=navController,startDestination = "DashBoard"){
 
         composable("LoginScreen") {
             LoginScreen(

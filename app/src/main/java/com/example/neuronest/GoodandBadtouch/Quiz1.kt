@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.geometry.Offset
-
+import org.w3c.dom.Text
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DragAndDropQuestionScreen(
@@ -34,31 +34,40 @@ fun DragAndDropQuestionScreen(
     onNextQuestion: () -> Unit,
     onPreviousQuestion: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scrollState = rememberScrollState()
+    val offsets = remember { mutableStateListOf(*Array(optionImages.size) { Offset.Zero }) }
+
     var draggedItemIndex by remember { mutableStateOf<Int?>(null) }
     var isAnswerCorrect by remember { mutableStateOf(false) }
-    val offsets = remember { mutableStateListOf(*Array(optionImages.size) { Offset(0f, 0f)})}
-    val scrollState = rememberScrollState()
     var droppedImageIndex by remember { mutableStateOf<Int?>(null) }
-    val context = LocalContext.current
+
     LaunchedEffect(currentQuestionNumber) {
-        offsets.forEachIndexed { index, _ ->
-            offsets[index] = Offset(0f, 0f)
+        // Reset state for new question
+        for (i in offsets.indices) {
+            offsets[i] = Offset.Zero
         }
         isAnswerCorrect = false
         droppedImageIndex = null
+        draggedItemIndex = null
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(text = "Drag And Drop")
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF3F51B5), titleContentColor = Color.White)
+                title = { Text("Drag And Drop") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF3F51B5),
+                    titleContentColor = Color.White
+                )
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -69,85 +78,82 @@ fun DragAndDropQuestionScreen(
                 Text(
                     text = "Question $currentQuestionNumber of $totalQuestions",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Black,
-                    modifier = Modifier.padding(bottom = 2.dp)
+                    color = Color.Black
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
                 Image(
                     painter = painterResource(id = questionImage),
                     contentDescription = "Question Image",
-                    modifier = Modifier
-                        .size(200.dp)
-                        .padding(bottom = 16.dp)
+                    modifier = Modifier.size(200.dp)
                 )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    optionImages.chunked(2).forEach { row ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            row.forEachIndexed { indexInRow, imageResId ->
-                                val index = optionImages.indexOf(imageResId)
-                                Box(
-                                    modifier = Modifier
-                                        .size(130.dp)
-                                        .offset {
-                                            IntOffset(
-                                                offsets[index].x.toInt(),
-                                                (offsets[index].y - scrollState.value).toInt()
-                                            )
-                                        }
-                                        .clip(RoundedCornerShape(8.dp))
-                                        .background(Color.LightGray)
-                                        .pointerInput(Unit) {
-                                            detectDragGestures(
-                                                onDragStart = {
-                                                    draggedItemIndex = index
-                                                },
-                                                onDrag = { change, dragAmount ->
-                                                    change.consume()
-                                                    offsets[index] = offsets[index] + Offset(dragAmount.x, dragAmount.y)
-                                                    if (isAnswerCorrect && offsets[correctImageIndex].y <= dropThresholdY) {
-                                                        isAnswerCorrect = false
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                optionImages.chunked(2).forEach { row ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        row.forEach { imageResId ->
+                            val index = optionImages.indexOf(imageResId)
+                            Box(
+                                modifier = Modifier
+                                    .size(130.dp)
+                                    .offset {
+                                        IntOffset(
+                                            offsets[index].x.toInt(),
+                                            (offsets[index].y - scrollState.value).toInt()
+                                        )
+                                    }
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.LightGray)
+                                    // Only allow drag if answer is not yet correct
+                                    .then(
+                                        if (!isAnswerCorrect)
+                                            Modifier.pointerInput(Unit) {
+                                                detectDragGestures(
+                                                    onDragStart = {
+                                                        draggedItemIndex = index
+                                                    },
+                                                    onDrag = { change, dragAmount ->
+                                                        change.consume()
+                                                        offsets[index] += Offset(dragAmount.x, dragAmount.y)
+                                                    },
+                                                    onDragEnd = {
+                                                        val dropY = offsets[index].y + scrollState.value
+                                                        if (!isAnswerCorrect && index == correctImageIndex && dropY > dropThresholdY) {
+                                                            isAnswerCorrect = true
+                                                            droppedImageIndex = index
+                                                            Toast.makeText(context, "Correct Answer!", Toast.LENGTH_SHORT).show()
+                                                            onAnswerCorrect()
+                                                        } else {
+                                                            offsets[index] = Offset.Zero
+                                                        }
+                                                        draggedItemIndex = null
+                                                    },
+                                                    onDragCancel = {
+                                                        offsets[index] = Offset.Zero
                                                     }
-                                                },
-                                                onDragEnd = {
-                                                    if (draggedItemIndex == correctImageIndex &&
-                                                        index == correctImageIndex && // Ensure it's the actual correct index
-                                                        offsets[index].y > dropThresholdY + scrollState.value
-                                                    ) {
-                                                        isAnswerCorrect = true
-                                                        Toast.makeText(context, "Correct Answer!", Toast.LENGTH_SHORT).show()
-                                                        droppedImageIndex = index
-                                                        onAnswerCorrect()
-                                                    } else {
-                                                        offsets[index] = Offset(0f, 0f)
-                                                    }
-                                                    draggedItemIndex = null
-                                                }
-                                                ,
-                                                onDragCancel = {
-                                                    offsets[index] = Offset(0f, 0f)
-                                                }
-                                            )
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = imageResId),
-                                        contentDescription = "Option $index",
-                                        modifier = Modifier.size(120.dp)
-                                    )
-                                }
+                                                )
+                                            }
+                                        else Modifier
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = imageResId),
+                                    contentDescription = "Option $index",
+                                    modifier = Modifier.size(120.dp)
+                                )
                             }
                         }
                     }
                 }
+
                 Divider(
                     color = Color.Gray,
                     thickness = 2.dp,
@@ -155,20 +161,20 @@ fun DragAndDropQuestionScreen(
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
                 )
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(if (isAnswerCorrect) Color.Green else Color.LightGray),
+                        .background(if (isAnswerCorrect) Color(0xFF81C784) else Color(0xFFD6D6D6)),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (droppedImageIndex != null && isAnswerCorrect) {
+                    if (isAnswerCorrect && droppedImageIndex != null) {
                         Image(
                             painter = painterResource(id = optionImages[droppedImageIndex!!]),
                             contentDescription = "Dropped Image",
                             modifier = Modifier.size(120.dp)
-
                         )
                     } else {
                         Text(
@@ -178,7 +184,8 @@ fun DragAndDropQuestionScreen(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -187,7 +194,7 @@ fun DragAndDropQuestionScreen(
                     Button(
                         onClick = onPreviousQuestion,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                     ) {
                         Text("Previous")
                     }
@@ -195,7 +202,7 @@ fun DragAndDropQuestionScreen(
                     Button(
                         onClick = onNextQuestion,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                     ) {
                         Text("Next")
                     }

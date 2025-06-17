@@ -98,7 +98,7 @@ fun PresentationScreen(navController: NavHostController) {
             TopAppBar(
                 title = { Text(text = "Good & Bad Touch") },
                 navigationIcon = {
-                    IconButton(onClick =  { navController.navigate("SelectionScreen") }) {
+                    IconButton(onClick =  { navController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
