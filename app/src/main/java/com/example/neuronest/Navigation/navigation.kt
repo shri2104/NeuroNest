@@ -13,18 +13,20 @@ import com.example.neuronest.GoodandBadtouch.QuizScreen
 import com.example.neuronest.GoodandBadtouch.QuizSelectionScreen
 import com.example.neuronest.GoodandBadtouch.SplashScreen
 import com.example.neuronest.GoodandBadtouch.Task1SelectionScreen
-import com.example.neuronest.Task2.Task2Quiz.MatchGameScreen
-import com.example.neuronest.Task2.ClassPresentationScreen
-import com.example.neuronest.Task2.ClassSelectionScreen
-import com.example.neuronest.Task2.ImageSelectionScreen
-import com.example.neuronest.Task2.SocialPresentationScreen
-import com.example.neuronest.Task2.SocialSelectionScreen
-import com.example.neuronest.Task2.Task2Quiz.Classroomquiz1
-import com.example.neuronest.Task2.Task2Quiz.classroomquizselection
-import com.example.neuronest.Task2.Task2Quiz.sampleQuestions
-import com.example.neuronest.Task2.Task2Quiz.sampleQuestions2
-import com.example.neuronest.Task2.Task2Quiz.socialquiz
-import com.example.neuronest.Task2.Task2SelectionScreen
+import com.example.neuronest.Task2.Presentation.ClassPresentationScreen
+import com.example.neuronest.Task2.selection.ClassSelectionScreen
+import com.example.neuronest.Task2.Presentation.SocialPresentationScreen
+import com.example.neuronest.Task2.selection.SocialSelectionScreen
+import com.example.neuronest.Task2.selection.classroomquiz
+
+import com.example.neuronest.Task2.selection.socialquiz
+import com.example.neuronest.Task2.selection.Task2SelectionScreen
+import com.example.neuronest.Task2.classroomquiz.ClassroomDrapaandDrop
+import com.example.neuronest.Task2.classroomquiz.YesNoClass
+import com.example.neuronest.Task2.classroomquiz.classroomselection
+import com.example.neuronest.Task2.socialquiz.SocialDrapaandDrop
+import com.example.neuronest.Task2.socialquiz.SocialSelectionQuiz
+import com.example.neuronest.Task2.socialquiz.YesNosocial
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
 
@@ -74,20 +76,12 @@ fun Navigation(apiService: ApiService) {
             SplashScreen(navController=navController)
 
         }
-        composable("matchforclassroom"){
-            MatchGameScreen(navController=navController)
-        }
+
         composable("socialquizselection"){
             socialquiz(navController=navController)
         }
-        composable("ynforclass"){
-            com.example.neuronest.Task2.Task2Quiz.QuizScreen(questions = sampleQuestions)
-        }
-        composable("ynforsocial"){
-            com.example.neuronest.Task2.Task2Quiz.QuizScreen2(questions = sampleQuestions2)
-        }
-        composable("selctionforsocial"){
-            ImageSelectionScreen(navController)
+        composable("classroomquizselection") {
+            classroomquiz(navController = navController)
         }
         composable("presentationscreen"){
             PresentationScreen(navController = navController)
@@ -98,12 +92,23 @@ fun Navigation(apiService: ApiService) {
         composable("socialpresentationscreen"){
             SocialPresentationScreen(navController = navController)
         }
-        composable("classroomquizselection"){
-            classroomquizselection(navController = navController)
+        composable("socialdraganddrop") {
+            SocialDrapaandDrop(navController = navController)
         }
-        composable("classroomquiz"){
-            Classroomquiz1(navController=navController)
+        composable("SocialSelectionQuiz") {
+            SocialSelectionQuiz(navController = navController)
         }
-
+        composable("YesNosocial") {
+            YesNosocial(navController = navController)
+        }
+        composable("ClassroomDrapaandDrop") {
+            ClassroomDrapaandDrop(navController = navController)
+        }
+        composable("classroomselection") {
+            classroomselection(navController = navController)
+        }
+        composable("YesNoClass") {
+            YesNoClass(navController = navController)
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.neuronest.Task2
+package com.example.neuronest.Task2.Presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -40,61 +39,56 @@ import com.example.neuronest.R
 import android.media.MediaPlayer
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SocialPresentationScreen(navController: NavHostController) {
+fun ClassPresentationScreen(navController: NavHostController) {
     val context = LocalContext.current
+
     val images = listOf(
-        R.drawable.s1,
-        R.drawable.s2,
-        R.drawable.s3,
-        R.drawable.s4,
-        R.drawable.s5,
-        R.drawable.s6,
-        R.drawable.s7,
-        R.drawable.s8,
-        R.drawable.s9,
-        R.drawable.s10,
-        R.drawable.s11,
-        R.drawable.s12,
-        R.drawable.s13,
-        R.drawable.s14,
-        R.drawable.s15,
-        R.drawable.s16,
-        R.drawable.s17,
-        R.drawable.s18,
-        R.drawable.s19
+        R.drawable.c1, R.drawable.c2, R.drawable.c3, R.drawable.c4,
+        R.drawable.c5, R.drawable.c6, R.drawable.c7, R.drawable.c8,
+        R.drawable.c9, R.drawable.c10, R.drawable.c11, R.drawable.c12,
+        R.drawable.c13, R.drawable.c14, R.drawable.c15, R.drawable.c16,
+        R.drawable.c17, R.drawable.c18, R.drawable.c19
     )
 
     val audios = listOf(
-        R.raw.s1, R.raw.s2, R.raw.s3, R.raw.s4, R.raw.s5, R.raw.s6,
-        R.raw.s7, R.raw.s8, R.raw.s9, R.raw.s10, R.raw.s11, R.raw.s12,
-        R.raw.s13, R.raw.s14, R.raw.s15, R.raw.s16, R.raw.s17, R.raw.s18, R.raw.s19
+        R.raw.c1, R.raw.c2, R.raw.c3, R.raw.c4,
+        R.raw.c5, R.raw.c6, R.raw.c7, R.raw.c8,
+        R.raw.c9, R.raw.c10, R.raw.c11, R.raw.c12,
+        R.raw.c13, R.raw.c14, R.raw.c15, R.raw.c16,
+        R.raw.c17, R.raw.c18, R.raw.c19
     )
 
     var currentIndex by remember { mutableStateOf(0) }
     var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
 
-    DisposableEffect(currentIndex) {
+    // Handle audio playback when index changes
+    LaunchedEffect(currentIndex) {
         mediaPlayer?.release()
         mediaPlayer = MediaPlayer.create(context, audios[currentIndex])
         mediaPlayer?.start()
+    }
 
+    // Clean up the media player when composable leaves the composition
+    DisposableEffect(Unit) {
         onDispose {
             mediaPlayer?.release()
+            mediaPlayer = null
         }
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "NeuroNest" , fontSize = 35.sp) },
+                title = { Text(text = "NeuroNest", fontSize = 35.sp) },
                 navigationIcon = {
-                    IconButton(onClick =  { navController.navigate("Task2SelectionScreen") }) {
+                    IconButton(onClick = { navController.navigate("ClassSelectionScreen") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -114,7 +108,6 @@ fun SocialPresentationScreen(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Text("${currentIndex + 1} / ${images.size}", color = Color.White , fontSize = 25.sp)
 
                 }
@@ -125,11 +118,11 @@ fun SocialPresentationScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp), // Add horizontal padding for better alignment
-            verticalArrangement = Arrangement.Center, // Center content vertically
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp)) // Add top spacing
+            Spacer(modifier = Modifier.height(16.dp))
 
             Image(
                 painter = painterResource(id = images[currentIndex]),
@@ -137,12 +130,12 @@ fun SocialPresentationScreen(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(900.dp)
-                    .padding(16.dp) // Add padding around the image
+                    .padding(16.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .border(BorderStroke(2.dp, MaterialTheme.colorScheme.primary))
             )
 
-            Spacer(modifier = Modifier.height(32.dp)) // Increase spacing between image and buttons
+            Spacer(modifier = Modifier.height(32.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -152,13 +145,13 @@ fun SocialPresentationScreen(navController: NavHostController) {
                     onClick = { if (currentIndex > 0) currentIndex-- },
                     enabled = currentIndex > 0
                 ) {
-                    Text("Previous" , fontSize =40.sp)
+                    Text("Previous", fontSize = 40.sp)
                 }
                 Button(
                     onClick = { if (currentIndex < images.size - 1) currentIndex++ },
                     enabled = currentIndex < images.size - 1
                 ) {
-                    Text("Next" ,fontSize =40.sp)
+                    Text("Next" , fontSize = 40.sp)
                 }
             }
 
@@ -166,5 +159,3 @@ fun SocialPresentationScreen(navController: NavHostController) {
         }
     }
 }
-
-

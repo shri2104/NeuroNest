@@ -1,5 +1,5 @@
 
-package com.example.neuronest.Task2
+package com.example.neuronest.Task2.selection
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

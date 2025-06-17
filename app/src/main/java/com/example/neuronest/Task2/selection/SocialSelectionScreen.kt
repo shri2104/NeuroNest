@@ -1,4 +1,4 @@
-package com.example.neuronest.Task2
+package com.example.neuronest.Task2.selection
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -152,7 +151,8 @@ fun socialSelectionScreen2(
     backgroundImage: Int,
     titleText: String,
     onFirstButtonClick: () -> Unit,
-    onSecondButtonClick: () -> Unit
+    onSecondButtonClick: () -> Unit,
+    onThirdButtonClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -228,10 +228,19 @@ fun socialSelectionScreen2(
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Selection", fontSize = 40.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Drag & Drop", fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth().size(100.dp)
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
+                ) {
+                    Text(text = "Selection", fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                }
+                Button(
+                    onClick = onThirdButtonClick,
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
