@@ -38,8 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
 import android.media.MediaPlayer
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.sp
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,13 +92,16 @@ fun SocialPresentationScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Social Manners") },
+                title = { Text(text = "NeuroNest" , fontSize = 35.sp) },
                 navigationIcon = {
                     IconButton(onClick =  { navController.navigate("Task2SelectionScreen") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
-            )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF52360C),
+                    titleContentColor = Color.White
+            ))
         },
         bottomBar = {
             BottomAppBar(
@@ -109,19 +114,9 @@ fun SocialPresentationScreen(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Button(
-                        onClick = { if (currentIndex > 0) currentIndex-- },
-                        enabled = currentIndex > 0
-                    ) {
-                        Text("Previous")
-                    }
-                    Text("${currentIndex + 1} / ${images.size}", color = Color.White)
-                    Button(
-                        onClick = { if (currentIndex < images.size - 1) currentIndex++ },
-                        enabled = currentIndex < images.size - 1
-                    ) {
-                        Text("Next")
-                    }
+
+                    Text("${currentIndex + 1} / ${images.size}", color = Color.White , fontSize = 25.sp)
+
                 }
             }
         }
@@ -141,7 +136,7 @@ fun SocialPresentationScreen(navController: NavHostController) {
                 contentDescription = "Presentation Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(500.dp)
+                    .height(900.dp)
                     .padding(16.dp) // Add padding around the image
                     .clip(RoundedCornerShape(12.dp))
                     .border(BorderStroke(2.dp, MaterialTheme.colorScheme.primary))
@@ -157,13 +152,13 @@ fun SocialPresentationScreen(navController: NavHostController) {
                     onClick = { if (currentIndex > 0) currentIndex-- },
                     enabled = currentIndex > 0
                 ) {
-                    Text("Previous")
+                    Text("Previous" , fontSize =40.sp)
                 }
                 Button(
                     onClick = { if (currentIndex < images.size - 1) currentIndex++ },
                     enabled = currentIndex < images.size - 1
                 ) {
-                    Text("Next")
+                    Text("Next" ,fontSize =40.sp)
                 }
             }
 

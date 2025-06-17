@@ -33,7 +33,7 @@ fun DashboardScreen(navController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("NeuroNest", fontWeight = FontWeight.Bold)
+                    Text("NeuroNest", fontWeight = FontWeight.Bold , fontSize = 35.sp)
                 },
                 actions = {
                     IconButton(onClick = { navController.navigate("profile")}) {
@@ -122,7 +122,7 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
 
             Text(
                 "Choose a Task",
-                fontSize = 24.sp,
+                fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
@@ -179,7 +179,7 @@ fun TaskItem(taskName: String, taskImage: Int,onClick: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(taskName, fontWeight = FontWeight.SemiBold, color = Color(0xFF37474F))
+                Text(taskName, fontWeight = FontWeight.SemiBold, color = Color(0xFF37474F),fontSize = 26.sp)
             }
         }
     }

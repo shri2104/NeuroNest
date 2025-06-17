@@ -10,9 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -61,13 +66,19 @@ fun classSelectionScreen(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF52360C),
                     titleContentColor = Color.White
-                )
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("Task2SelectionScreen") }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -82,10 +93,11 @@ fun classSelectionScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+
             Text(
                 text = titleText,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 65.sp,
+                    fontSize = 85.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 65.sp
                 ),
@@ -102,24 +114,24 @@ fun classSelectionScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(150.dp))
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = firstButtonText, fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                    Text(text = firstButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = secondButtonText, fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = secondButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
@@ -145,13 +157,19 @@ fun classSelectionScreen2(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF52360C),
                     titleContentColor = Color.White
-                )
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("ClassSelectionScreen") }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -172,7 +190,7 @@ fun classSelectionScreen2(
             Text(
                 text = titleText,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 50.sp,
+                    fontSize = 85.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 55.sp
                 ),
@@ -180,48 +198,48 @@ fun classSelectionScreen2(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 24.dp, start = 16.dp, end = 16.dp)
+                    .padding(top = 40.dp, start = 16.dp, end = 16.dp)
             )
-
             // Buttons
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 250.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .height(60.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
                 ) {
-                    Text(text = firstButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    Text(text = firstButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
 
                 Button(
                     onClick = onSecondButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .height(60.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
                 ) {
-                    Text(text = secondButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = secondButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
 
                 Button(
                     onClick = onThirdButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .height(60.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
                 ) {
-                    Text(text = thirdButtonText, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = thirdButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }

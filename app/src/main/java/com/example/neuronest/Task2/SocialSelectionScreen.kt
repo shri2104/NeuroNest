@@ -9,9 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -57,14 +63,20 @@ fun socialSelectionScreen(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF52360C),
                     titleContentColor = Color.Black
 
-                )
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("Task2SelectionScreen") }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -83,7 +95,7 @@ fun socialSelectionScreen(
             Text(
                 text = titleText,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 65.sp,
+                    fontSize = 85.sp,
                     fontWeight = FontWeight.Bold
                     ,lineHeight = 65.sp
                 ),
@@ -110,24 +122,24 @@ fun socialSelectionScreen(
 //                        .padding(vertical = 16.dp)
 //                )
 
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(90.dp))
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Happy Learning!", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Happy Learning!", fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = "Brain Fun!", fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
@@ -149,14 +161,20 @@ fun socialSelectionScreen2(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF52360C),
                     titleContentColor = Color.Black
 
-                )
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("SocialSelectionScreen") }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -175,7 +193,7 @@ fun socialSelectionScreen2(
             Text(
                 text = titleText,
                 style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 65.sp,
+                    fontSize = 85.sp,
                     fontWeight = FontWeight.Bold
                     ,lineHeight = 65.sp
                 ),
@@ -206,20 +224,20 @@ fun socialSelectionScreen2(
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Selection", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Selection", fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onSecondButtonClick,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
                 ) {
-                    Text(text = "Yes/No", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = "Yes/No", fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
             }
         }
