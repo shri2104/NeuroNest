@@ -1,4 +1,5 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +11,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -113,6 +116,46 @@ fun SelectionScreen(
                 ) {
                     Text(text = "Brain Fun!", fontSize = 25.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun lastquizScreen(
+    navController: NavController,
+    destinationRoute: String // new parameter
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF1F1F1)),
+        color = Color(0xFFF1F1F1)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Quiz is Finished!",
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF3F51B5)
+            )
+
+            Spacer(modifier = Modifier.height(48.dp))
+
+            Button(
+                onClick = {
+                    navController.navigate(destinationRoute)
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3F51B5))
+            ) {
+                Text(text = "Go Back", fontSize = 20.sp, color = Color.White)
             }
         }
     }

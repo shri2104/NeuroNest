@@ -201,7 +201,7 @@ fun socialSelectionScreen2(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 80.dp)
+                    .padding(top = 100.dp)
             )
             Column(
                 modifier = Modifier
@@ -220,7 +220,7 @@ fun socialSelectionScreen2(
 //                        .padding(vertical = 16.dp)
 //                )
 
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(120.dp))
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier

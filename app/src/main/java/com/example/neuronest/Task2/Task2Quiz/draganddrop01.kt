@@ -1,4 +1,5 @@
 package com.example.neuronest.Task2.Task2Quiz
+import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.example.neuronest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,11 +54,18 @@ fun DragAndDropQuestionScreen1(
         droppedTextIndex = null
         draggedItemIndex = null
     }
+    fun playSound(resId: Int) {
+        val mediaPlayer = MediaPlayer.create(context, resId)
+        mediaPlayer?.apply {
+            start()
+            setOnCompletionListener { release() }
+        }
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Drag And Drop") },
+                title = { Text("Drag And Drop" , fontSize = 35.sp) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF3F51B5),
                     titleContentColor = Color.White
@@ -73,11 +82,11 @@ fun DragAndDropQuestionScreen1(
                 Button(
                     onClick = onPreviousQuestion,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1f).size(80.dp)
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                 ) {
-                    Text("Previous")
+                    Text("Previous", fontSize = 40.sp)
                 }
 
                 Spacer(modifier = Modifier.width(24.dp))
@@ -85,11 +94,11 @@ fun DragAndDropQuestionScreen1(
                 Button(
                     onClick = onNextQuestion,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1f).size(80.dp)
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                 ) {
-                    Text("Next")
+                    Text("Next" , fontSize = 40.sp)
                 }
             }
         }
@@ -100,10 +109,10 @@ fun DragAndDropQuestionScreen1(
                 .padding(innerPadding)
         ) {
             val isTablet = maxWidth > 600.dp
-            val imageSize = if (isTablet) 380.dp else 260.dp
-            val optionBoxSize = if (isTablet) 160.dp else 110.dp
-            val dropBoxHeight = if (isTablet) 240.dp else 160.dp
-            val fontSize = if (isTablet) 24.sp else MaterialTheme.typography.bodyLarge.fontSize
+            val imageSize = if (isTablet) 450.dp else 260.dp
+            val optionBoxSize = if (isTablet) 180.dp else 110.dp
+            val dropBoxHeight = if (isTablet) 220.dp else 160.dp
+            val fontSize = if (isTablet) 35.sp else MaterialTheme.typography.bodyLarge.fontSize
 
             Column(
                 modifier = Modifier
@@ -168,6 +177,7 @@ fun DragAndDropQuestionScreen1(
                                                     if (!isAnswerCorrect && index == correctTextIndex && dropY > dropThresholdY) {
                                                         isAnswerCorrect = true
                                                         droppedTextIndex = index
+                                                        playSound(R.raw.correct)
                                                         Toast.makeText(
                                                             context,
                                                             "Correct Answer!",
@@ -175,6 +185,7 @@ fun DragAndDropQuestionScreen1(
                                                         ).show()
                                                         onAnswerCorrect()
                                                     } else {
+                                                        playSound(R.raw.wrng)
                                                         offsets[index] = Offset.Zero
                                                     }
                                                     draggedItemIndex = null
@@ -219,7 +230,7 @@ fun DragAndDropQuestionScreen1(
                     if (isAnswerCorrect && droppedTextIndex != null) {
                         Text(
                             text = optionTexts[droppedTextIndex!!],
-                            fontSize = fontSize,
+                            fontSize = if (isTablet) 70.sp else 32.sp,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(8.dp)

@@ -1,5 +1,6 @@
 package com.example.neuronest.Task2.classroomquiz
 
+import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
@@ -8,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -20,11 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
+import lastquizScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +33,8 @@ fun classroomselection(navController: NavHostController) {
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
     var currentPage by remember { mutableStateOf(0) }
+    var isFinished by remember { mutableStateOf(false) }
+    var showLastScreen by remember { mutableStateOf(false) }
 
     val allImages = listOf(
         SelectableImage(R.drawable.classsel1, false),
@@ -51,10 +53,29 @@ fun classroomselection(navController: NavHostController) {
     val totalPages = (images.size + imagesPerPage - 1) / imagesPerPage
     val currentImages = images.drop(currentPage * imagesPerPage).take(imagesPerPage)
 
+    fun playSound(resId: Int) {
+        val mediaPlayer = MediaPlayer.create(context, resId)
+        mediaPlayer?.apply {
+            start()
+            setOnCompletionListener { release() }
+        }
+    }
+
+    if (isFinished && !showLastScreen) {
+        LaunchedEffect(Unit) {
+            kotlinx.coroutines.delay(1500)
+            showLastScreen = true
+        }
+    }
+    if (showLastScreen) {
+            lastquizScreen(navController = navController, destinationRoute = "ClassSelectionScreen")
+            return
+        }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Select Good Manners", fontSize = 22.sp) },
+                title = { Text("Select Good Manners", fontSize = 35.sp) },
                 navigationIcon = {
                     IconButton(onClick = { backDispatcher?.onBackPressed() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -77,14 +98,14 @@ fun classroomselection(navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            Spacer(modifier = Modifier.height(25.dp))
             Text(
                 text = "Select good manners from below:",
-                fontSize = 20.sp,
+                fontSize = 35.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-
+            Spacer(modifier = Modifier.height(20.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -111,8 +132,20 @@ fun classroomselection(navController: NavHostController) {
                                 images = images.toMutableList().also {
                                     it[globalIndex] = it[globalIndex].copy(isClicked = true)
                                 }
-                                val msg = if (image.isCorrect) "Correct Answer" else "Incorrect Answer"
+                                val msg = if (image.isCorrect) {
+                                    playSound(R.raw.correct)
+                                    "Correct Answer"
+                                } else {
+                                    playSound(R.raw.wrng)
+                                    "Incorrect Answer"
+                                }
                                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+
+                                // Check if last page and all clicked
+                                val updatedCurrentImages = images.drop(currentPage * imagesPerPage).take(imagesPerPage)
+                                if (currentPage == totalPages - 1 && updatedCurrentImages.all { it.isClicked }) {
+                                    isFinished = true
+                                }
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -138,21 +171,17 @@ fun classroomselection(navController: NavHostController) {
                 Button(
                     onClick = { if (currentPage > 0) currentPage-- },
                     enabled = currentPage > 0,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp)
+                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
                 ) {
-                    Text("Previous")
+                    Text("Previous", fontSize = 40.sp)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Button(
                     onClick = { if (currentPage < totalPages - 1) currentPage++ },
                     enabled = currentPage < totalPages - 1,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp)
+                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
                 ) {
-                    Text("Next")
+                    Text("Next", fontSize = 40.sp)
                 }
             }
         }

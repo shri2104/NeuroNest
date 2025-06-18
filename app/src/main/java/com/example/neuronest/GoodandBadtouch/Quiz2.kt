@@ -147,7 +147,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "NeuroNest", color = Color.White) },
+                title = { Text(text = "NeuroNest", color = Color.White , fontSize = 35.sp) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF3F51B5))
             )
         }
@@ -177,14 +177,14 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                     ) {
                         Text(
                             text = message,
-                            fontSize = 18.sp,
+                            fontSize = 45.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFF0F0F1),
                             textAlign = TextAlign.Center
                         )
                         Text(
                             text = "Your Score: $score / $totalQuestions ",
-                            fontSize = 22.sp,
+                            fontSize = 50.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFF0F0F1),
                             textAlign = TextAlign.Center,
@@ -207,7 +207,7 @@ fun FinishScreen(navController: NavHostController, score: Int, totalQuestions: I
                     modifier = Modifier.padding(top = 16.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = "Go Back ", fontSize = 16.sp)
+                    Text(text = "Go Back ", fontSize = 40.sp)
                 }
             }
         }

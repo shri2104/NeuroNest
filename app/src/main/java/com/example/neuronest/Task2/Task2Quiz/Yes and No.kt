@@ -1,6 +1,6 @@
 package com.example.neuronest.Task2.Task2Quiz
 
-
+import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
@@ -23,21 +23,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 import com.example.neuronest.R
 import com.example.neuronest.Task2.socialquiz.Question
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizScreen(
     questions: List<Question>,
+    currentIndex: Int,
+    onAnswer: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-    var currentIndex by remember { mutableStateOf(0) }
     var showSnackbar by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -51,23 +50,37 @@ fun QuizScreen(
         }
     }
 
+    fun playSound(resId: Int) {
+        val mediaPlayer = MediaPlayer.create(context, resId)
+        mediaPlayer?.apply {
+            start()
+            setOnCompletionListener { release() }
+        }
+    }
+
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Yes OR No Quiz") },
+            TopAppBar(
+                title = { Text("Yes OR No Quiz", fontSize = 35.sp) },
                 navigationIcon = {
                     IconButton(onClick = {
                         backDispatcher?.onBackPressed()
                     }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF52360C),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
             )
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { padding ->
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -78,28 +91,25 @@ fun QuizScreen(
         ) {
             Text(
                 text = "Does this image show a good action?",
-                fontSize = 28.sp,
+                fontSize = 35.sp,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
+                modifier = Modifier.fillMaxWidth()
             )
 
+            Spacer(modifier = Modifier.height(40.dp))
 
             Image(
                 painter = painterResource(id = question.imageRes),
                 contentDescription = "Question Image",
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .aspectRatio(1.2f)
+                    .size(800.dp)
                     .clip(RoundedCornerShape(32.dp))
             )
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Icons Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -109,8 +119,10 @@ fun QuizScreen(
                 IconButton(
                     onClick = {
                         if (question.answer) {
-                            if (currentIndex < questions.size - 1) currentIndex++
+                            playSound(R.raw.correct)
+                            onAnswer(true)
                         } else {
+                            playSound(R.raw.wrng)
                             showSnackbar = true
                         }
                     },
@@ -118,21 +130,23 @@ fun QuizScreen(
                         .weight(1f)
                         .height(100.dp)
                         .padding(end = 12.dp)
-                        .background(Color(0xFF4CAF50), shape = RoundedCornerShape(20.dp)) // Green
+                        .background(Color(0xFF4CAF50), shape = RoundedCornerShape(20.dp))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = "Yes",
                         tint = Color.White,
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier.size(55.dp)
                     )
                 }
 
                 IconButton(
                     onClick = {
                         if (!question.answer) {
-                            if (currentIndex < questions.size - 1) currentIndex++
+                            playSound(R.raw.correct)
+                            onAnswer(true)
                         } else {
+                            playSound(R.raw.wrng)
                             showSnackbar = true
                         }
                     },
@@ -140,17 +154,16 @@ fun QuizScreen(
                         .weight(1f)
                         .height(100.dp)
                         .padding(start = 12.dp)
-                        .background(Color(0xFFF44336), shape = RoundedCornerShape(20.dp)) // Red
+                        .background(Color(0xFFF44336), shape = RoundedCornerShape(20.dp))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "No",
                         tint = Color.White,
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier.size(55.dp)
                     )
                 }
             }
         }
     }
 }
-
