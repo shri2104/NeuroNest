@@ -2,17 +2,21 @@ package com.example.neuronest.Navigation
 
 import LoginScreen
 import SignUpScreen
+import SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.DashboardScreen
-import com.example.neuronest.GoodandBadtouch.MatchThePairQuizScreen
-import com.example.neuronest.GoodandBadtouch.PresentationScreen
 import com.example.neuronest.GoodandBadtouch.QuizScreen
-import com.example.neuronest.GoodandBadtouch.QuizSelectionScreen
-import com.example.neuronest.GoodandBadtouch.SplashScreen
-import com.example.neuronest.GoodandBadtouch.Task1SelectionScreen
+import com.example.neuronest.Task1.Task1presentation.Task1presentation
+import com.example.neuronest.Task1.selection.Task1SelectionScreen1
+import com.example.neuronest.Task1.selection.Task1SelectionScreen2
+import com.example.neuronest.Task1.selection.Task1SelectionScreen3
+import com.example.neuronest.Task1.task1quiz.Task1yeandno
+import com.example.neuronest.Task1.task1quiz.task1draganddrop
+import com.example.neuronest.Task1.task1quiz.task1selectionquiz1
+import com.example.neuronest.Task1.task1quiz.task1selectionquiz2
 import com.example.neuronest.Task2.Presentation.ClassPresentationScreen
 import com.example.neuronest.Task2.selection.ClassSelectionScreen
 import com.example.neuronest.Task2.Presentation.SocialPresentationScreen
@@ -27,6 +31,9 @@ import com.example.neuronest.Task2.classroomquiz.classroomselection
 import com.example.neuronest.Task2.socialquiz.SocialDrapaandDrop
 import com.example.neuronest.Task2.socialquiz.SocialSelectionQuiz
 import com.example.neuronest.Task2.socialquiz.YesNosocial
+import com.example.neuronest.Task3.Task3Presentation.task3presentation
+import com.example.neuronest.Task3.task3selection.task3Selection
+import com.example.neuronest.Task3.task3selection.task3selection
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
 
@@ -54,14 +61,29 @@ fun Navigation(apiService: ApiService) {
         composable("DragandDropQuiz"){
             QuizScreen(navController=navController)
         }
-        composable("MatchQuiz"){
-            MatchThePairQuizScreen(navController=navController)
-        }
-        composable("QuizSelectionScreen"){
-            QuizSelectionScreen(navController=navController)
-        }
         composable("Task1SelectionScreen"){
-            Task1SelectionScreen(navController=navController)
+            Task1SelectionScreen1(navController=navController)
+        }
+        composable("Task1SelectionScreen2"){
+            Task1SelectionScreen2(navController=navController)
+        }
+        composable("Task1SelectionScreen3"){
+            Task1SelectionScreen3(navController=navController)
+        }
+        composable("Task1presentation"){
+            Task1presentation(navController=navController)
+        }
+        composable("Task1draganddrop"){
+            task1draganddrop(navController=navController)
+        }
+        composable("Task1YasandNo"){
+            Task1yeandno(navController=navController)
+        }
+        composable("task1selectionquiz1"){
+            task1selectionquiz1(navController=navController)
+        }
+        composable("task1selectionquiz2"){
+            task1selectionquiz2(navController=navController)
         }
         composable("Task2SelectionScreen"){
             Task2SelectionScreen(navController=navController)
@@ -74,17 +96,12 @@ fun Navigation(apiService: ApiService) {
         }
         composable("Splashscreen"){
             SplashScreen(navController=navController)
-
         }
-
         composable("socialquizselection"){
             socialquiz(navController=navController)
         }
         composable("classroomquizselection") {
             classroomquiz(navController = navController)
-        }
-        composable("presentationscreen"){
-            PresentationScreen(navController = navController)
         }
         composable("classpresentationscreen"){
             ClassPresentationScreen(navController = navController)
@@ -110,5 +127,12 @@ fun Navigation(apiService: ApiService) {
         composable("YesNoClass") {
             YesNoClass(navController = navController)
         }
+        composable("Task3SelectionScreen") {
+            task3Selection(navController = navController)
+        }
+        composable("Task3presentationScreen") {
+            task3presentation(navController = navController)
+        }
+
     }
 }

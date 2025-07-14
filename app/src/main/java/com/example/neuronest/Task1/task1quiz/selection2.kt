@@ -1,4 +1,5 @@
-package com.example.neuronest.Task2.classroomquiz
+package com.example.neuronest.Task1.task1quiz
+
 
 import android.media.MediaPlayer
 import android.widget.Toast
@@ -6,14 +7,38 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +53,7 @@ import lastquizScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun classroomselection(navController: NavHostController) {
+fun task1selectionquiz2(navController: NavHostController) {
     val context = LocalContext.current
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
@@ -37,14 +62,14 @@ fun classroomselection(navController: NavHostController) {
     var showLastScreen by remember { mutableStateOf(false) }
 
     val allImages = listOf(
-        SelectableImage(R.drawable.classsel1, false),
-        SelectableImage(R.drawable.classsel2, true),
-        SelectableImage(R.drawable.classsel3, true),
-        SelectableImage(R.drawable.classsel4, false),
-        SelectableImage(R.drawable.classsel5, true),
-        SelectableImage(R.drawable.classsel6, false),
-        SelectableImage(R.drawable.classsel7, true),
-        SelectableImage(R.drawable.classsel8, false)
+        SelectableImage(R.drawable.task1sel9, false),
+        SelectableImage(R.drawable.task1sel10, false),
+        SelectableImage(R.drawable.task1sel11, true),
+        SelectableImage(R.drawable.task1sel12, true),
+        SelectableImage(R.drawable.task1sel13, false),
+        SelectableImage(R.drawable.task1sel15, true),
+        SelectableImage(R.drawable.task1sel14, false),
+        SelectableImage(R.drawable.task1sel16, true)
     )
 
     var images by remember { mutableStateOf(allImages) }
@@ -68,21 +93,21 @@ fun classroomselection(navController: NavHostController) {
         }
     }
     if (showLastScreen) {
-            lastquizScreen(navController = navController, destinationRoute = "ClassSelectionScreen")
-            return
-        }
+        lastquizScreen(navController = navController, destinationRoute = "Task1SelectionScreen3")
+        return
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Select Good Manners", fontSize = 35.sp) },
+                title = { Text("Select Good Touch Images", fontSize = 35.sp) },
                 navigationIcon = {
                     IconButton(onClick = { backDispatcher?.onBackPressed() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF52360C),
+                    containerColor = Color(0xFF2196F3),
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White
                 )
@@ -100,7 +125,7 @@ fun classroomselection(navController: NavHostController) {
         ) {
             Spacer(modifier = Modifier.height(25.dp))
             Text(
-                text = "Select good manners from below:",
+                text = "Tap the images that show Good Touch:",
                 fontSize = 35.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(vertical = 16.dp)
@@ -119,7 +144,7 @@ fun classroomselection(navController: NavHostController) {
                     val globalIndex = currentPage * imagesPerPage + index
 
                     val backgroundColor = when {
-                        image.isClicked && image.isCorrect -> Color(0xFF64B5F6)
+                        image.isClicked && image.isCorrect -> Color(0xFF2196F3)
                         image.isClicked && !image.isCorrect -> Color(0xFFEF5350)
                         else -> MaterialTheme.colorScheme.surface
                     }
@@ -141,7 +166,6 @@ fun classroomselection(navController: NavHostController) {
                                 }
                                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 
-                                // Check if last page and all clicked
                                 val updatedCurrentImages = images.drop(currentPage * imagesPerPage).take(imagesPerPage)
                                 if (currentPage == totalPages - 1 && updatedCurrentImages.all { it.isClicked }) {
                                     isFinished = true
@@ -171,9 +195,11 @@ fun classroomselection(navController: NavHostController) {
                 Button(
                     onClick = { if (currentPage > 0) currentPage-- },
                     enabled = currentPage > 0,
-                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp)
                 ) {
-                    Text("Previous", fontSize = 40.sp)
+                    Text("Previous", fontSize = 20.sp)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 val correctSelections = images.count { it.isCorrect && it.isClicked }
@@ -181,18 +207,14 @@ fun classroomselection(navController: NavHostController) {
                 Button(
                     onClick = { if (currentPage < totalPages - 1) currentPage++ },
                     enabled = currentPage < totalPages - 1 && (correctSelections == 2 || allCurrentClicked),
-                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp)
                 ) {
-                    Text("Next", fontSize = 40.sp)
+                    Text("Next", fontSize = 20.sp)
                 }
             }
         }
     }
 }
 
-
-data class SelectableImage(
-    val resId: Int,
-    val isCorrect: Boolean,
-    val isClicked: Boolean = false
-)

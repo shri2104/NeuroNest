@@ -94,7 +94,7 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
     val tasks = listOf(
         "Good & Bad Touch" to R.drawable.rb_5272,
         "Manners" to R.drawable.rb_5272,
-        "Task 3" to R.drawable.rb_5272,
+        "Emotions" to R.drawable.rb_5272,
         "Task 5" to R.drawable.rb_5272,
         "Task 6" to R.drawable.rb_5272,
         "Task 7" to R.drawable.rb_5272,
@@ -140,6 +140,9 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
                         }
                         if (taskName == "Manners") {
                             navController.navigate("Task2SelectionScreen")
+                        }
+                        if (taskName == "Emotions") {
+                            navController.navigate("Task3SelectionScreen")
                         }
                     })
                 }

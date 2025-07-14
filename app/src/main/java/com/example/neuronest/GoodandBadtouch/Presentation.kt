@@ -44,7 +44,7 @@ import com.example.neuronest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PresentationScreen(navController: NavHostController) {
+fun PresentationScree(navController: NavHostController) {
     val context = LocalContext.current
     val images = listOf(
         R.drawable.pre1,
@@ -178,8 +178,3 @@ fun PresentationScreen(navController: NavHostController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PresentationScreen(navController = NavHostController(LocalContext.current))
-}

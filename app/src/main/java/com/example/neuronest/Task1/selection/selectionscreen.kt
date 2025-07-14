@@ -1,5 +1,4 @@
-
-package com.example.neuronest.Task2.selection
+package com.example.neuronest.Task1.selection
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -11,13 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,23 +30,52 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.neuronest.R
+import com.example.neuronest.Task2.selection.classSelectionScreen
 
 @Composable
-fun ClassSelectionScreen(navController: NavHostController) {
-    classSelectionScreen(
+fun Task1SelectionScreen1(navController: NavHostController) {
+    SelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.resized_girl,
-        titleText = "Classroom Manners",
+        backgroundImage = R.drawable.task1bgimage2,
+        titleText = "Good and Bad Touch",
         firstButtonText = "Happy Learning!",
         secondButtonText = "Brain Fun!",
-        onFirstButtonClick = { navController.navigate("classpresentationscreen") },
-        onSecondButtonClick = { navController.navigate("classroomquizselection") }
+        onFirstButtonClick = { navController.navigate("Task1presentation") },
+        onSecondButtonClick = { navController.navigate("Task1SelectionScreen2") }
+    )
+}
+
+@Composable
+fun Task1SelectionScreen2(navController: NavHostController) {
+    SelectionScreenforquiz(
+        navController = navController,
+        backgroundImage = R.drawable.task1bgimage2,
+        titleText = "Good and Bad Touch",
+        firstButtonText = "Drag and Drop",
+        secondButtonText = "Selection",
+        thirdButtonText = "Yes and No",
+        onFirstButtonClick = { navController.navigate("Task1draganddrop") },
+        onSecondButtonClick = { navController.navigate("Task1SelectionScreen3")  },
+        onThirdButtonClick = { navController.navigate("Task1YasandNo") }
+    )
+}
+
+@Composable
+fun Task1SelectionScreen3(navController: NavHostController) {
+    SelectionScreen(
+        navController = navController,
+        backgroundImage = R.drawable.task1bgimage2,
+        titleText = "Good and Bad Touch",
+        firstButtonText = "Selection Part 1",
+        secondButtonText = "Selection Part 2",
+        onFirstButtonClick = { navController.navigate("task1selectionquiz1") },
+        onSecondButtonClick = { navController.navigate("task1selectionquiz2") }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun classSelectionScreen(
+fun SelectionScreen(
     navController: NavHostController,
     backgroundImage: Int,
     titleText: String,
@@ -60,6 +84,7 @@ fun classSelectionScreen(
     onFirstButtonClick: () -> Unit,
     onSecondButtonClick: () -> Unit
 ) {
+    val lightBlue = Color(0xFF00BFFF)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -67,19 +92,13 @@ fun classSelectionScreen(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White,
-                        fontSize = 35.sp
+                        color = Color.White
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF52360C),
+                    containerColor = Color(0xFF2196F3),
                     titleContentColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate("Task2SelectionScreen") }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
+                )
             )
         }
     ) { innerPadding ->
@@ -94,20 +113,6 @@ fun classSelectionScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 65.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 20.dp)
-            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -115,13 +120,32 @@ fun classSelectionScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(150.dp))
+                Text(
+                    text = titleText,
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontSize = 65.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 65.sp
+                    ),
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF3F51B5)
+                )
+
+                /*Divider(
+                    color = Color(0xFF3F51B5),
+                    thickness = 2.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                )*/
+
+                Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
                     Text(text = firstButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
@@ -130,7 +154,7 @@ fun classSelectionScreen(
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(Color(0xC38D5F1A))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
                     Text(text = secondButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
@@ -138,9 +162,10 @@ fun classSelectionScreen(
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun classSelectionScreen2(
+fun SelectionScreenforquiz(
     navController: NavHostController,
     backgroundImage: Int,
     titleText: String,
@@ -151,6 +176,7 @@ fun classSelectionScreen2(
     onSecondButtonClick: () -> Unit,
     onThirdButtonClick: () -> Unit
 ) {
+    val lightBlue = Color(0xFF00BFFF)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -158,19 +184,13 @@ fun classSelectionScreen2(
                     Text(
                         text = "NeuroNest",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White,
-                        fontSize = 35.sp
+                        color = Color.White
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF52360C),
+                    containerColor = Color(0xFF2196F3),
                     titleContentColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate("ClassSelectionScreen") }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
+                )
             )
         }
     ) { innerPadding ->
@@ -179,68 +199,75 @@ fun classSelectionScreen2(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Background Image
             Image(
                 painter = painterResource(id = backgroundImage),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-
-            // Title Text
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 55.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 40.dp, start = 16.dp, end = 16.dp)
-            )
-            // Buttons
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 250.dp),
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(
+                    text = titleText,
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontSize = 65.sp,
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 65.sp
+                    ),
+                    textAlign = TextAlign.Center,
+                    color = Color(0xFF3F51B5)
+                )
+
+                /*Divider(
+                    color = Color(0xFF3F51B5),
+                    thickness = 2.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                )*/
+
+                Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
-                        .height(60.dp)
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
                     Text(text = firstButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold)
                 }
-
                 Button(
                     onClick = onSecondButtonClick,
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
-                        .height(60.dp)
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = secondButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(
+                        text = secondButtonText,
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
                 }
-
                 Button(
                     onClick = onThirdButtonClick,
                     modifier = Modifier
                         .fillMaxWidth().size(100.dp)
-                        .height(60.dp)
                         .padding(vertical = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xC38D5F1A))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))
                 ) {
-                    Text(text = thirdButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(
+                        text = thirdButtonText,
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
                 }
             }
         }

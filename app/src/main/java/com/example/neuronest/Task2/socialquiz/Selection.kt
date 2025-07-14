@@ -92,7 +92,6 @@ fun SocialSelectionQuiz(navController: NavHostController) {
                 )
             },
         ) { innerPadding ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -183,9 +182,11 @@ fun SocialSelectionQuiz(navController: NavHostController) {
                         Text("Previous", fontSize = 25.sp)
                     }
                     Spacer(modifier = Modifier.width(12.dp))
+                    val correctSelections = images.count { it.isCorrect && it.isClicked }
+                    val allCurrentClicked = currentImages.all { it.isClicked }
                     Button(
                         onClick = { if (currentPage < totalPages - 1) currentPage++ },
-                        enabled = currentPage < totalPages - 1,
+                        enabled = currentPage < totalPages - 1 && (correctSelections == 2 || allCurrentClicked),
                         modifier = Modifier.weight(1f)
                     ) {
                         Text("Next", fontSize = 25.sp)
