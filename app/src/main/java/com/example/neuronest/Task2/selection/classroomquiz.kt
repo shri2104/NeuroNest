@@ -11,7 +11,7 @@ fun classroomquiz(navController: NavHostController) {
     classSelectionScreen2(
         navController = navController,
         backgroundImage = R.drawable.resized_girl,
-        titleText = "Clasroom Manners",
+        titleText = "Classroom Manners",
         onFirstButtonClick = { navController.navigate("ClassroomDrapaandDrop") },
         onSecondButtonClick = { navController.navigate("classroomselection") },
         onThirdButtonClick = { navController.navigate("YesNoClass") },

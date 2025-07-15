@@ -1,4 +1,5 @@
 package com.example.neuronest.Task2.Task2Quiz
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -21,10 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.neuronest.R
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DragAndDropQuestionScreen1(
@@ -204,7 +208,8 @@ fun DragAndDropQuestionScreen1(
                                 fontSize = fontSize,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.padding(8.dp),
-                                color = Color.Black
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
@@ -230,10 +235,11 @@ fun DragAndDropQuestionScreen1(
                     if (isAnswerCorrect && droppedTextIndex != null) {
                         Text(
                             text = optionTexts[droppedTextIndex!!],
-                            fontSize = if (isTablet) 70.sp else 32.sp,
+                            fontSize = if (isTablet) 100.sp else 32.sp,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(8.dp),
+                            fontWeight = FontWeight.Bold
                         )
                     } else {
                         Text(

@@ -32,6 +32,9 @@ import com.example.neuronest.Task2.socialquiz.SocialDrapaandDrop
 import com.example.neuronest.Task2.socialquiz.SocialSelectionQuiz
 import com.example.neuronest.Task2.socialquiz.YesNosocial
 import com.example.neuronest.Task3.Task3Presentation.task3presentation
+import com.example.neuronest.Task3.task3Quiz.Task3DrapaandDrop
+import com.example.neuronest.Task3.task3Quiz.Task3SelectionQuiz
+import com.example.neuronest.Task3.task3Quiz.task3QuizSelectionScreen
 import com.example.neuronest.Task3.task3selection.task3Selection
 import com.example.neuronest.Task3.task3selection.task3selection
 import com.example.neuronest.login.ProfileScreen
@@ -133,6 +136,14 @@ fun Navigation(apiService: ApiService) {
         composable("Task3presentationScreen") {
             task3presentation(navController = navController)
         }
-
+        composable("Task3QuizSelectionScreen") {
+            task3QuizSelectionScreen(navController = navController)
+        }
+        composable("Task3DrapaandDrop") {
+            Task3DrapaandDrop(navController = navController)
+        }
+        composable("Task3SelectionQuiz") {
+            Task3SelectionQuiz(navController = navController)
+        }
     }
 }
