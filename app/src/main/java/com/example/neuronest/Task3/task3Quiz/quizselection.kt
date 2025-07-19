@@ -44,12 +44,13 @@ fun task3QuizSelectionScreen(navController: NavHostController) {
         //titleText = "Emotions",
         onFirstButtonClick = { navController.navigate("Task3DrapaandDrop") },
         onSecondButtonClick = { navController.navigate("Task3SelectionQuiz") } ,
-       // onThirdButtonClick =  { navController.navigate("") },
+       onThirdButtonClick =  { navController.navigate("task3mcqScreen") },
         firstButtonText = "Drag and Drop",
-        secondButtonText = "Selection"
-        //thirdButtonText = "Yes and No"
+        secondButtonText = "Selection",
+        thirdButtonText = "MCQs"
     )
 }
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,10 +60,10 @@ fun Task3QuizSelectionScreen(
     backgroundImage: Int,
     firstButtonText: String,
     secondButtonText: String,
-    //thirdButtonText: String,
+    thirdButtonText: String,
     onFirstButtonClick: () -> Unit,
     onSecondButtonClick: () -> Unit,
-    //onThirdButtonClick: () -> Unit
+    onThirdButtonClick: () -> Unit
 ) {
     val babyPink = Color(0xFFFF80A6)
     val deepPink = Color(0xFFE91E63)
@@ -132,16 +133,16 @@ fun Task3QuizSelectionScreen(
                     Text(text = secondButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 }
 
-//                Button(
-//                    onClick = onThirdButtonClick,
-//                    modifier = Modifier
-//                        .fillMaxWidth().size(100.dp)
-//                        .height(60.dp)
-//                        .padding(vertical = 8.dp),
-//                    colors = ButtonDefaults.buttonColors(containerColor = babyPink)
-//                ) {
-//                    Text(text = thirdButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
-//                }
+                Button(
+                    onClick = onThirdButtonClick,
+                    modifier = Modifier
+                        .fillMaxWidth().size(100.dp)
+                        .height(60.dp)
+                        .padding(vertical = 8.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = babyPink)
+                ) {
+                    Text(text = thirdButtonText, fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                }
             }
         }
     }
