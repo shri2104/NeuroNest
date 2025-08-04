@@ -156,7 +156,7 @@ fun SelectionQuizScreen(
                                     val image = images[index]
 
                                     val backgroundColor = when {
-                                        image.isClicked && image.isCorrect -> Color(0xFF64B5F6)
+                                        image.isClicked && image.isCorrect -> Color(0xFF90EE90)
                                         image.isClicked && !image.isCorrect -> Color(0xFFEF5350)
                                         else -> MaterialTheme.colorScheme.surface
                                     }

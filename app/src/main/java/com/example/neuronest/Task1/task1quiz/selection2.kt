@@ -144,7 +144,7 @@ fun task1selectionquiz2(navController: NavHostController) {
                     val globalIndex = currentPage * imagesPerPage + index
 
                     val backgroundColor = when {
-                        image.isClicked && image.isCorrect -> Color(0xFF2196F3)
+                        image.isClicked && image.isCorrect -> Color(0xFF90EE90)
                         image.isClicked && !image.isCorrect -> Color(0xFFEF5350)
                         else -> MaterialTheme.colorScheme.surface
                     }
