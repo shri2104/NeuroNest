@@ -127,7 +127,7 @@ fun task1selectionquiz1(navController: NavHostController) {
 
             Text(
                 text = "Tap the body parts that are not private.",
-                fontSize = 26.sp,
+                fontSize = 32.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
@@ -170,10 +170,14 @@ fun task1selectionquiz1(navController: NavHostController) {
                                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 
                                 val updatedCurrentImages = images.drop(currentPage * imagesPerPage).take(imagesPerPage)
-                                if (currentPage == totalPages - 1 && updatedCurrentImages.all { it.isClicked }) {
-                                    isFinished = true
+                                if (currentPage == totalPages - 1) {
+                                    val correctClickedOnLastPage = updatedCurrentImages.count { it.isCorrect && it.isClicked }
+                                    if (correctClickedOnLastPage >= 2) {
+                                        isFinished = true
+                                    }
                                 }
-                            },
+                            }
+                        ,
                         contentAlignment = Alignment.Center
                     ) {
                         Image(

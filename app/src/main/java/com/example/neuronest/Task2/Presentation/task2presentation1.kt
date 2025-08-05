@@ -28,7 +28,7 @@ val audios = listOf(
 fun ClassPresentationScreen(navController: NavHostController){
     PresentationScreen(
         navController = navController,
-        title = "Neuronest",
+        title = "Classroom Manners",
         themeColor = Color(0xFF704214),
         images = images,
         audios = audios,

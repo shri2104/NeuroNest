@@ -40,7 +40,7 @@ import com.example.neuronest.R
 fun ClassSelectionScreen(navController: NavHostController) {
     classSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.resized_girl,
+        backgroundImage = R.drawable.classbg,
         titleText = "Classroom Manners",
         firstButtonText = "Happy Learning!",
         secondButtonText = "Brain Fun!",
@@ -65,7 +65,7 @@ fun classSelectionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Classroom Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp
@@ -95,19 +95,6 @@ fun classSelectionScreen(
                 contentScale = ContentScale.Crop
             )
 
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 65.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 20.dp)
-            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -156,7 +143,7 @@ fun classSelectionScreen2(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Classroom Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp
@@ -187,26 +174,12 @@ fun classSelectionScreen2(
                 contentScale = ContentScale.Crop
             )
 
-            // Title Text
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 55.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 40.dp, start = 16.dp, end = 16.dp)
-            )
             // Buttons
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 24.dp)
-                    .padding(top = 250.dp),
+                    .padding(top = 160.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

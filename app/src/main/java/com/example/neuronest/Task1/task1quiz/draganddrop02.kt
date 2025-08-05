@@ -111,7 +111,7 @@ fun task1draganddrop2(
         ) {
             val isTablet = maxWidth > 600.dp
             val imageSize = if (isTablet) 400.dp else 260.dp
-            val optionBoxSize = if (isTablet) 240.dp else 110.dp
+            val optionBoxSize = if (isTablet) 260.dp else 110.dp
             val dropBoxHeight = if (isTablet) 220.dp else 160.dp
             val fontSize = if (isTablet) 35.sp else MaterialTheme.typography.bodyLarge.fontSize
 

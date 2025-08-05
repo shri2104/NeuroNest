@@ -72,7 +72,7 @@ fun Task3QuizSelectionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Emotions",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp

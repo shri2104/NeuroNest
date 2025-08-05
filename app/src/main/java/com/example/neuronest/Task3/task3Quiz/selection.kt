@@ -105,12 +105,15 @@ fun SelectionQuizScreen(
         return
     }
 
-    if (allClicked && isLastPage && !showLastScreen) {
-        LaunchedEffect(Unit) {
+    val correctClickedOnLastPage = images.count { it.isCorrect && it.isClicked }
+
+    if (isLastPage && correctClickedOnLastPage >= 2 && !showLastScreen) {
+        LaunchedEffect(correctClickedOnLastPage) {
             kotlinx.coroutines.delay(1500)
             showLastScreen = true
         }
-    } else {
+    }
+    else {
         Scaffold(
             topBar = {
                 TopAppBar(

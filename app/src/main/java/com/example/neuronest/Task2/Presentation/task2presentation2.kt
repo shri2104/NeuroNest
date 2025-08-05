@@ -40,7 +40,7 @@ val audios1 = listOf(
 fun SocialPresentationScreen(navController: NavHostController){
     PresentationScreen(
         navController = navController,
-        title = "Neuronest",
+        title = "Social Manners",
         themeColor = Color(0xFF704214),
         images = images1,
         audios = audios1,

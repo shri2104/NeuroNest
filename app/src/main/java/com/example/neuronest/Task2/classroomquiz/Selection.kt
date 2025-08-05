@@ -143,8 +143,11 @@ fun classroomselection(navController: NavHostController) {
 
                                 // Check if last page and all clicked
                                 val updatedCurrentImages = images.drop(currentPage * imagesPerPage).take(imagesPerPage)
-                                if (currentPage == totalPages - 1 && updatedCurrentImages.all { it.isClicked }) {
-                                    isFinished = true
+                                if (currentPage == totalPages - 1) {
+                                    val correctClickedOnLastPage = updatedCurrentImages.count { it.isCorrect && it.isClicked }
+                                    if (correctClickedOnLastPage >= 2) {
+                                        isFinished = true
+                                    }
                                 }
                             },
                         contentAlignment = Alignment.Center

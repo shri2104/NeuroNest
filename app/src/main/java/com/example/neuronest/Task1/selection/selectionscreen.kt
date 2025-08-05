@@ -90,7 +90,7 @@ fun SelectionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Good and Bad Touch",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White
                     )
@@ -182,7 +182,7 @@ fun SelectionScreenforquiz(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Good and Bad Touch",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White
                     )

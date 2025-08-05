@@ -39,8 +39,8 @@ import com.example.neuronest.R
 fun Task2SelectionScreen(navController: NavHostController) {
     task2SelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.social3,
-        titleText = "Manners",
+        backgroundImage = R.drawable.mainbg,
+        titleText = "",
         onFirstButtonClick = { navController.navigate("ClassSelectionScreen") },
         onSecondButtonClick = { navController.navigate("SocialSelectionScreen") }
     )
@@ -61,7 +61,7 @@ fun task2SelectionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp

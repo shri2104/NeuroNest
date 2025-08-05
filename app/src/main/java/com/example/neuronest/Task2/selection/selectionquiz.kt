@@ -8,7 +8,7 @@ import com.example.neuronest.R
 fun socialquiz(navController: NavHostController) {
     socialSelectionScreen2(
         navController = navController,
-        backgroundImage = R.drawable.social4,
+        backgroundImage = R.drawable.socialbg,
         titleText = "Social Manners",
         onFirstButtonClick = { navController.navigate("socialdraganddrop") },
         onSecondButtonClick = { navController.navigate("SocialSelectionQuiz") } ,

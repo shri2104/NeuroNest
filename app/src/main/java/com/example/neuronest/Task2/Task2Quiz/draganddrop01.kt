@@ -71,7 +71,7 @@ fun DragAndDropQuestionScreen1(
             TopAppBar(
                 title = { Text("Drag And Drop" , fontSize = 35.sp) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF3F51B5),
+                    containerColor = Color(0xFF52360C),
                     titleContentColor = Color.White
                 )
             )
@@ -161,7 +161,7 @@ fun DragAndDropQuestionScreen1(
                                     )
                                 }
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(Color.LightGray)
+                                .background(Color(0xFFD2B48C))
                                 .then(
                                     if (!isAnswerCorrect)
                                         Modifier.pointerInput(Unit) {

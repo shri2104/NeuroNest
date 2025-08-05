@@ -39,7 +39,7 @@ import com.example.neuronest.R
 fun SocialSelectionScreen(navController: NavHostController) {
     socialSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.social4,
+        backgroundImage = R.drawable.socialbg,
         titleText = "Social Manners",
         onFirstButtonClick = { navController.navigate("socialpresentationscreen") },
         onSecondButtonClick = { navController.navigate("socialquizselection") }
@@ -60,7 +60,7 @@ fun socialSelectionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Social Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp
@@ -91,19 +91,7 @@ fun socialSelectionScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit
             )
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold
-                    ,lineHeight = 65.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 80.dp)
-            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -159,7 +147,7 @@ fun socialSelectionScreen2(
             TopAppBar(
                 title = {
                     Text(
-                        text = "NeuroNest",
+                        text = "Social Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp
@@ -190,19 +178,7 @@ fun socialSelectionScreen2(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit
             )
-            Text(
-                text = titleText,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 85.sp,
-                    fontWeight = FontWeight.Bold
-                    ,lineHeight = 65.sp
-                ),
-                color = Color(0xFF52360C),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 100.dp)
-            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()

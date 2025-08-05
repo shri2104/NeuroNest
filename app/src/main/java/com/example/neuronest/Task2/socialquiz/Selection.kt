@@ -69,12 +69,15 @@ fun SocialSelectionQuiz(navController: NavHostController) {
         lastquizScreen(navController = navController, destinationRoute = "SocialSelectionScreen")
         return
     }
-    if (allClicked && isLastPage && !showLastScreen) {
-        LaunchedEffect(Unit) {
+
+    val correctClickedOnLastPage = currentImages.count { it.isCorrect && it.isClicked }
+    if (isLastPage && correctClickedOnLastPage >= 2 && !showLastScreen) {
+        LaunchedEffect(correctClickedOnLastPage) {
             kotlinx.coroutines.delay(1500)
             showLastScreen = true
         }
-    }else {
+    }
+    else {
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -151,6 +154,7 @@ fun SocialSelectionQuiz(navController: NavHostController) {
                                                     "Incorrect Answer"
                                                 }
                                                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+
                                             },
                                         contentAlignment = Alignment.Center
                                     ) {

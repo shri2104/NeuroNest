@@ -139,7 +139,7 @@ fun SplashScreen(navController: NavHostController, viewModel: LoginScreenViewMod
 @Composable
 fun PresentationScreen(
     navController: NavHostController,
-    title: String = "NeuroNest",
+    title: String = "Presentation",
     themeColor: Color = Color(0xFF52360C),
     images: List<Int>,
     audios: List<Int>,

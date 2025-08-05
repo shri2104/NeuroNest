@@ -65,6 +65,7 @@ fun Task1yeandno(navController: NavController) {
         )
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizScreentask1(
@@ -170,7 +171,7 @@ fun QuizScreentask1(
                         .weight(1f)
                         .height(100.dp)
                         .padding(end = 12.dp)
-                        .background(Color(0xFF2196F3), shape = RoundedCornerShape(20.dp))
+                        .background(Color(0xFF4CAF50), shape = RoundedCornerShape(20.dp))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,

@@ -36,12 +36,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.neuronest.Task4.Quiz.task4QuizSelectionScreen
 
 @Composable
 fun task4Selection(navController: NavHostController) {
     task4selection(
         navController = navController,
-        backgroundImage = R.drawable.photo_2025_08_01_16_34_13, // update with actual image name
+        backgroundImage = R.drawable.photo_2025_08_05_00_17_00, // update with actual image name
         firstButtonText = "Happy Learning",
         secondButtonText = "Brain Fun",
         onFirstButtonClick = { navController.navigate("Task4presentationScreen") },
@@ -118,7 +119,7 @@ fun task4selection(
                         text = firstButtonText,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.Black
                     )
                 }
                 Spacer(Modifier.height(20.dp))
@@ -141,4 +142,13 @@ fun task4selection(
             }
         }
     }
+}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Task4SelectionPreview() {
+    // Use a dummy NavController for preview
+    val navController = rememberNavController()
+
+    // Call your Composable
+    task4Selection(navController = navController)
 }

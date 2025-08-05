@@ -41,7 +41,7 @@ import com.example.neuronest.Task4.Selection.task4Selection
 fun task4QuizSelectionScreen(navController: NavHostController) {
     Task4QuizSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.photo_2025_08_01_16_34_13,
+        backgroundImage = R.drawable.photo_2025_08_05_00_17_00,
         onFirstButtonClick = { navController.navigate("Task4DragAndDrop") },
         onSecondButtonClick = { navController.navigate("Task4SelectionQuiz") },
         onThirdButtonClick = { navController.navigate("Task4McqScreen") },
@@ -110,6 +110,7 @@ fun Task4QuizSelectionScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Button(
                     onClick = onFirstButtonClick,
                     modifier = Modifier
