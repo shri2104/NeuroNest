@@ -1,5 +1,6 @@
 package com.example.neuronest.GoodandBadtouch
 
+import PresentationScreen
 import android.media.MediaPlayer
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +76,6 @@ fun PresentationScree(navController: NavHostController) {
         R.raw.gb13, R.raw.gb14, R.raw.gb15, R.raw.gb16,
         R.raw.gb17, R.raw.gb18, R.raw.gb19 , R.raw.gb20
     )
-
     var currentIndex by remember { mutableStateOf(0) }
     var mediaPlayer : MediaPlayer? by remember {mutableStateOf(null)}
 
@@ -178,3 +179,9 @@ fun PresentationScree(navController: NavHostController) {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun PresentationScreenPreview() {
+    val navController = rememberNavController()
+    PresentationScree(navController)
+}

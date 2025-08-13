@@ -174,7 +174,8 @@ fun classroomselection(navController: NavHostController) {
                 Button(
                     onClick = { if (currentPage > 0) currentPage-- },
                     enabled = currentPage > 0,
-                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
+                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF704214))
                 ) {
                     Text("Previous", fontSize = 40.sp)
                 }
@@ -184,7 +185,8 @@ fun classroomselection(navController: NavHostController) {
                 Button(
                     onClick = { if (currentPage < totalPages - 1) currentPage++ },
                     enabled = currentPage < totalPages - 1 && (correctSelections == 2 || allCurrentClicked),
-                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp)
+                    modifier = Modifier.weight(1f).height(56.dp).size(80.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF704214))
                 ) {
                     Text("Next", fontSize = 40.sp)
                 }

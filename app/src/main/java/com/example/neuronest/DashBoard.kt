@@ -95,7 +95,7 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
         "Good & Bad Touch" to R.drawable.rb_5272,
         "Manners" to R.drawable.rb_5272,
         "Emotions" to R.drawable.rb_5272,
-        "Task 5" to R.drawable.rb_5272,
+        "Task 4" to R.drawable.rb_5272,
         "Task 6" to R.drawable.rb_5272,
         "Task 7" to R.drawable.rb_5272,
         "Task 8" to R.drawable.rb_5272,
@@ -143,6 +143,9 @@ fun TaskGrid(modifier: Modifier = Modifier, navController: NavHostController) {
                         }
                         if (taskName == "Emotions") {
                             navController.navigate("Task3SelectionScreen")
+                        }
+                        if (taskName == "Task 4") {
+                            navController.navigate("task4selection1")
                         }
                     })
                 }

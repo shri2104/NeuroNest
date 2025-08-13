@@ -92,7 +92,8 @@ fun SelectionScreen(
                     Text(
                         text = "Good and Bad Touch",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -184,7 +185,8 @@ fun SelectionScreenforquiz(
                     Text(
                         text = "Good and Bad Touch",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.White
+                        color = Color.White,
+                        fontSize = 35.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

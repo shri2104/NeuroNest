@@ -64,7 +64,7 @@ fun task2SelectionScreen(
                         text = "Manners",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
-                        fontSize = 35.sp
+                        fontSize = 32.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

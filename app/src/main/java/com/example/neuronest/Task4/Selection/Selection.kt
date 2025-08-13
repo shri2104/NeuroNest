@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +46,7 @@ fun task4Selection(navController: NavHostController) {
         backgroundImage = R.drawable.photo_2025_08_05_00_17_00, // update with actual image name
         firstButtonText = "Happy Learning",
         secondButtonText = "Brain Fun",
-        onFirstButtonClick = { navController.navigate("Task4presentationScreen") },
+        onFirstButtonClick = { navController.navigate("task4selection2") },
         onSecondButtonClick = { navController.navigate("Task4QuizSelectionScreen") }
     )
 }
@@ -68,7 +69,7 @@ fun task4selection(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Neuronest",
+                        text = "Social Stories",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 35.sp
@@ -119,7 +120,7 @@ fun task4selection(
                         text = firstButtonText,
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = Color.White
                     )
                 }
                 Spacer(Modifier.height(20.dp))
@@ -143,12 +144,126 @@ fun task4selection(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun task4selection2(
+    navController: NavHostController,
+    backgroundImage: Int
+) {
+    val lightGreen = Color(0xFF90EE90)
+    val darkGreen = Color(0xFF388E3C)
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Social Stories",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.White,
+                        fontSize = 32.sp
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = darkGreen,
+                    titleContentColor = Color.White
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("Dashboard") }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Image(
+                painter = painterResource(id = backgroundImage),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val buttonModifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp)
+                    .padding(vertical = 6.dp)
+
+                val buttonTextStyle = TextStyle(
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Button(
+                    onClick = { navController.navigate("task4presentation") },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                ) {
+                    Text("No Hitting", style = buttonTextStyle, color = Color.White)
+                }
+
+                Button(
+                    onClick = { navController.navigate("task4presentation") },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                ) {
+                    Text("No Pinching", style = buttonTextStyle, color = Color.White)
+                }
+
+                Button(
+                    onClick = { navController.navigate("task4presentation") },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                ) {
+                    Text("No Spitting", style = buttonTextStyle, color = Color.White)
+                }
+
+                Button(
+                    onClick = { navController.navigate("task4presentation") },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                ) {
+                    Text("No Biting", style = buttonTextStyle, color = Color.White)
+                }
+
+                Button(
+                    onClick = { navController.navigate("task4presentation") },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                ) {
+                    Text("No Shouting", style = buttonTextStyle, color = Color.White)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun task4Selection2(navController: NavHostController) {
+    task4selection2(
+        navController = navController,
+        backgroundImage = R.drawable.task4bg
+    )
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun Task4SelectionPreview() {
-    // Use a dummy NavController for preview
+
     val navController = rememberNavController()
 
-    // Call your Composable
-    task4Selection(navController = navController)
+
+    task4Selection2(navController = navController)
 }

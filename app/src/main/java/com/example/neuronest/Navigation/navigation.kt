@@ -3,12 +3,14 @@ package com.example.neuronest.Navigation
 import LoginScreen
 import SignUpScreen
 import SplashScreen
+import VideoPlayerScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.DashboardScreen
 import com.example.neuronest.GoodandBadtouch.QuizScreen
+import com.example.neuronest.R
 import com.example.neuronest.Task1.Task1presentation.Task1presentation
 import com.example.neuronest.Task1.selection.Task1SelectionScreen1
 import com.example.neuronest.Task1.selection.Task1SelectionScreen2
@@ -38,6 +40,8 @@ import com.example.neuronest.Task3.task3Quiz.Task3SelectionQuiz
 import com.example.neuronest.Task3.task3Quiz.task3QuizSelectionScreen
 import com.example.neuronest.Task3.task3selection.task3Selection
 import com.example.neuronest.Task3.task3selection.task3selection
+import com.example.neuronest.Task4.Selection.task4Selection
+import com.example.neuronest.Task4.Selection.task4Selection2
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
 
@@ -148,6 +152,15 @@ fun Navigation(apiService: ApiService) {
         }
         composable("task3mcqScreen") {
             McqQuizScreen(navController)
+        }
+        composable("task4selection1") {
+            task4Selection(navController)
+        }
+        composable("task4selection2") {
+            task4Selection2(navController)
+        }
+        composable("task4presentation") {
+            VideoPlayerScreen(videoResId = R.raw.my_video)
         }
 
     }

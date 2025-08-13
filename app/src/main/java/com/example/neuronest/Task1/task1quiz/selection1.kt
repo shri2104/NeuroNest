@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -204,7 +205,8 @@ fun task1selectionquiz1(navController: NavHostController) {
                     enabled = currentPage > 0,
                     modifier = Modifier
                         .weight(1f)
-                        .height(56.dp)
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                 ) {
                     Text("Previous", fontSize = 20.sp)
                 }
@@ -219,7 +221,8 @@ fun task1selectionquiz1(navController: NavHostController) {
                     enabled = currentPage < totalPages - 1 && (correctSelections == 2 || allCurrentClicked),
                     modifier = Modifier
                         .weight(1f)
-                        .height(56.dp)
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
                 ) {
                     Text("Next", fontSize = 20.sp)
                 }

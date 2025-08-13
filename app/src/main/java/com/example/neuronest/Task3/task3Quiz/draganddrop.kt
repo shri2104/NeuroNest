@@ -206,7 +206,7 @@ fun DragAndDropQuestionScreen2(
                     modifier = Modifier
                         .weight(1f).size(80.dp)
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF80A6))
                 ) {
                     Text("Previous", fontSize = 40.sp)
                 }
@@ -218,7 +218,7 @@ fun DragAndDropQuestionScreen2(
                     modifier = Modifier
                         .weight(1f).size(80.dp)
                         .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF80A6))
                 ) {
                     Text("Next" , fontSize = 40.sp)
                 }

@@ -1,4 +1,5 @@
 import android.media.MediaPlayer
+import android.net.Uri
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -46,7 +47,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -239,4 +247,108 @@ fun PresentationScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun VideoPlayerScreen(
+    videoResId: Int,
+    themeColor: Color = Color(0xFF81C784) // light green
+) {
+    val context = LocalContext.current
+    val player = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val videoUri = Uri.parse("android.resource://${context.packageName}/$videoResId")
+            setMediaItem(MediaItem.fromUri(videoUri))
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+                    .setUsage(C.USAGE_MEDIA)
+                    .build(),
+                true
+            )
+            prepare()
+        }
+    }
+
+    val isPlaying = remember { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        onDispose { player.release() }
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Video Lesson",
+                        fontSize = 28.sp,
+                        color = Color.White
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = themeColor)
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(Color(0xFFFDF6FD)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            // Video View
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f) // take available space
+                    .padding(16.dp),
+                factory = {
+                    PlayerView(it).apply {
+                        useController = false
+                        this.player = player
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    if (player.isPlaying) {
+                        player.pause()
+                        isPlaying.value = false
+                    } else {
+                        player.play()
+                        isPlaying.value = true
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = themeColor),
+                shape = RoundedCornerShape(30.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
+                modifier = Modifier
+                    .padding(16.dp)
+                    .height(70.dp)
+                    .width(240.dp)
+            ) {
+                Text(
+                    text = if (isPlaying.value) "⏸ Pause" else "▶ Play",
+                    fontSize = 26.sp,
+                    color = Color.White
+                )
+            }
+
+        }
+    }
+}
+
+
+
+
+@Preview(showBackground = true)
+@Composable
+fun VideoPlayerScreenPreview() {
+    VideoPlayerScreen(videoResId = R.raw.my_video)
 }

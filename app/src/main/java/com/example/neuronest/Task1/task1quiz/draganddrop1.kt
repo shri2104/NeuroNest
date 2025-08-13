@@ -17,31 +17,30 @@ data class Question1(
     val dropThresholdY: Float
 )
 
-
 @Composable
 fun task1draganddrop(navController: NavHostController) {
     val questions = listOf(
         Question1(
             questionImage = R.drawable.task1dq1,
-            optionImageRes = listOf(R.drawable.task1do1, R.drawable.task1do2, R.drawable.task1do3),
+            optionImageRes = listOf(R.drawable._o18, R.drawable._o17, R.drawable._o15),
             correctImageIndex = 1,
             dropThresholdY = 500f
         ),
         Question1(
             questionImage = R.drawable.task1dq2,
-            optionImageRes = listOf(R.drawable.task1do4, R.drawable.task1do5, R.drawable.taskdo6),
+            optionImageRes = listOf(R.drawable._o16, R.drawable._o19, R.drawable._o21),
             correctImageIndex = 1,
             dropThresholdY = 500f
         ),
         Question1(
             questionImage = R.drawable.task1dq3,
-            optionImageRes = listOf(R.drawable.task1do7, R.drawable.task1do8, R.drawable.task1do9),
+            optionImageRes = listOf(R.drawable._o12, R.drawable._013, R.drawable._o10),
             correctImageIndex = 1,
             dropThresholdY = 500f
         ),
         Question1(
             questionImage = R.drawable.task1dq4,
-            optionImageRes = listOf(R.drawable.task1do10, R.drawable.task1do11, R.drawable.task1do12),
+            optionImageRes = listOf(R.drawable._o5, R.drawable._o1, R.drawable._o14),
             correctImageIndex = 1,
             dropThresholdY = 500f
         ),

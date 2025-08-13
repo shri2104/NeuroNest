@@ -68,4 +68,7 @@ dependencies {
     implementation (libs.threetenabp)
     implementation (libs.threetenabp.v131)
     implementation (libs.material3)
+    implementation ("androidx.media3:media3-exoplayer:1.3.1")
+    implementation ("androidx.media3:media3-ui:1.8.0")
+    implementation ("androidx.media3:media3-common:1.8.0")
 }

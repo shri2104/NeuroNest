@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import com.example.neuronest.GoodandBadtouch.FinishScreen
 import com.example.neuronest.R
 import com.example.neuronest.Task2.Task2Quiz.DragAndDropQuestionScreen1
+import com.example.neuronest.Task2.socialquiz.DragAndDropQuestionScreen3
 import lastquizScreen
 
 data class Question1(
@@ -73,7 +74,6 @@ fun ClassroomDrapaandDrop(navController: NavHostController) {
                 isQuizFinished = true
             }
         }
-
         val onPreviousQuestion: () -> Unit = {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--
@@ -83,7 +83,7 @@ fun ClassroomDrapaandDrop(navController: NavHostController) {
 
         val currentQuestion = questions[currentQuestionIndex]
 
-        DragAndDropQuestionScreen1(
+        DragAndDropQuestionScreen3(
             questionImage = currentQuestion.questionImage,
             optionTexts = currentQuestion.optionTexts,
             correctTextIndex = currentQuestion.correctTextIndex,
