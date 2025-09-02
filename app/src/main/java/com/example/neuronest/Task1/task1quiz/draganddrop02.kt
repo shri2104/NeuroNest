@@ -1,5 +1,6 @@
 package com.example.neuronest.Task1.task1quiz
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.neuronest.R
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun task1draganddrop2(
@@ -68,7 +70,7 @@ fun task1draganddrop2(
             TopAppBar(
                 title = { Text("Drag And Drop" , fontSize = 35.sp) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF3F51B5),
+                    containerColor = Color(0xFF2196F3),
                     titleContentColor = Color.White
                 )
             )

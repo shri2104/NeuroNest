@@ -106,7 +106,7 @@ fun Task3DrapaandDrop(navController: NavHostController) {
     if (isQuizFinished) {
         lastquizScreen(
             navController = navController ,
-            destinationRoute = "SocialSelectionScreen"
+            destinationRoute = "Task3QuizSelectionScreen"
         )
     } else {
         val onNextQuestion: () -> Unit = {

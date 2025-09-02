@@ -101,7 +101,7 @@ fun task1selectionquiz1(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Body Safety Quiz", fontSize = 28.sp) },
+                title = { Text("Selection Quiz", fontSize = 28.sp) },
                 navigationIcon = {
                     IconButton(onClick = { backDispatcher?.onBackPressed() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")

@@ -75,7 +75,7 @@ fun classroomselection(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Select Good Manners", fontSize = 35.sp) },
+                title = { Text("Selection Quiz", fontSize = 35.sp) },
                 navigationIcon = {
                     IconButton(onClick = { backDispatcher?.onBackPressed() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")

@@ -117,7 +117,7 @@ fun SelectionQuizScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Emotions", fontSize = 35.sp) },
+                    title = { Text("Selection Quiz", fontSize = 35.sp) },
                     navigationIcon = {
                         IconButton(onClick = { backDispatcher?.onBackPressed() }) {
                             Icon(Icons.Default.ArrowBack, contentDescription = "Back")
