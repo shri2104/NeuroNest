@@ -8,9 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.neuronest.AboutScreen
 import com.example.neuronest.DashboardScreen
+import com.example.neuronest.FeedbackScreen
 import com.example.neuronest.GoodandBadtouch.QuizScreen
 import com.example.neuronest.R
+import com.example.neuronest.SettingsScreen
 import com.example.neuronest.Task1.Task1presentation.Task1presentation
 import com.example.neuronest.Task1.selection.Task1SelectionScreen1
 import com.example.neuronest.Task1.selection.Task1SelectionScreen2
@@ -42,6 +45,7 @@ import com.example.neuronest.Task3.task3selection.task3Selection
 import com.example.neuronest.Task3.task3selection.task3selection
 import com.example.neuronest.Task4.Selection.task4Selection
 import com.example.neuronest.Task4.Selection.task4Selection2
+import com.example.neuronest.TutorialScreen
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
 
@@ -162,6 +166,11 @@ fun Navigation(apiService: ApiService) {
         composable("task4presentation") {
             VideoPlayerScreen(videoResId = R.raw.my_video)
         }
+        composable("dashboard") { DashboardScreen(navController) }
+        composable("about") { AboutScreen(navController) }
+        composable("tutorial") { TutorialScreen(navController) }
+        composable("settings") { SettingsScreen(navController) }
+        composable("feedback") { FeedbackScreen(navController) }
 
     }
 }
