@@ -9,11 +9,11 @@ import com.example.neuronest.R
 
 
 val images = listOf(
-    R.drawable.c1, R.drawable.c2, R.drawable.c3, R.drawable.c4,
-    R.drawable.c5, R.drawable.c6, R.drawable.c7, R.drawable.c8,
-    R.drawable.c9, R.drawable.c10, R.drawable.c11, R.drawable.c12,
-    R.drawable.c13, R.drawable.c14, R.drawable.c15, R.drawable.c16,
-    R.drawable.c17, R.drawable.c18, R.drawable.c19
+    R.drawable.t2n1, R.drawable.t2n2, R.drawable.t2n3, R.drawable.t2n4,
+    R.drawable.t2n5, R.drawable.t2n6, R.drawable.t2n7, R.drawable.t2n8,
+    R.drawable.t2n9, R.drawable.t2n10, R.drawable.t2n11, R.drawable.t2n12,
+    R.drawable.t2n13, R.drawable.t2n14, R.drawable.t2n15, R.drawable.t2n16,
+    R.drawable.t2n17, R.drawable.t218, R.drawable.t2n19
 )
 
 val audios = listOf(

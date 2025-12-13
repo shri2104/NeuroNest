@@ -8,11 +8,11 @@ import androidx.navigation.NavHostController
 import com.example.neuronest.R
 
 val images2 = listOf(
-    R.drawable.task1p1, R.drawable.task1p2, R.drawable.task1p3, R.drawable.task1p4,
-    R.drawable.task1p5, R.drawable.task1p6, R.drawable.task1p7, R.drawable.task1p8,
-    R.drawable.task1p9, R.drawable.task1p10, R.drawable.task1p11, R.drawable.task1p12,
-    R.drawable.t1p13, R.drawable.t1p14, R.drawable.t1p15, R.drawable.t1p16,
-   R.drawable.t1p18,R.drawable.t1p19,R.drawable.t1p20,
+    R.drawable.t1n1, R.drawable.t1n2, R.drawable.t1n3, R.drawable.t1n4,
+    R.drawable.t1n5, R.drawable.t1n6, R.drawable.t1n7, R.drawable.t1n8,
+    R.drawable.t1n9, R.drawable.t1n10, R.drawable.t1n11, R.drawable.t1n12,
+    R.drawable.t1n13, R.drawable.t1n14, R.drawable.t1n15, R.drawable.t1n16,
+   R.drawable.t1n17,R.drawable.t1n18,R.drawable.t1n19,
 )
 
 val audios2 = listOf(

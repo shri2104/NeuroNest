@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.AboutScreen
 import com.example.neuronest.DashboardScreen
 import com.example.neuronest.FeedbackScreen
+import com.example.neuronest.FeedbackScreenPreview
 import com.example.neuronest.GoodandBadtouch.QuizScreen
 import com.example.neuronest.R
 import com.example.neuronest.SettingsScreen
@@ -53,7 +54,7 @@ import com.example.neuronest.retrofit.ApiService
 @Composable
 fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
-    NavHost(navController=navController,startDestination = "DashBoard"){
+    NavHost(navController=navController,startDestination = "LoginScreen"){
 
         composable("LoginScreen") {
             LoginScreen(
@@ -170,7 +171,7 @@ fun Navigation(apiService: ApiService) {
         composable("about") { AboutScreen(navController) }
         composable("tutorial") { TutorialScreen(navController) }
         composable("settings") { SettingsScreen(navController) }
-        composable("feedback") { FeedbackScreen(navController) }
+        composable("feedback") { FeedbackScreenPreview() }
 
     }
 }
