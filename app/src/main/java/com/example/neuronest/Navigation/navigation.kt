@@ -44,8 +44,14 @@ import com.example.neuronest.Task3.task3Quiz.Task3SelectionQuiz
 import com.example.neuronest.Task3.task3Quiz.task3QuizSelectionScreen
 import com.example.neuronest.Task3.task3selection.task3Selection
 import com.example.neuronest.Task3.task3selection.task3selection
+import com.example.neuronest.Task4.Quiz.task4QuizSelectionScreen
+import com.example.neuronest.Task4.Selection.Task4ActivityType
+import com.example.neuronest.Task4.Selection.task4BrainFunList
+import com.example.neuronest.Task4.Selection.task4HappyLearningList
 import com.example.neuronest.Task4.Selection.task4Selection
-import com.example.neuronest.Task4.Selection.task4Selection2
+import com.example.neuronest.Task4.task4quiz.Task4DragDrop
+import com.example.neuronest.Task4.task4quiz.Task4McqScreen
+import com.example.neuronest.Task4.task4quiz.Task4YesNoScreen
 import com.example.neuronest.TutorialScreen
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
@@ -54,7 +60,7 @@ import com.example.neuronest.retrofit.ApiService
 @Composable
 fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
-    NavHost(navController=navController,startDestination = "LoginScreen"){
+    NavHost(navController=navController,startDestination = "DashBoard"){
 
         composable("LoginScreen") {
             LoginScreen(
@@ -161,9 +167,52 @@ fun Navigation(apiService: ApiService) {
         composable("task4selection1") {
             task4Selection(navController)
         }
-        composable("task4selection2") {
-            task4Selection2(navController)
+        composable("HappyLearningList") {
+            task4HappyLearningList(navController)
         }
+
+        composable("BrainFunList") {
+            task4BrainFunList(navController)
+        }
+
+        composable("Task4QuizSelection/{activity}") { backStackEntry ->
+            val activity = Task4ActivityType.valueOf(
+                backStackEntry.arguments!!.getString("activity")!!
+            )
+
+            task4QuizSelectionScreen(
+                navController = navController,
+                activity = activity
+            )
+        }
+
+        composable("Task4DragDrop/{activity}") { backStackEntry ->
+            val activity = Task4ActivityType.valueOf(
+                backStackEntry.arguments!!.getString("activity")!!
+            )
+
+            Task4DragDrop(navController, activity)
+        }
+
+        composable("Task4Mcq/{activity}") { backStackEntry ->
+            val activity = Task4ActivityType.valueOf(
+                backStackEntry.arguments?.getString("activity")!!
+            )
+
+            Task4McqScreen(navController, activity)
+        }
+
+
+        composable("Task4YesNo/{activity}") { backStackEntry ->
+            val activity = Task4ActivityType.valueOf(
+                backStackEntry.arguments!!.getString("activity")!!
+            )
+
+            Task4YesNoScreen(navController, activity)
+        }
+
+
+
         composable("task4presentation") {
             VideoPlayerScreen(videoResId = R.raw.my_video)
         }

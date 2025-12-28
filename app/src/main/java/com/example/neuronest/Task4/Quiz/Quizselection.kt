@@ -35,21 +35,37 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.R
 import com.example.neuronest.Task2.selection.socialSelectionScreen2
+import com.example.neuronest.Task4.Selection.Task4ActivityType
 import com.example.neuronest.Task4.Selection.task4Selection
 
 @Composable
-fun task4QuizSelectionScreen(navController: NavHostController) {
+fun task4QuizSelectionScreen(
+    navController: NavHostController,
+    activity: Task4ActivityType
+) {
     Task4QuizSelectionScreen(
         navController = navController,
-        backgroundImage = R.drawable.photo_2025_08_05_00_17_00,
-        onFirstButtonClick = { navController.navigate("Task4DragAndDrop") },
-        onSecondButtonClick = { navController.navigate("Task4SelectionQuiz") },
-        onThirdButtonClick = { navController.navigate("Task4McqScreen") },
-        firstButtonText = "Drag and Drop",
-        secondButtonText = "Selection",
-        thirdButtonText = "Yes/No"
+        backgroundImage = R.drawable.task4bg,
+
+        firstButtonText = "Drag & Drop",
+        secondButtonText = "MCQ",
+        thirdButtonText = "Yes / No",
+
+        onFirstButtonClick = {
+            navController.navigate("Task4DragDrop/${activity.name}")
+        },
+
+        onSecondButtonClick = {
+            navController.navigate("Task4Mcq/${activity.name}")
+        },
+
+        onThirdButtonClick = {
+            navController.navigate("Task4YesNo/${activity.name}")
+        }
     )
 }
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +98,7 @@ fun Task4QuizSelectionScreen(
                     titleContentColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("Task4SelectionScreen") }) {
+                    IconButton(onClick = { navController.navigate("BrainFunList") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                     }
                 }
@@ -146,14 +162,4 @@ fun Task4QuizSelectionScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun Task4SelectionPreview() {
-    // Use a dummy NavController for preview
-    val navController = rememberNavController()
-
-    // Call your Composable
-    task4QuizSelectionScreen(navController = navController)
 }

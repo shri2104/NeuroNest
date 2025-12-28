@@ -39,17 +39,42 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.neuronest.Task4.Quiz.task4QuizSelectionScreen
 
+
+enum class Task4ActivityType {
+    HITTING, PINCHING, SPITTING, BITING, SHOUTING
+}
+
+enum class Task4QuizType {
+    DRAG, SELECTION, YESNO
+}
+
+fun activityToType(activity: String): Task4ActivityType {
+    return when (activity) {
+        "No Hitting" -> Task4ActivityType.HITTING
+        "No Pinching" -> Task4ActivityType.PINCHING
+        "No Spitting" -> Task4ActivityType.SPITTING
+        "No Biting" -> Task4ActivityType.BITING
+        "No Shouting" -> Task4ActivityType.SHOUTING
+        else -> Task4ActivityType.HITTING
+    }
+}
+
 @Composable
 fun task4Selection(navController: NavHostController) {
     task4selection(
         navController = navController,
-        backgroundImage = R.drawable.photo_2025_08_05_00_17_00, // update with actual image name
+        backgroundImage = R.drawable.photo_2025_08_05_00_17_00,
         firstButtonText = "Happy Learning",
         secondButtonText = "Brain Fun",
-        onFirstButtonClick = { navController.navigate("task4selection2") },
-        onSecondButtonClick = { navController.navigate("Task4QuizSelectionScreen") }
+        onFirstButtonClick = {
+            navController.navigate("HappyLearningList")
+        },
+        onSecondButtonClick = {
+            navController.navigate("BrainFunList")
+        }
     )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,11 +172,11 @@ fun task4selection(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun task4selection2(
+fun Task4ActivityListScreen(
     navController: NavHostController,
-    backgroundImage: Int
+    backgroundImage: Int,
+    onActivityClick: (String) -> Unit
 ) {
-    val lightGreen = Color(0xFF90EE90)
     val darkGreen = Color(0xFF388E3C)
 
     Scaffold(
@@ -160,30 +185,30 @@ fun task4selection2(
                 title = {
                     Text(
                         text = "Social Stories",
-                        style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontSize = 32.sp
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = darkGreen,
-                    titleContentColor = Color.White
+                    containerColor = darkGreen
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("Dashboard") }) {
+                    IconButton(onClick = { navController.navigate("task4selection1") }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
                     }
                 }
             )
         }
     ) { innerPadding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+
             Image(
-                painter = painterResource(id = backgroundImage),
+                painter = painterResource(backgroundImage),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
@@ -196,74 +221,59 @@ fun task4selection2(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val buttonModifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(vertical = 6.dp)
 
-                val buttonTextStyle = TextStyle(
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold
+                val activities = listOf(
+                    "No Hitting",
+                    "No Pinching",
+                    "No Spitting",
+                    "No Biting",
+                    "No Shouting"
                 )
 
-                Button(
-                    onClick = { navController.navigate("task4presentation") },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
-                ) {
-                    Text("No Hitting", style = buttonTextStyle, color = Color.White)
-                }
-
-                Button(
-                    onClick = { navController.navigate("task4presentation") },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
-                ) {
-                    Text("No Pinching", style = buttonTextStyle, color = Color.White)
-                }
-
-                Button(
-                    onClick = { navController.navigate("task4presentation") },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
-                ) {
-                    Text("No Spitting", style = buttonTextStyle, color = Color.White)
-                }
-
-                Button(
-                    onClick = { navController.navigate("task4presentation") },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
-                ) {
-                    Text("No Biting", style = buttonTextStyle, color = Color.White)
-                }
-
-                Button(
-                    onClick = { navController.navigate("task4presentation") },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
-                ) {
-                    Text("No Shouting", style = buttonTextStyle, color = Color.White)
+                activities.forEach { activity ->
+                    Button(
+                        onClick = { onActivityClick(activity) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(80.dp)
+                            .padding(vertical = 6.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = darkGreen)
+                    ) {
+                        Text(
+                            text = activity,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun task4Selection2(navController: NavHostController) {
-    task4selection2(
+fun task4HappyLearningList(navController: NavHostController) {
+    Task4ActivityListScreen(
         navController = navController,
-        backgroundImage = R.drawable.task4bg
+        backgroundImage = R.drawable.task4bg,
+        onActivityClick = {
+            navController.navigate("task4presentation")
+        }
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Task4SelectionPreview() {
-
-    val navController = rememberNavController()
-
-
-    task4Selection2(navController = navController)
+fun task4BrainFunList(navController: NavHostController) {
+    Task4ActivityListScreen(
+        navController = navController,
+        backgroundImage = R.drawable.task4bg,
+        onActivityClick = { activity ->
+            val type = activityToType(activity)
+            navController.navigate("Task4QuizSelection/${type.name}")
+        }
+    )
 }
+
+
