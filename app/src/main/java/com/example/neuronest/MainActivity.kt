@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import com.example.neuronest.Navigation.Navigation
 import com.example.neuronest.retrofit.createApiService
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.neurokids.app.ui.screens.HomeDashboard
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -18,7 +19,10 @@ class MainActivity : ComponentActivity() {
         val apiService = createApiService()
         enableEdgeToEdge()
         setContent {
-            Navigation(apiService)
+            HomeDashboard(
+                childName = "Alex",
+                overallProgress = 0.30f
+            )
         }
     }
 }
