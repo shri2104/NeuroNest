@@ -44,51 +44,57 @@ class LoginScreenViewModel : ViewModel() {
     fun createUserWithEmailAndPassword(
         email: String,
         password: String,
+        childName: String,
+        caregiverName: String,
+        caregiverPhone: String,
+        userGroup: String,
+        language: String,
+        childAge: String,
         home: (Boolean) -> Unit
     ) {
+
         if (_loading.value == false) {
             _loading.value = true
+
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
+
                     if (task.isSuccessful) {
-                        val displayName = email.substringBefore('@')
-                        createUser(displayName) {
-                            home(true) // Navigate after user creation
-                        }
+
+                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+
+                        val userMap = hashMapOf(
+                            "email" to email,
+                            "childName" to childName,
+                            "caregiverName" to caregiverName,
+                            "caregiverPhone" to caregiverPhone,
+                            "userGroup" to userGroup,
+                            "language" to language,
+                            "childAge" to childAge
+                        )
+
+                        firestore.collection("users")
+                            .document(uid)
+                            .set(userMap)
+                            .addOnSuccessListener {
+                                Log.d("FB", "User document created!")
+                                home(true)
+                            }
+                            .addOnFailureListener {
+                                Log.e("FB", "Firestore error: ${it.message}")
+                                home(false)
+                            }
+
                     } else {
                         Log.d("FB", "Registration Failed: ${task.exception?.message}")
                         home(false)
                     }
+
                     _loading.value = false
                 }
         }
     }
 
-    /**
-     * Create user document in Firestore.
-     */
-    private fun createUser(displayName: String?, home: () -> Unit) {
-        val userId = auth.currentUser?.uid ?: return
-        val user = MUser(
-            id = userId,
-            userId = userId,
-            displayName = displayName ?: "",
-            avatarUrl = "",
-            quote = "Life is great",
-            profession = "Android Developer"
-        ).toMap()
-
-        firestore.collection("users")
-            .document(userId)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d("FB", "User document successfully created!")
-                home() // Navigate after Firestore document creation
-            }
-            .addOnFailureListener { exception ->
-                Log.e("FB", "Error creating user document: ${exception.message}")
-            }
-    }
 
     /**
      * Check if the user is already logged in.

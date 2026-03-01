@@ -19,10 +19,7 @@ class MainActivity : ComponentActivity() {
         val apiService = createApiService()
         enableEdgeToEdge()
         setContent {
-            HomeDashboard(
-                childName = "Alex",
-                overallProgress = 0.30f
-            )
+           Navigation(apiService)
         }
     }
 }

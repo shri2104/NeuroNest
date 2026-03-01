@@ -167,7 +167,7 @@ fun SplashScreen(
                 painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(140.dp)
+                    .size(190.dp)
                     .graphicsLayer(
                         scaleX = scale.value,
                         scaleY = scale.value,
@@ -180,7 +180,7 @@ fun SplashScreen(
             Text(
                 text = "Uniquel Brains",
                 color = Color.White,
-                fontSize = 28.sp,
+                fontSize = 35.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.alpha(alpha.value)
             )
@@ -190,7 +190,7 @@ fun SplashScreen(
             Text(
                 text = "Smart Care • Smart Growth",
                 color = Color.White.copy(alpha = 0.8f),
-                fontSize = 14.sp,
+                fontSize = 20.sp,
                 modifier = Modifier.alpha(alpha.value)
             )
         }
