@@ -1,0 +1,1 @@
+Neuronest is an innovative mobile app designed for neurodiagnosis in children, combining learning and assessment in one platform. The app includes an interactive presentation module to explain neurological concepts in a simple, child-friendly way, along with an engaging quiz section to evaluate understanding and cognitive responses.
