@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "114172269466",
-    "project_id": "neuronest-c254d",
-    "storage_bucket": "neuronest-c254d.firebasestorage.app"
+    "project_number": "559660739251",
+    "project_id": "uniquel-brains-87353",
+    "storage_bucket": "uniquel-brains-87353.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:114172269466:android:b2bf89d9b1cfe9329a6023",
+        "mobilesdk_app_id": "1:559660739251:android:a167c62d305442ab119ec6",
         "android_client_info": {
           "package_name": "com.example.neuronest"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCQ8O3QJFUQ72UY2mTQSxX9_svyvnL7i-A"
+          "current_key": "AIzaSyAiUxNXr7ILEW5grXrho-CEe-GzSWgKoQU"
         }
       ],
       "services": {
