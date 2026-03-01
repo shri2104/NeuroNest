@@ -2,6 +2,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -35,7 +36,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.graphicsLayer
@@ -61,6 +64,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.neuronest.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun lastquizScreen(
@@ -100,49 +104,98 @@ fun lastquizScreen(
         }
     }
 }
-
 @Composable
-fun SplashScreen(navController: NavHostController, viewModel: LoginScreenViewModel = viewModel()) {
-    val scale = remember { Animatable(0f) }
-    val isUserLoggedIn by remember { mutableStateOf(viewModel.isUserLoggedIn()) } // Check login status
+fun SplashScreen(
+    navController: NavHostController,
+    viewModel: LoginScreenViewModel = viewModel()
+) {
+    val scale = remember { Animatable(0.7f) }
+    val alpha = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        scale.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(
-                durationMillis = 800,
-                easing = {
-                    OvershootInterpolator(4f).getInterpolation(it)
-                }
-            )
-        )
-        delay(2000L)
 
-        if (isUserLoggedIn) {
+        // Scale animation
+        launch {
+            scale.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(
+                    durationMillis = 900,
+                    easing = FastOutSlowInEasing
+                )
+            )
+        }
+
+        // Fade animation
+        launch {
+            alpha.animateTo(
+                targetValue = 1f,
+                animationSpec = tween(durationMillis = 1200)
+            )
+        }
+
+        delay(2200)
+
+        if (viewModel.isUserLoggedIn()) {
             navController.navigate("DashBoard") {
-                popUpTo("Splashscreen") { inclusive = true } // Clears splash from backstack
+                popUpTo("SplashScreen") { inclusive = true }
             }
         } else {
             navController.navigate("LoginScreen") {
-                popUpTo("Splashscreen") { inclusive = true } // Clears splash from backstack
+                popUpTo("SplashScreen") { inclusive = true }
             }
         }
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF4A90E2),
+                        Color(0xFF145DA0)
+                    )
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped), // Replace with your actual image resource
-            contentDescription = "App Logo",
-            modifier = Modifier
-                .size(150.dp) // Adjust size as needed
-                .graphicsLayer(scaleX = scale.value, scaleY = scale.value)
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(140.dp)
+                    .graphicsLayer(
+                        scaleX = scale.value,
+                        scaleY = scale.value,
+                        alpha = alpha.value
+                    )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Uniquel Brains",
+                color = Color.White,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.alpha(alpha.value)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Smart Care • Smart Growth",
+                color = Color.White.copy(alpha = 0.8f),
+                fontSize = 14.sp,
+                modifier = Modifier.alpha(alpha.value)
+            )
+        }
     }
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresentationScreen(

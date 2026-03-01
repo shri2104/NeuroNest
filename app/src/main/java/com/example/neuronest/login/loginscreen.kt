@@ -1,5 +1,6 @@
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,68 +42,95 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    LazyColumn(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .padding(top = 32.dp, bottom = 32.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color(0xFFF5F7FA))
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
     ) {
-        item {
-            Image(
-                painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped), // Replace with your logo
-                contentDescription = "App Logo",
-                modifier = Modifier
-                    .size(120.dp)
-                    .padding(bottom = 16.dp)
-            )
-
-
-            InputField(label = "Email", value = email, onValueChange = { email = it }, placeholder = "Enter your email")
-            Spacer(modifier = Modifier.height(8.dp))
-            InputField(label = "Password", value = password, onValueChange = { password = it }, placeholder = "Enter your password")
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (errorMessage != null) {
-                Text(
-                    text = errorMessage!!,
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-
-            Button(
-                onClick = {
-                    if (email.isNotEmpty() && password.isNotEmpty()) {
-                        viewModel.signInWithEmailAndPassword(email, password) { success ->
-                            if (success) {
-                                navController.navigate("DashBoard") {
-                                    popUpTo("LoginScreen") { inclusive = true }
-                                }
-                            } else {
-                                errorMessage = "Invalid email or password. Please try again."
-                            }
-                        }
-                    } else {
-                        errorMessage = "Please fill in all fields."
-                    }
-                }
+        Card(
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(8.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Login")
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            TextButton(onClick = onSignUp) {
-                Text("Don't have an account? Sign Up")
+
+                Image(
+                    painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
+                    contentDescription = "Logo",
+                    modifier = Modifier.size(100.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Welcome Back",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                InputField("Email", email, { email = it }, "Enter your email")
+                InputField(
+                    label = "Password",
+                    value = password,
+                    onValueChange = { password = it },
+                    placeholder = "Enter password",
+                    isPassword = true
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                errorMessage?.let {
+                    Text(it, color = Color.Red)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = {
+                        if (email.isNotBlank() && password.isNotBlank()) {
+                            viewModel.signInWithEmailAndPassword(email, password) { success ->
+                                if (success) {
+                                    navController.navigate("DashBoard") {
+                                        popUpTo("LoginScreen") { inclusive = true }
+                                    }
+                                } else {
+                                    errorMessage = "Invalid email or password."
+                                }
+                            }
+                        } else {
+                            errorMessage = "Please fill all fields."
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Text("Login")
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                TextButton(onClick = onSignUp) {
+                    Text("Don't have an account? Sign Up")
+                }
             }
         }
     }
 }
 
 @Composable
-fun SignUpScreen(viewModel: LoginScreenViewModel = viewModel(), navController: NavHostController) {
+fun SignUpScreen(
+    viewModel: LoginScreenViewModel = viewModel(),
+    navController: NavHostController
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var childName by remember { mutableStateOf("") }
@@ -111,83 +139,119 @@ fun SignUpScreen(viewModel: LoginScreenViewModel = viewModel(), navController: N
     var userGroup by remember { mutableStateOf("") }
     var language by remember { mutableStateOf("") }
     var childAge by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    LazyColumn(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .padding(top = 32.dp, bottom = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color(0xFFF5F7FA))
+            .padding(24.dp)
     ) {
-        item {
-            Text("SIGN UP", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(10.dp))
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
 
-            Divider(Modifier.height(4.dp))
+                Text(
+                    text = "Create Account",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
 
-            Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-            InputField(label = "Child Name", value = childName, onValueChange = { childName = it }, placeholder = "Enter child's name")
-            InputField(label = "Caregiver's Name", value = caregiverName, onValueChange = { caregiverName = it }, placeholder = "Enter caregiver's name")
-            InputField(label = "Caregiver's Phone No.", value = caregiverPhone, onValueChange = { caregiverPhone = it }, placeholder = "Enter phone number")
-            InputField(label = "Email ID", value = email, onValueChange = { email = it }, placeholder = "Enter email")
-            InputField(label = "User Group", value = userGroup, onValueChange = { userGroup = it }, placeholder = "Enter user group")
-            InputField(label = "Language", value = language, onValueChange = { language = it }, placeholder = "Enter language")
-            InputField(label = "Child Age", value = childAge, onValueChange = { childAge = it }, placeholder = "Enter child's age")
-            InputField(label = "Password", value = password, onValueChange = { password = it }, placeholder = "Enter password")
+                InputField("Child Name", childName, { childName = it }, "Enter child's name")
+                InputField("Caregiver Name", caregiverName, { caregiverName = it }, "Enter caregiver name")
+                InputField("Caregiver Phone", caregiverPhone, { caregiverPhone = it }, "Enter phone number")
+                InputField("Email", email, { email = it }, "Enter email")
+                InputField("User Group", userGroup, { userGroup = it }, "Enter user group")
+                InputField("Language", language, { language = it }, "Enter language")
+                InputField("Child Age", childAge, { childAge = it }, "Enter child's age")
 
-            Spacer(modifier = Modifier.height(32.dp))
-            Button(onClick = {
-                viewModel.createUserWithEmailAndPassword(email, password) { success ->
-                    if (success) {
-                        Log.d("SignUp", "Navigating to Dashboard")
-                        navController.navigate("DashBoard") {
-                            popUpTo("SignUpScreen") { inclusive = true }
-                        }
-                    } else {
-                        Log.e("SignUp", "Registration failed, staying on SignUpScreen")
-                    }
+                InputField(
+                    label = "Password",
+                    value = password,
+                    onValueChange = { password = it },
+                    placeholder = "Enter password",
+                    isPassword = true
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                errorMessage?.let {
+                    Text(it, color = Color.Red)
                 }
-            }) {
-                Text("Create Account")
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = {
+                        if (email.isBlank() || password.length < 6) {
+                            errorMessage = "Enter valid email & password (min 6 chars)."
+                            return@Button
+                        }
+
+                        viewModel.createUserWithEmailAndPassword(email, password) { success ->
+                            if (success) {
+                                navController.navigate("DashBoard") {
+                                    popUpTo("SignUpScreen") { inclusive = true }
+                                }
+                            } else {
+                                errorMessage = "Registration failed. Try another email."
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Text("Create Account")
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
             }
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
 
-
-
-
-
 @Composable
-fun InputField(label: String, value: String, onValueChange: (String) -> Unit, placeholder: String) {
-    Text(
-        text = label,
-        fontSize = 16.sp,
-        color = Color.Black,
-        modifier = Modifier.padding(bottom = 4.dp)
-    )
-    Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
-    ) {
+fun InputField(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    isPassword: Boolean = false
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+        Text(
+            text = label,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color.DarkGray
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
         TextField(
             value = value,
             onValueChange = onValueChange,
-            placeholder = { Text(text = placeholder) },
+            placeholder = { Text(placeholder) },
             modifier = Modifier.fillMaxWidth(),
+            visualTransformation = if (isPassword)
+                PasswordVisualTransformation()
+            else
+                androidx.compose.ui.text.input.VisualTransformation.None,
+            shape = RoundedCornerShape(14.dp),
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
-                cursorColor = Color.Blue,
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White
             )
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
     }
 }
