@@ -351,7 +351,6 @@ fun InputField(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserGroupDropdown(
     selectedValue: String,
