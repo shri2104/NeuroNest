@@ -115,6 +115,7 @@ val activities = listOf(
 @Composable
 fun HomeDashboard(
     childName: String = "Alex",
+    onNavigate: (String) -> Unit = {},
     overallProgress: Float = activities.run {
         sumOf { it.sectionsCompleted }.toFloat() / (size * 4)
     }
@@ -127,9 +128,11 @@ fun HomeDashboard(
         LeftSidebar(
             childName = childName,
             overallProgress = overallProgress,
+            onNavigate = onNavigate,
             modifier = Modifier.width(300.dp).fillMaxHeight()
         )
         RightContent(
+            onNavigate = onNavigate,
             modifier = Modifier.weight(1f).fillMaxHeight()
         )
     }
@@ -138,11 +141,11 @@ fun HomeDashboard(
 // ─── Left Sidebar ─────────────────────────────────────────────────────────────
 
 @Composable
-fun LeftSidebar(childName: String, overallProgress: Float, modifier: Modifier = Modifier) {
+fun LeftSidebar(childName: String, overallProgress: Float,  onNavigate: (String) -> Unit = {}, modifier: Modifier = Modifier) {
     var animatedProgress by remember { mutableFloatStateOf(0f) }
     val completedCount = activities.count { it.isCompleted }
     val isPreview = LocalInspectionMode.current
-
+    var showLogoutDialog by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         if (!isPreview) delay(400)
         animate(
@@ -168,7 +171,6 @@ fun LeftSidebar(childName: String, overallProgress: Float, modifier: Modifier = 
             Text("Hi, $childName! 👋", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3D3D3D))
             Text("Keep up the great work!", fontSize = 13.sp, color = Color(0xFF9E9E9E))
             Spacer(Modifier.height(28.dp))
-            LevelRing(progress = if (isPreview) overallProgress else animatedProgress)
             Spacer(Modifier.height(24.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 StatChip("$completedCount", "Done", Color(0xFF4CAF50))
@@ -176,17 +178,45 @@ fun LeftSidebar(childName: String, overallProgress: Float, modifier: Modifier = 
                 StatChip("${activities.size}", "Total", Color(0xFF7C4DFF))
             }
             Spacer(Modifier.height(32.dp))
-            SideNavItem(Icons.Default.Home, "Home", selected = true, Color(0xFF7C4DFF))
+            SideNavItem(Icons.Default.Home, "Home", selected = true, Color(0xFF7C4DFF),
+                onClick = { onNavigate("DashBoard") })
             Spacer(Modifier.height(8.dp))
-            SideNavItem(Icons.Default.BarChart, "My Progress", selected = false, Color(0xFF7C4DFF))
+            SideNavItem(Icons.Default.Info, "About App", selected = false, Color(0xFF7C4DFF),
+                onClick = { onNavigate("about") })
             Spacer(Modifier.height(8.dp))
-            SideNavItem(Icons.Default.EmojiEvents, "Achievements", selected = false, Color(0xFF7C4DFF))
+            SideNavItem(Icons.Default.PlayCircle, "Tutorial", selected = false, Color(0xFF7C4DFF),
+                onClick = { onNavigate("tutorial") })
             Spacer(Modifier.height(8.dp))
-            SideNavItem(Icons.Default.Person, "Profile", selected = false, Color(0xFF7C4DFF))
+            SideNavItem(Icons.Default.Feedback, "Feedback", selected = false, Color(0xFF7C4DFF),
+                onClick = { onNavigate("feedback") })
+            SideNavItem(Icons.Default.Logout, "Logout", selected = false, Color(0xFFE53935),
+                onClick = { showLogoutDialog = true })
+
+            if (showLogoutDialog) {
+                AlertDialog(
+                    onDismissRequest = { showLogoutDialog = false },
+                    title = { Text("Logout", fontWeight = FontWeight.Bold) },
+                    text = { Text("Are you sure you want to logout?") },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            showLogoutDialog = false
+                            onNavigate("LoginScreen")
+                        }) {
+                            Text("Yes, Logout", color = Color(0xFFE53935))
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showLogoutDialog = false }) {
+                            Text("Cancel", color = Color(0xFF7C4DFF))
+                        }
+                    }
+                )
+            }
+            Spacer(Modifier.height(8.dp))
             Spacer(Modifier.weight(1f))
             Spacer(Modifier.height(16.dp))
             OutlinedButton(
-                onClick = {}, shape = RoundedCornerShape(16.dp),
+                onClick = { onNavigate("settings")}, shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF7C4DFF)),
                 border = BorderStroke(1.5.dp, Color(0xFFEDE7F6))
@@ -220,26 +250,7 @@ fun AnimatedAvatarBubble() {
 
 // ─── Level Ring ───────────────────────────────────────────────────────────────
 
-@Composable
-fun LevelRing(progress: Float) {
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(140.dp)) {
-        CircularProgressIndicator(
-            progress = { 1f }, modifier = Modifier.fillMaxSize(),
-            color = Color(0xFFEDE7F6), strokeWidth = 10.dp
-        )
-        CircularProgressIndicator(
-            progress = { progress }, modifier = Modifier.fillMaxSize(),
-            color = Color(0xFF7C4DFF), strokeWidth = 10.dp
-        )
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "${(progress * 100).toInt()}%",
-                fontSize = 30.sp, fontWeight = FontWeight.Bold, color = Color(0xFF3D3D3D)
-            )
-            Text("Overall", fontSize = 12.sp, color = Color(0xFF9E9E9E))
-        }
-    }
-}
+
 
 // ─── Stat Chip ────────────────────────────────────────────────────────────────
 
@@ -261,10 +272,10 @@ fun StatChip(value: String, label: String, color: Color) {
 // ─── Side Nav Item ────────────────────────────────────────────────────────────
 
 @Composable
-fun SideNavItem(icon: ImageVector, label: String, selected: Boolean, color: Color) {
+fun SideNavItem(icon: ImageVector, label: String, selected: Boolean, color: Color, onClick: () -> Unit = {} ) {
     Row(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-            .background(if (selected) color.copy(alpha = 0.10f) else Color.Transparent)
+            .background(if (selected) color.copy(alpha = 0.10f) else Color.Transparent)    .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -285,7 +296,7 @@ fun SideNavItem(icon: ImageVector, label: String, selected: Boolean, color: Colo
 // ─── Right Content ────────────────────────────────────────────────────────────
 
 @Composable
-fun RightContent(modifier: Modifier = Modifier) {
+fun RightContent( onNavigate: (String) -> Unit = {}, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(start = 10.dp, top = 20.dp, end = 20.dp, bottom = 20.dp)) {
         Spacer(Modifier.height(16.dp))
         Row(
@@ -317,7 +328,7 @@ fun RightContent(modifier: Modifier = Modifier) {
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             itemsIndexed(activities) { index, activity ->
-                AnimatedTabletCard(activity = activity, index = index)
+                AnimatedTabletCard(activity = activity, index = index,  onNavigate = onNavigate )
             }
         }
     }
@@ -326,7 +337,7 @@ fun RightContent(modifier: Modifier = Modifier) {
 // ─── Animated Card Wrapper ────────────────────────────────────────────────────
 
 @Composable
-fun AnimatedTabletCard(activity: Activity, index: Int) {
+fun AnimatedTabletCard(activity: Activity, index: Int,  onNavigate: (String) -> Unit = {}  ) {
     val isPreview = LocalInspectionMode.current
     var visible by remember { mutableStateOf(isPreview) }
     LaunchedEffect(Unit) {
@@ -342,14 +353,14 @@ fun AnimatedTabletCard(activity: Activity, index: Int) {
             animationSpec = spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessMedium)
         ) + fadeIn(tween(250))
     ) {
-        TabletActivityCard(activity = activity)
+        TabletActivityCard(activity = activity, onNavigate = onNavigate )
     }
 }
 
 // ─── Tablet Activity Card ─────────────────────────────────────────────────────
 
 @Composable
-fun TabletActivityCard(activity: Activity) {
+fun TabletActivityCard(activity: Activity,onNavigate: (String) -> Unit = {}) {
     val isCompleted = activity.isCompleted
     val cardBg = if (isCompleted)
         Brush.linearGradient(listOf(activity.color, activity.gradientEnd))
@@ -357,8 +368,20 @@ fun TabletActivityCard(activity: Activity) {
         Brush.linearGradient(listOf(Color.White, Color.White))
 
     Card(
-        modifier = Modifier.fillMaxWidth().shadow(6.dp, RoundedCornerShape(24.dp)),
+        modifier = Modifier.fillMaxWidth().shadow(6.dp, RoundedCornerShape(24.dp))
+            .clickable {
+                // Map activity id to navigation route
+                when (activity.id) {
+                    1 -> onNavigate("Task3SelectionScreen")   // Emotions
+                    2 -> onNavigate("DragandDropQuiz")        // Personal Space
+                    3 -> onNavigate("Task1SelectionScreen")   // Good & Bad Touch
+                    4 -> onNavigate("Task2SelectionScreen")   // Manners
+                    5 -> onNavigate("task4selection1")        // Social Stories
+                    // add more as needed
+                }
+            },
         shape = RoundedCornerShape(24.dp),
+
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Box(
@@ -462,60 +485,17 @@ fun TabletActivityCard(activity: Activity) {
                 Spacer(Modifier.height(14.dp))
 
                 // ── Section Steps ─────────────────────────────────────────────
-                SectionStepsRow(activity = activity)
+
 
                 Spacer(Modifier.height(12.dp))
 
                 // ── Overall progress bar ──────────────────────────────────────
-                if (isCompleted) {
-                    Box(
-                        Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(3.dp))
-                            .background(Color.White.copy(alpha = 0.40f))
-                    )
-                    Spacer(Modifier.height(6.dp))
-                    Text("All sections completed! 🎉", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
-                } else {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        LinearProgressIndicator(
-                            progress = { activity.progress },
-                            modifier = Modifier.weight(1f).height(5.dp).clip(RoundedCornerShape(3.dp)),
-                            color = activity.color,
-                            trackColor = activity.color.copy(alpha = 0.15f)
-                        )
-                        Text(
-                            "${(activity.progress * 100).toInt()}%",
-                            fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = activity.color
-                        )
-                    }
-                    Spacer(Modifier.height(5.dp))
-                    // Next step hint
-                    val nextSection = ActivitySection.entries.getOrNull(activity.sectionsCompleted)
-                    if (nextSection != null) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                Icons.Default.ArrowForward, null,
-                                tint = activity.color.copy(alpha = 0.7f),
-                                modifier = Modifier.size(11.dp)
-                            )
-                            Text(
-                                "Next: ${nextSection.label}",
-                                fontSize = 11.sp,
-                                color = activity.color.copy(alpha = 0.8f),
-                                fontWeight = FontWeight.Medium
-                            )
-                        }
-                    }
+
                 }
             }
         }
     }
-}
+
 
 // ─── Section Steps Row ────────────────────────────────────────────────────────
 /**
@@ -555,54 +535,6 @@ fun SectionStepsRow(activity: Activity) {
             }
 
             // Step bubble
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(
-                    modifier = Modifier
-                        .size(if (stepActive) 34.dp else 30.dp)
-                        .clip(CircleShape)
-                        .background(
-                            when {
-                                isCompleted -> Color.White.copy(alpha = 0.30f)
-                                stepDone -> activity.color
-                                stepActive -> activity.color.copy(alpha = 0.18f)
-                                else -> activity.color.copy(alpha = 0.08f)
-                            }
-                        )
-                        .then(
-                            if (stepActive && !isCompleted)
-                                Modifier.border(2.dp, activity.color, CircleShape)
-                            else Modifier
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (stepDone || isCompleted) {
-                        Icon(
-                            Icons.Default.Check, null,
-                            tint = if (isCompleted) Color.White else Color.White,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    } else {
-                        Icon(
-                            section.icon, section.label,
-                            tint = if (stepActive) activity.color else activity.color.copy(alpha = 0.35f),
-                            modifier = Modifier.size(14.dp)
-                        )
-                    }
-                }
-                Spacer(Modifier.height(3.dp))
-                Text(
-                    text = section.label,
-                    fontSize = 8.sp,
-                    fontWeight = if (stepActive) FontWeight.Bold else FontWeight.Normal,
-                    color = when {
-                        isCompleted -> Color.White.copy(alpha = 0.80f)
-                        stepDone -> activity.color
-                        stepActive -> activity.color
-                        else -> activity.color.copy(alpha = 0.35f)
-                    },
-                    maxLines = 1
-                )
-            }
         }
     }
 }

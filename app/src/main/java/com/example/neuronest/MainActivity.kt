@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         val apiService = createApiService()
         enableEdgeToEdge()
         setContent {
-           Navigation(apiService)
+            Navigation(apiService)
         }
     }
 }

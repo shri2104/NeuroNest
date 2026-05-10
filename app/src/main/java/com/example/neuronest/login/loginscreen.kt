@@ -3,11 +3,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -25,6 +27,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,81 +53,99 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F7FA))
-            .padding(24.dp),
+            .background(Color(0xFFF0F4FF)), // same as dashboard
         contentAlignment = Alignment.Center
     ) {
         Card(
-            shape = RoundedCornerShape(24.dp),
-            elevation = CardDefaults.cardElevation(8.dp),
-            modifier = Modifier.fillMaxWidth()
+            shape = RoundedCornerShape(32.dp),
+            elevation = CardDefaults.cardElevation(12.dp),
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
+                modifier = Modifier
+                    .background(Color(0xFFF5F0FF))
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
-                    contentDescription = "Logo",
-                    modifier = Modifier.size(100.dp)
-                )
+                // LOGO with gradient circle (like avatar)
+                Box(
+                    modifier = Modifier
+                        .size(90.dp)
+                        .clip(CircleShape)
+                        .background(
+                            Color(0xFF7C4DFF)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
+                        contentDescription = "Logo",
+                        modifier = Modifier.size(100.dp)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Welcome Back",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
+                    text = "Welcome Back 👋",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF3D3D3D)
+                )
+
+                Text(
+                    text = "Login to continue",
+                    fontSize = 13.sp,
+                    color = Color(0xFF9E9E9E)
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 InputField("Email", email, { email = it }, "Enter your email")
                 InputField(
-                    label = "Password",
-                    value = password,
-                    onValueChange = { password = it },
-                    placeholder = "Enter password",
+                    "Password",
+                    password,
+                    { password = it },
+                    "Enter password",
                     isPassword = true
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
-
-                errorMessage?.let {
-                    Text(it, color = Color.Red)
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = {
-                        if (email.isNotBlank() && password.isNotBlank()) {
-                            viewModel.signInWithEmailAndPassword(email, password) { success ->
-                                if (success) {
-                                    navController.navigate("DashBoard") {
-                                        popUpTo("LoginScreen") { inclusive = true }
-                                    }
-                                } else {
-                                    errorMessage = "Invalid email or password."
+                    onClick = { if (email.isNotBlank() && password.isNotBlank()) {
+                        viewModel.signInWithEmailAndPassword(email, password) { success ->
+                            if (success) {
+                                navController.navigate("DashBoard") {
+                                    popUpTo("LoginScreen") { inclusive = true }
                                 }
+                            } else {
+                                errorMessage = "Invalid email or password."
                             }
-                        } else {
-                            errorMessage = "Please fill all fields."
                         }
-                    },
+                    } else {
+                        errorMessage = "Please fill all fields."
+                    } },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
-                    shape = RoundedCornerShape(16.dp)
+                        .height(52.dp),
+                    shape = RoundedCornerShape(18.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF7C4DFF) // same theme
+                    )
                 ) {
-                    Text("Login")
+                    Text("Login", fontWeight = FontWeight.Bold)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 TextButton(onClick = onSignUp) {
-                    Text("Don't have an account? Sign Up")
+                    Text(
+                        "Don't have an account? Sign Up",
+                        color = Color(0xFF7C4DFF)
+                    )
                 }
             }
         }
@@ -149,127 +170,142 @@ fun SignUpScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF2F4F8))
+            .background(Color(0xFFF0F4FF)), // same as login
+        contentAlignment = Alignment.Center
     ) {
-
-        LazyColumn(
+        Card(
+            shape = RoundedCornerShape(32.dp),
+            elevation = CardDefaults.cardElevation(12.dp),
             modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth(0.9f)
         ) {
+            LazyColumn(
+                modifier = Modifier
+                    .background(Color(0xFFF5F0FF)) // same inner bg
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            item {
+                item {
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Text(
-                    text = "Create Account",
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF3F51B5)
-                )
-
-                Text(
-                    text = "Fill the details to continue",
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Card(
-                    shape = RoundedCornerShape(24.dp),
-                    elevation = CardDefaults.cardElevation(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    Column(
-                        modifier = Modifier.padding(20.dp)
+                    // 🔥 LOGO (same as login)
+                    Box(
+                        modifier = Modifier
+                            .size(90.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF7C4DFF)),
+                        contentAlignment = Alignment.Center
                     ) {
-
-                        InputField("Child Name", childName, { childName = it }, "Enter child's name")
-                        InputField("Caregiver Name", caregiverName, { caregiverName = it }, "Enter caregiver name")
-                        InputField("Caregiver Phone", caregiverPhone, { caregiverPhone = it }, "Enter phone number")
-                        InputField("Email", email, { email = it }, "Enter email")
-                        Text("User Group",fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color.DarkGray)
-                        UserGroupDropdown(
-                            selectedValue = userGroup,
-                            onValueChange = { userGroup = it }
+                        Image(
+                            painter = painterResource(id = R.drawable.ub_logo_new_1_photoaidcom_cropped),
+                            contentDescription = "Logo",
+                            modifier = Modifier.size(60.dp)
                         )
-
-                        Spacer(modifier = Modifier.height(12.dp))
-
-                        InputField("Language", language, { language = it }, "Enter language")
-                        InputField("Child Age", childAge, { childAge = it }, "Enter child's age")
-
-                        InputField(
-                            label = "Password",
-                            value = password,
-                            onValueChange = { password = it },
-                            placeholder = "Enter password",
-                            isPassword = true
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        errorMessage?.let {
-                            Text(it, color = Color.Red, fontSize = 13.sp)
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Button(
-                            onClick = {
-
-                                if (
-                                    email.isBlank() ||
-                                    password.length < 6 ||
-                                    childName.isBlank() ||
-                                    caregiverName.isBlank() ||
-                                    caregiverPhone.isBlank() ||
-                                    userGroup.isBlank()
-                                ) {
-                                    errorMessage = "Please fill all fields correctly."
-                                    return@Button
-                                }
-
-                                viewModel.createUserWithEmailAndPassword(
-                                    email,
-                                    password,
-                                    childName,
-                                    caregiverName,
-                                    caregiverPhone,
-                                    userGroup,
-                                    language,
-                                    childAge
-                                ) { success ->
-
-                                    if (success) {
-                                        navController.navigate("Dashboard") {
-                                            popUpTo("SignUp") { inclusive = true }
-                                        }
-                                    } else {
-                                        errorMessage = "Registration failed. Try another email."
-                                    }
-                                }
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(52.dp),
-                            shape = RoundedCornerShape(18.dp)
-                        ) {
-                            Text(
-                                "Create Account",
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
                     }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Create Account 🚀",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF3D3D3D)
+                    )
+
+                    Text(
+                        text = "Fill details to continue",
+                        fontSize = 13.sp,
+                        color = Color(0xFF9E9E9E)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                item {
+                    InputField("Child Name", childName, { childName = it }, "Enter child's name")
+                    InputField("Caregiver Name", caregiverName, { caregiverName = it }, "Enter caregiver name")
+                    InputField("Caregiver Phone", caregiverPhone, { caregiverPhone = it }, "Enter phone number")
+                    InputField("Email", email, { email = it }, "Enter email")
+
+                    Text(
+                        "User Group",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.DarkGray
+                    )
+
+                    UserGroupDropdown(
+                        selectedValue = userGroup,
+                        onValueChange = { userGroup = it }
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    InputField("Language", language, { language = it }, "Enter language")
+                    InputField("Child Age", childAge, { childAge = it }, "Enter child's age")
+
+                    InputField(
+                        "Password",
+                        password,
+                        { password = it },
+                        "Enter password",
+                        isPassword = true
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    errorMessage?.let {
+                        Text(it, color = Color.Red, fontSize = 13.sp)
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Button(
+                        onClick = {
+                            if (
+                                email.isBlank() ||
+                                password.length < 6 ||
+                                childName.isBlank() ||
+                                caregiverName.isBlank() ||
+                                caregiverPhone.isBlank() ||
+                                userGroup.isBlank()
+                            ) {
+                                errorMessage = "Please fill all fields correctly."
+                                return@Button
+                            }
+
+                            viewModel.createUserWithEmailAndPassword(
+                                email,
+                                password,
+                                childName,
+                                caregiverName,
+                                caregiverPhone,
+                                userGroup,
+                                language,
+                                childAge
+                            ) { success ->
+                                if (success) {
+                                    navController.navigate("Dashboard") {
+                                        popUpTo("SignUp") { inclusive = true }
+                                    }
+                                } else {
+                                    errorMessage = "Registration failed."
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        shape = RoundedCornerShape(18.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF7C4DFF)
+                        )
+                    ) {
+                        Text("Create Account", fontWeight = FontWeight.Bold)
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }

@@ -55,12 +55,13 @@ import com.example.neuronest.Task4.task4quiz.Task4YesNoScreen
 import com.example.neuronest.TutorialScreen
 import com.example.neuronest.login.ProfileScreen
 import com.example.neuronest.retrofit.ApiService
+import com.neurokids.app.ui.screens.HomeDashboard
 
 
 @Composable
 fun Navigation(apiService: ApiService) {
     val navController = rememberNavController()
-    NavHost(navController=navController,startDestination = "Splashscreen"){
+    NavHost(navController=navController,startDestination = "LoginScreen"){
 
         composable("LoginScreen") {
             LoginScreen(
@@ -71,8 +72,10 @@ fun Navigation(apiService: ApiService) {
         composable("SignUpScreen") {
             SignUpScreen(navController = navController)
         }
-        composable("DashBoard"){
-            DashboardScreen(navController=navController)
+        composable("DashBoard") {
+            HomeDashboard(
+                onNavigate = { route -> navController.navigate(route) }
+            )
         }
         composable("profile"){
             ProfileScreen(navController=navController)
@@ -216,7 +219,6 @@ fun Navigation(apiService: ApiService) {
         composable("task4presentation") {
             VideoPlayerScreen(videoResId = R.raw.my_video)
         }
-        composable("dashboard") { DashboardScreen(navController) }
         composable("about") { AboutScreen(navController) }
         composable("tutorial") { TutorialScreen(navController) }
         composable("settings") { SettingsScreen(navController) }
